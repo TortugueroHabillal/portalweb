@@ -17,21 +17,19 @@ const TORTUFEST_2ED = [
   { tone: "azul", src: IMAGES.tortufest2edCartel, caption: "", big: true },
   { tone: "coral", src: IMAGES.tortufest2ed1, caption: "" },
   { tone: "verde", src: IMAGES.tortufest2edGroup, caption: "" },
-  { tone: "verde", src: IMAGES.tortufest2edBaile1, caption: "" },
-  { tone: "coral", src: IMAGES.tortufest2edBaile2, caption: "" },
-  { tone: "azul", src: IMAGES.tortufes2edCria, caption: "" },
+  { tone: "verde", src: IMAGES.tortufest2edBaile1, caption: "", halfWidth: true },
+  { tone: "coral", src: IMAGES.tortufest2edBaile2, caption: "", halfWidth: true },
 ];
 
 const RODADA = [
-  { tone: "coral", src: IMAGES.rodadaBicis, caption: "" },
-  { tone: "verde", src: IMAGES.rodadaGroup, caption: "" }
+  { tone: "coral", src: IMAGES.rodadaBicis, caption: "", halfWidth: true },
+  { tone: "verde", src: IMAGES.rodadaGroup, caption: "", halfWidth: true },
 ];
 
 const ENCUENTRO = [
   { tone: "azul", src: IMAGES.hutchinsonHatchling, caption: "", big: true },
   { tone: "verde", src: IMAGES.hutchinsonLine, caption: "" },
   { tone: "coral", src: IMAGES.hutchinsonBikes, caption: "" },
-
 ];
 
 export function PageEventos() {

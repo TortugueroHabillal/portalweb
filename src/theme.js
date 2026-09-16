@@ -209,7 +209,7 @@ export const GLOBAL_STYLE = `
       max-height: calc(100vh - 72px);
       overflow-y: auto;
       box-sizing: border-box;
-      background: ${TOKENS.cieloClaro};
+      background: #C3DFE9;
       box-shadow: 0 16px 28px -16px rgba(16,38,43,0.35);
       z-index: 30;
     }
@@ -290,20 +290,28 @@ export const GLOBAL_STYLE = `
     .tt-hero-shock {
       display: flex;
       flex-direction: column-reverse;
-      min-height: auto;
+      min-height: calc(100vh - 70px);
       max-height: none;
+      width: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
     }
     .tt-hero-shock .tt-hero-shock-media {
-      height: 150px;
+      height: 220px;
+      width: 100%;
       flex: none;
     }
     .tt-hero-shock .tt-hero-shock-media img,
     .tt-hero-shock .tt-hero-shock-media video {
-      height: 150px;
+      height: 220px;
+      width: 100%;
+      object-fit: cover;
     }
     .tt-hero-shock .tt-hero-shock-msg {
-      padding: 20px 16px 24px;
-      max-width: none;
+      padding: 18px 20px 24px;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -326,7 +334,19 @@ export const GLOBAL_STYLE = `
     }
   }
 
-  /* About Us Intro Section — flush right on desktop, 100vw full width on mobile */
+  .tt-mgrid-half-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  @media (max-width: 600px) {
+    .tt-mgrid-half-row {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  /* About Us Intro Section — flush right on desktop, 100% full width on mobile */
   .tt-about-intro-grid {
     display: grid;
     grid-template-columns: 1fr 1.15fr;
@@ -355,9 +375,8 @@ export const GLOBAL_STYLE = `
       gap: 24px;
     }
     .tt-about-intro-photo {
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      margin-right: calc(-50vw + 50%);
+      width: 100%;
+      margin: 0;
     }
     .tt-about-intro-photo img {
       border-radius: 0 !important;

@@ -23,7 +23,7 @@ function Hero({ go }) {
               lineHeight: 1.1,
               letterSpacing: "-0.01em",
               color: "#ffffffff",
-              margin: "8px 0 14px",
+              margin: "8px 0 60px",
             }}
           >
             Cada nido que protegemos es una playa que{" "}

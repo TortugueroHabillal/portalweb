@@ -75,10 +75,10 @@ export function Nav({ current, setCurrent }) {
         position: "sticky",
         top: 0,
         zIndex: 20,
-        background: `${TOKENS.cieloClaro}CC`,
+        background: "rgba(195, 223, 233, 0.95)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
-        borderBottom: `1px solid ${TOKENS.cielo}99`,
+        borderBottom: "1px solid rgba(160, 200, 215, 0.6)",
       }}
     >
       <div className="tt-nav2-bar">
