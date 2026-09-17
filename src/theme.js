@@ -469,6 +469,14 @@ export const GLOBAL_STYLE = `
   .tt-species-card-photo { width: 100%; }
   .tt-species-card-body { padding: 22px 20px 24px; flex: 1; display: flex; flex-direction: column; }
 
+  .tt-pillar-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -16px rgba(16,38,43,0.28) !important;
+  }
+  .tt-pillar-card:hover img {
+    transform: scale(1.06);
+  }
+
   @media (max-width: 900px) {
     .tt-species-grid { grid-template-columns: 1fr; gap: 20px; }
   }

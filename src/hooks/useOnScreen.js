@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
 /* ---------- Reveal al hacer scroll ---------- */
-export function useOnScreen(threshold = 0.15) {
+export function useOnScreen(threshold = 0.02) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
+
     let reduced = false;
     try {
       reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -18,6 +19,14 @@ export function useOnScreen(threshold = 0.15) {
       setVisible(true);
       return;
     }
+
+    // Check if element is already within viewport on initial render
+    const rect = node.getBoundingClientRect();
+    if (rect.top < (window.innerHeight || document.documentElement.clientHeight) + 60 && rect.bottom > -60) {
+      setVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -25,7 +34,7 @@ export function useOnScreen(threshold = 0.15) {
           observer.disconnect();
         }
       },
-      { threshold }
+      { threshold: 0.02, rootMargin: "60px 0px 60px 0px" }
     );
     observer.observe(node);
     return () => observer.disconnect();
