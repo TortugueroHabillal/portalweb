@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FONT_IMPORT, GLOBAL_STYLE } from "./theme";
+import { FONT_IMPORT, GLOBAL_STYLE, TOKENS } from "./theme";
 import { Nav } from "./components/Nav";
 import { Footer } from "./components/Footer";
 import { FinalCTA } from "./components/FinalCTA";
@@ -42,7 +42,7 @@ export default function App() {
       <Nav current={page} setCurrent={setPage} />
       {renderPage()}
       {page === "home" && <FinalCTA go={setPage} />}
-      <Footer go={setPage} />
+      <Footer go={setPage} fromColor={page === "about" ? "transparent" : TOKENS.arena} />
     </div>
   );
 }

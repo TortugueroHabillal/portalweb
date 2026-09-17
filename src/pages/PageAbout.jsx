@@ -428,6 +428,7 @@ function Team() {
       style={{
         position: "relative",
         background: `linear-gradient(135deg, ${TOKENS.noche} 0%, ${TOKENS.azulOlaOscuro} 60%, ${TOKENS.verdeOscuro} 100%), url("${IMAGES.campAerial}") center/cover fixed`,
+        paddingBottom: "60px",
         boxSizing: "border-box",
         overflow: "hidden",
       }}
