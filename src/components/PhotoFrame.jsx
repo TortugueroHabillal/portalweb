@@ -20,7 +20,7 @@ export function PhotoFrame({ shape = "portrait", tone = "verde", note, crop, cap
       ? "160px 160px 8px 8px"
       : "0px";
   const aspect =
-    shape === "circle" ? "1 / 1" : shape === "wide" ? "16 / 9" : shape === "arch" ? "3 / 4.2" : "4 / 5";
+    shape === "circle" || shape === "square" ? "1 / 1" : shape === "wide" ? "16 / 9" : shape === "arch" ? "3 / 4.2" : "4 / 5";
   const hasMedia = !!(src || video);
   const zoom = hoverZoom !== undefined ? hoverZoom : hasMedia;
 

@@ -2,7 +2,6 @@ import { TOKENS, LOGO_URL } from "../theme";
 import { WaveDivider } from "./WaveDivider";
 
 export function Footer({ go, fromColor = TOKENS.arena }) {
-  const isTransparent = fromColor === "transparent";
   const links = [
     { label: "Inicio", route: "home" },
     { label: "Nosotros", route: "about" },
@@ -19,7 +18,12 @@ export function Footer({ go, fromColor = TOKENS.arena }) {
       <WaveDivider
         fromColor={fromColor}
         toColor={TOKENS.noche}
-        style={isTransparent ? { marginTop: "-48px", position: "relative", zIndex: 5, marginBottom: "-1px" } : { marginBottom: "-1px" }}
+        style={{
+          marginTop: "-4px",
+          position: "relative",
+          zIndex: 5,
+          marginBottom: "-1px",
+        }}
       />
       <div
         className="tt-footer-grid"

@@ -363,7 +363,6 @@ function VectorCircleArtwork() {
           height: "290px",
           borderRadius: "50%",
           overflow: "hidden",
-          border: "6px solid #ffffff",
           boxShadow: "0 20px 42px -10px rgba(190,106,74,0.28)",
           zIndex: 2,
         }}
@@ -385,7 +384,6 @@ function VectorCircleArtwork() {
           height: "145px",
           borderRadius: "50%",
           overflow: "hidden",
-          border: "5px solid #ffffff",
           boxShadow: "0 16px 32px -10px rgba(16,38,43,0.22)",
           zIndex: 3,
         }}
@@ -407,7 +405,6 @@ function VectorCircleArtwork() {
           height: "185px",
           borderRadius: "50%",
           overflow: "hidden",
-          border: "5px solid #ffffff",
           boxShadow: "0 18px 36px -10px rgba(16,38,43,0.24)",
           zIndex: 3,
         }}

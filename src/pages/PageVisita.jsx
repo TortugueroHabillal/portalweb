@@ -47,7 +47,7 @@ export function PageVisita() {
   };
 
   return (
-    <div style={{ background: TOKENS.arena, minHeight: "100vh", position: "relative" }}>
+    <div style={{ minHeight: "100vh", position: "relative" }}>
       {/* 1. Header con Estilo Elegante del Portal */}
       <section
         style={{
@@ -423,11 +423,6 @@ export function PageVisita() {
           </Reveal>
         </div>
       </section>
-
-      {/* Divisor de Cierre hacia el Footer en tono Arena */}
-      <div style={{ lineHeight: 0, margin: 0, padding: 0 }}>
-        <WaveDivider fromColor="#D4E7D7" toColor={TOKENS.arena} />
-      </div>
     </div>
   );
 }

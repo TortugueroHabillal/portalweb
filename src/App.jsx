@@ -35,6 +35,20 @@ export default function App() {
     }
   };
 
+  const getFooterFromColor = () => {
+    switch (page) {
+      case "home": return TOKENS.cieloClaro;
+      case "about": return TOKENS.arena;
+      case "convocatorias": return TOKENS.arena;
+      case "eventos": return TOKENS.arena;
+      case "visita": return "#D4E7D7";
+      case "adopta": return TOKENS.arena;
+      case "dona": return TOKENS.arena;
+      case "contacto": return TOKENS.cieloClaro;
+      default: return TOKENS.arena;
+    }
+  };
+
   return (
     <div style={{ fontFamily: "'Public Sans', sans-serif" }}>
       <style>{FONT_IMPORT}</style>
@@ -42,7 +56,7 @@ export default function App() {
       <Nav current={page} setCurrent={setPage} />
       {renderPage()}
       {page === "home" && <FinalCTA go={setPage} />}
-      <Footer go={setPage} fromColor={page === "about" ? "transparent" : TOKENS.arena} />
+      <Footer go={setPage} fromColor={getFooterFromColor()} />
     </div>
   );
 }

@@ -381,7 +381,7 @@ function LocationMap() {
   return (
     <section style={{ background: TOKENS.cieloClaro, padding: "56px 32px" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        <SectionHead eyebrow="Visítanos" eyebrowColor={TOKENS.azulOlaOscuro} title="Cómo llegar al campamento" titleMaxWidth="20ch" />
+        <SectionHead title="Visítanos" titleMaxWidth="20ch" />
         <div className="tt-cols-2 tt-cols-2-top" style={{ marginTop: "28px" }}>
           <Reveal delay={100}>
             <MapEmbed />

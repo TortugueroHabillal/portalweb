@@ -4,8 +4,8 @@ import { Reveal } from "../components/Reveal";
 import { PhotoFrame } from "../components/PhotoFrame";
 import { Button } from "../components/Button";
 import { AnimatedCounter } from "../components/AnimatedCounter";
-import { Eyebrow, H2, SectionHead } from "../components/Typography";
 import { CertificateTemplate } from "../components/CertificateTemplate";
+import { WaveDivider } from "../components/WaveDivider";
 
 const KPIS = [
   { value: 150, suffix: "+", label: "Nidos adoptados" },
@@ -34,139 +34,205 @@ const FAQS = [
   {
     q: "¿Puedo regalar la adopción de un nido a un amigo o familiar?",
     a: "Sí. Al realizar tu aportación puedes indicar el nombre del familiar o amigo a quien deseas regalar la adopción, y el certificado digital se expedirá a su nombre.",
-    img: IMAGES.touristsSunsetRelease,
   },
   {
     q: "¿Es posible apadrinar como escuela, empresa o grupo?",
     a: "Sí. Contamos con esquemas de apadrinamiento para grupos, escuelas y empresas que desean colaborar con la conservación de la tortuga marina.",
-    img: IMAGES.adoptado1,
   },
   {
     q: "¿En qué se utiliza mi aportación?",
     a: "Tu aportación se destina a los materiales de resguardo en vivero, patrullajes nocturnos de vigilancia, insumos de protección y la logística del campamento.",
-    img: IMAGES.corralNidos,
   },
 ];
 
-function Hero() {
+/* 1. Hero de Adopta: Imagen abarcan toda la mitad derecha en Web y arriba sin padding en Móvil */
+function HeroAdopta() {
   return (
-    <section className="tt-hero-shock">
-      <div className="tt-hero-shock-msg">
-        <Reveal from="left" distance={45}>
-          <span
+    <section
+      style={{
+        position: "relative",
+        background: TOKENS.noche,
+        overflow: "hidden",
+        width: "100%",
+      }}
+    >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+          alignItems: "stretch",
+          minHeight: "460px",
+          width: "100%",
+        }}
+      >
+        {/* Lado Izquierdo: Mensaje Principal */}
+        <div
+          style={{
+            padding: "clamp(28px, 4vw, 44px) clamp(24px, 4vw, 44px)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            position: "relative",
+            zIndex: 2,
+          }}
+        >
+          <Reveal from="up" distance={35}>
+            {/* Subtítulo Coherente en Naranja / Coral Centrado */}
+            <span
+              style={{
+                color: TOKENS.cieloClaro,
+                fontSize: "12.5px",
+                fontWeight: 700,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                marginBottom: "10px",
+                display: "block",
+                textAlign: "center",
+              }}
+            >
+              Tú logras la conservación
+            </span>
+
+            <h1
+              style={{
+                fontFamily: "'Fraunces', serif",
+                fontSize: "clamp(26px, 3.4vw, 42px)",
+                fontWeight: 700,
+                lineHeight: 1.14,
+                letterSpacing: "-0.01em",
+                color: "#6cc6ef",
+                margin: "0 0 12px",
+                textAlign: "center",
+              }}
+            >
+              Adopta un Nido y Cambia El Futuro del Océano
+            </h1>
+
+            <p
+              style={{
+                fontFamily: "'Public Sans', sans-serif",
+                fontSize: "15px",
+                color: "#E7F0EC",
+                lineHeight: 1.55,
+                margin: "0 auto 20px",
+                maxWidth: "48ch",
+                textAlign: "center",
+              }}
+            >
+              Tu adopción financia el resguardo, la incubación segura en vivero y la liberación de un nido completo. Recibirás el seguimiento directo y tu certificado oficial.
+            </p>
+
+            {/* Botón Verde Sólido Centrado */}
+            <div style={{ marginBottom: "22px", textAlign: "center", display: "flex", justifyContent: "center" }}>
+              <a
+                href="https://wa.me/527531631707?text=Hola,%20quiero%20apadrinar%20un%20nido%20de%20esta%20temporada."
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none", display: "inline-block" }}
+              >
+                <Button tone="verde" size="lg" style={{ borderRadius: "999px", padding: "12px 32px", fontSize: "14.5px" }}>
+                  Adopta un Nido Ahora
+                </Button>
+              </a>
+            </div>
+
+            {/* KPIs Centrados Sin Línea Divisoria */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "20px",
+                maxWidth: "360px",
+                margin: "0 auto",
+                textAlign: "center",
+              }}
+            >
+              {KPIS.map((k) => (
+                <div key={k.label} style={{ textAlign: "center" }}>
+                  <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 30px)", color: "#FFFFFF" }}>
+                    <AnimatedCounter value={k.value} suffix={k.suffix} />
+                  </div>
+                  <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "#A8BCB8", marginTop: "2px" }}>
+                    {k.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Lado Derecho: Imagen Completa pegada hasta arriba y abarcan toda la mitad */}
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "100%",
+            minHeight: "300px",
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src={IMAGES.liberacionSunsetPeople}
+            alt="Adopta un nido en El Habillal"
             style={{
-              color: TOKENS.cielo,
-              fontSize: "11.5px",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              marginBottom: "10px",
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center 35%",
               display: "block",
             }}
-          >
-            TEMPORADA 2026 - 2027
-          </span>
-          <h1
-            style={{
-              fontFamily: "'Fraunces', serif",
-              fontSize: "clamp(26px,3.2vw,44px)",
-              fontWeight: 700,
-              lineHeight: 1.1,
-              letterSpacing: "-0.01em",
-              color: "#ffffffff",
-              margin: "8px 0 14px",
-            }}
-          >
-            Adopta un nido esta temporada
-          </h1>
-          <p
-            style={{
-              fontFamily: "'Public Sans', sans-serif",
-              fontSize: "14.5px",
-              color: "#E7F0EC",
-              lineHeight: 1.55,
-              margin: "0 0 16px",
-              fontWeight: 500,
-              maxWidth: "48ch",
-            }}
-          >
-            Tu adopción cubre el resguardo, monitoreo y liberación de un nido. Recibirás su ficha con fecha estimada de eclosión y tu certificado digital de apadrinamiento.
-          </p>
-
-          <p
-            style={{
-              fontFamily: "'Public Sans', sans-serif",
-              color: TOKENS.cielo,
-              fontWeight: 700,
-              fontSize: "12.5px",
-              lineHeight: 1.45,
-              margin: "0 0 20px",
-              maxWidth: "46ch",
-            }}
-          >
-            ✦ Lo que tu adopción hace posible: Miles de crías tocan el mar cada temporada gracias a nidos adoptados como el tuyo.
-          </p>
-
-          <div style={{ marginBottom: "20px" }} className="tt-hero-buttons">
-            <a
-              href="https://wa.me/527531631707?text=Hola,%20quiero%20apadrinar%20un%20nido%20de%20esta%20temporada."
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: "none", display: "inline-block" }}
-            >
-              <Button tone="shock" size="lg">
-                Apadrinar un nido
-              </Button>
-            </a>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "16px",
-              borderTop: "1px solid rgba(255,255,255,0.15)",
-              paddingTop: "14px",
-              textAlign: "center",
-              justifyContent: "center",
-            }}
-          >
-            {KPIS.map((k) => (
-              <div key={k.label} style={{ textAlign: "center" }}>
-                <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px,2.8vw,32px)", color: "#FFFFFF" }}>
-                  <AnimatedCounter value={k.value} suffix={k.suffix} />
-                </div>
-                <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", color: "#A8BCB8", marginTop: "2px" }}>
-                  {k.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-      </div>
-
-      <div className="tt-hero-shock-media">
-        <img src={IMAGES.liberacionSunsetPeople} alt="Adopta un nido" />
+          />
+        </div>
       </div>
     </section>
   );
 }
 
+/* 2. Banner de Crías con bordes ondulados superior e inferior recortados directamente */
 function CriasBanner() {
   return (
-    <section style={{ position: "relative", minHeight: "34vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
-      <img
-        src={IMAGES.hatchlingCoconut}
-        alt="Cría de tortuga marina"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-      />
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(16,38,43,0.85) 0%, rgba(16,38,43,0.4) 100%)" }} />
-      <div style={{ position: "relative", maxWidth: "760px", margin: "0 auto", padding: "44px 32px", textAlign: "center" }}>
-        <Reveal>
-          <h3 style={{ fontFamily: "'Fraunces', serif", color: "#fff", fontSize: "clamp(20px,3vw,30px)", lineHeight: 1.3, margin: 0 }}>
-            Cada nido salvaguardado es una nueva esperanza para nuestras playas.
-          </h3>
-        </Reveal>
+    <section style={{ position: "relative", background: TOKENS.cieloClaro, overflow: "hidden" }}>
+      <div style={{ position: "relative", minHeight: "360px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {/* Ola superior recortando la foto desde arriba con curvatura de ola */}
+        <WaveDivider
+          fromColor={TOKENS.cieloClaro}
+          toColor={TOKENS.cieloClaro}
+          flip={true}
+          style={{ position: "absolute", top: "-2px", left: 0, right: 0, zIndex: 3 }}
+        />
+
+        {/* Fotografía de fondo */}
+        <img
+          src={IMAGES.hatchlingCoconut}
+          alt="Cría de tortuga marina en coco"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center 40%",
+          }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(16,38,43,0.68) 0%, rgba(16,38,43,0.52) 100%)", zIndex: 1 }} />
+
+        {/* Mensaje principal */}
+        <div style={{ position: "relative", maxWidth: "800px", margin: "0 auto", padding: "80px 24px", textAlign: "center", zIndex: 2 }}>
+          <Reveal>
+            <h3 style={{ fontFamily: "'Fraunces', serif", color: "#ffffff", fontSize: "clamp(24px, 3.4vw, 36px)", lineHeight: 1.25, margin: 0, fontWeight: 700, textShadow: "0 4px 16px rgba(0,0,0,0.5)" }}>
+              Cada nido salvaguardado es una nueva esperanza para nuestras playas.
+            </h3>
+          </Reveal>
+        </div>
+
+        {/* Ola inferior recortando la foto desde abajo hacia la pasarela de pago */}
+        <WaveDivider
+          fromColor="transparent"
+          toColor={TOKENS.espuma}
+          style={{ position: "absolute", bottom: "-2px", left: 0, right: 0, zIndex: 3 }}
+        />
       </div>
     </section>
   );
@@ -174,25 +240,76 @@ function CriasBanner() {
 
 function Proceso() {
   return (
-    <section id="proceso-adopcion" style={{ background: TOKENS.cieloClaro, padding: "52px 32px" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        <SectionHead eyebrow="El proceso" eyebrowColor={TOKENS.azulOlaOscuro} title="Apadrinar un nido, paso a paso" titleMaxWidth="22ch" />
-        <div className="tt-cols-3" style={{ marginTop: "32px", gap: "24px" }}>
+    <section
+      id="proceso-adopcion"
+      style={{
+        position: "relative",
+        background: TOKENS.cieloClaro,
+        padding: "64px 24px 72px",
+        overflow: "hidden",
+      }}
+    >
+      {/* Vector de olas en el fondo (wave vector) */}
+      <svg
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          pointerEvents: "none",
+          zIndex: 1,
+        }}
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <path
+          d="M-50,80 C180,260 380,20 600,180 C800,320 1050,110 1050,110 C1050,110 820,380 600,250 C380,120 180,330 -50,150 Z"
+          fill={TOKENS.cielo}
+          opacity="0.28"
+        />
+        <path
+          d="M-20,160 C200,330 420,70 650,230 C850,340 1020,190 1020,190"
+          fill="none"
+          stroke={TOKENS.azulOla}
+          strokeWidth="3.5"
+          opacity="0.28"
+        />
+        <path
+          d="M-20,110 C240,280 440,30 700,190 C880,280 1020,160 1020,160"
+          fill="none"
+          stroke={TOKENS.coral}
+          strokeWidth="2.5"
+          opacity="0.38"
+        />
+      </svg>
+
+      <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2 }}>
+        <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 36px" }}>
+          <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.azulOlaOscuro, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+            El Proceso
+          </span>
+          <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(26px, 3.4vw, 38px)", color: TOKENS.noche, margin: "6px 0 0", fontWeight: 700 }}>
+            Apadrinar un nido, paso a paso
+          </h2>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
           {PASOS.map((p, i) => (
             <Reveal key={p.t} delay={i * 90}>
               <div
                 style={{
-                  background: "#fff",
-                  borderRadius: 0,
-                  padding: "26px",
+                  background: "rgba(255, 255, 255, 0.92)",
+                  backdropFilter: "blur(8px)",
+                  borderRadius: "20px",
+                  padding: "28px 24px",
                   height: "100%",
                   boxSizing: "border-box",
-                  border: `1px solid ${TOKENS.arenaOscura}`,
-                  boxShadow: "0 8px 24px -16px rgba(16,38,43,0.2)",
+                  border: `1px solid ${TOKENS.cieloOscuro}`,
+                  boxShadow: "0 10px 28px -16px rgba(16,38,43,0.12)",
                 }}
               >
-                <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: "20px", color: p.color, margin: "0 0 12px" }}>{p.t}</h3>
-                <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14px", color: TOKENS.conchaSuave, lineHeight: 1.7, margin: 0 }}>{p.d}</p>
+                <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: "22px", color: p.color, margin: "0 0 12px", fontWeight: 700 }}>{p.t}</h3>
+                <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14.5px", color: TOKENS.conchaSuave, lineHeight: 1.7, margin: 0 }}>{p.d}</p>
               </div>
             </Reveal>
           ))}
@@ -202,66 +319,132 @@ function Proceso() {
   );
 }
 
-function FAQSection() {
-  const [openIdx, setOpenIdx] = useState(0);
+/* 3. Módulo de Pago / Pasarela Digital (Costo $200 por Nido) */
+function ModuloAdoptaPago() {
+  const [nidosQty, setNidosQty] = useState(1);
+  const [donorName, setDonorName] = useState("");
+  const [donorEmail, setDonorEmail] = useState("");
+
+  const precioPorNido = 200;
+  const totalCost = nidosQty * precioPorNido;
+
+  const inputStyle = {
+    width: "100%",
+    height: "44px",
+    border: `1px solid ${TOKENS.arenaOscura}`,
+    borderRadius: "12px",
+    background: "#fff",
+    color: TOKENS.noche,
+    fontFamily: "'Public Sans', sans-serif",
+    fontSize: "14px",
+    padding: "0 14px",
+    boxSizing: "border-box",
+    outline: "none",
+  };
 
   return (
-    <section style={{ background: TOKENS.espuma, padding: "64px 32px" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        <SectionHead eyebrow="Preguntas frecuentes" title="Dudas sobre el apadrinamiento" titleMaxWidth="22ch" />
+    <section style={{ padding: "56px 24px 64px", background: TOKENS.espuma, position: "relative" }}>
+      <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+        <Reveal>
+          <div
+            style={{
+              background: "#ffffff",
+              borderRadius: "28px",
+              padding: "clamp(28px, 5vw, 44px)",
+              boxShadow: "0 20px 48px -18px rgba(16,38,43,0.14)",
+              border: `1px solid ${TOKENS.arenaOscura}`,
+            }}
+          >
+            <div style={{ textAlign: "center", marginBottom: "24px" }}>
+              <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.verdeOscuro, textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "6px" }}>
+                Pasarela Digital de Apadrinamiento
+              </span>
+              <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(24px, 3.2vw, 36px)", fontWeight: 700, color: TOKENS.noche, margin: "0 0 8px" }}>
+                Selecciona la cantidad de nidos a apadrinar
+              </h2>
+              <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: 0 }}>
+                Cuota fija de recuperación: <strong>$200 MXN</strong> por nido completo protegido en vivero.
+              </p>
+            </div>
 
-        <div style={{ marginTop: "40px", display: "flex", flexDirection: "column", gap: "28px" }}>
-          {FAQS.map((faq, idx) => {
-            const isOpen = openIdx === idx;
-            const isEven = idx % 2 === 0;
-            return (
-              <Reveal key={faq.q} delay={idx * 80}>
-                <div
-                  style={{
-                    background: "#fff",
-                    border: `1px solid ${isOpen ? TOKENS.azulOla : TOKENS.arenaOscura}`,
-                    borderRadius: 0,
-                    padding: "20px",
-                    boxShadow: "0 8px 24px -16px rgba(16,38,43,0.15)",
-                  }}
-                  className="tt-faq-item"
-                >
-                  <div style={{ order: isEven ? 1 : 2 }}>
-                    <button
-                      onClick={() => setOpenIdx(isOpen ? null : idx)}
-                      style={{
-                        width: "100%",
-                        padding: "12px 0",
-                        background: "none",
-                        border: "none",
-                        display: "flex",
-                        justify: "space-between",
-                        alignItems: "center",
-                        textAlign: "left",
-                        cursor: "pointer",
-                        fontFamily: "'Fraunces', serif",
-                        fontSize: "18px",
-                        fontWeight: 600,
-                        color: isOpen ? TOKENS.azulOlaOscuro : TOKENS.noche,
-                      }}
-                    >
-                      <span>{faq.q}</span>
-                      <span style={{ fontSize: "20px", marginLeft: "12px" }}>{isOpen ? "−" : "+"}</span>
-                    </button>
-                    {isOpen && (
-                      <div style={{ paddingTop: "10px", fontFamily: "'Public Sans', sans-serif", fontSize: "14px", color: TOKENS.conchaSuave, lineHeight: 1.7 }}>
-                        {faq.a}
-                      </div>
-                    )}
-                  </div>
-                  <div style={{ order: isEven ? 2 : 1 }}>
-                    <PhotoFrame shape="wide" tone={isEven ? "verde" : "coral"} src={faq.img} style={{ aspectRatio: "16/10", borderRadius: 0 }} />
-                  </div>
+            {/* Selector de Cantidad de Nidos */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "12px", marginBottom: "24px" }}>
+              {[1, 2, 3, 4].map((qty) => {
+                const isSelected = nidosQty === qty;
+                return (
+                  <button
+                    key={qty}
+                    type="button"
+                    onClick={() => setNidosQty(qty)}
+                    style={{
+                      background: isSelected ? TOKENS.verdeOscuro : "#f8f6f0",
+                      color: isSelected ? "#ffffff" : TOKENS.noche,
+                      border: isSelected ? `2px solid ${TOKENS.verde}` : `1px solid ${TOKENS.arenaOscura}`,
+                      borderRadius: "16px",
+                      padding: "14px 10px",
+                      fontFamily: "'Fraunces', serif",
+                      fontSize: "17px",
+                      fontWeight: 700,
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      textAlign: "center",
+                    }}
+                  >
+                    {qty} {qty === 1 ? "Nido" : "Nidos"} (${qty * precioPorNido} MXN)
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* ÁREA CONTENEDORA DE PAGO EN LÍNEA STRIPE */}
+            <div
+              style={{
+                border: `2px dashed ${TOKENS.azulOla}`,
+                borderRadius: "20px",
+                padding: "24px",
+                background: "#FAFCFC",
+                marginBottom: "20px",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px", borderBottom: `1px solid ${TOKENS.arenaOscura}`, paddingBottom: "10px" }}>
+                <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.azulOlaOscuro }}>
+                  💳 Apadrinamiento Digital Seguro (Stripe Ready)
+                </span>
+                <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11px", color: "#6B7280", background: "#E5E7EB", padding: "3px 8px", borderRadius: "6px" }}>
+                  SSL 256-Bit
+                </span>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
+                <div>
+                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                    Nombre del Apadrinador
+                  </label>
+                  <input type="text" placeholder="Para tu certificado digital" value={donorName} onChange={(e) => setDonorName(e.target.value)} style={inputStyle} />
                 </div>
-              </Reveal>
-            );
-          })}
-        </div>
+                <div>
+                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                    Correo Electrónico
+                  </label>
+                  <input type="email" placeholder="Para enviarte la ficha del nido" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} style={inputStyle} />
+                </div>
+              </div>
+
+              <div style={{ background: "#ffffff", border: `1px solid ${TOKENS.arenaOscura}`, borderRadius: "12px", padding: "14px 16px", marginBottom: "16px", display: "flex", alignItems: "center", justifyContent: "space-between", color: "#9CA3AF", fontSize: "13.5px" }}>
+                <span>Número de Tarjeta, MM/AA, CVC (Stripe Elements)</span>
+                <span>🔒</span>
+              </div>
+
+              <Button
+                tone="verde"
+                style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }}
+                onClick={() => alert(`Apadrinando ${nidosQty} nido(s) por $${totalCost} MXN. ¡Muchas gracias!`)}
+              >
+                Completar Apadrinamiento (${totalCost} MXN)
+              </Button>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -269,17 +452,173 @@ function FAQSection() {
 
 function CertificadoPreviewSection() {
   return (
-    <section style={{ background: "#fff", padding: "52px 32px", borderTop: `1px solid ${TOKENS.arenaOscura}` }}>
+    <section style={{ background: TOKENS.cieloClaro, padding: "60px 24px" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        <SectionHead
-          eyebrow="Tu Reconocimiento Oficial"
-          eyebrowColor={TOKENS.verdeOscuro}
-          title="Tu apoyo es reconocido con un Certificado Digital"
-          titleMaxWidth="24ch"
-        />
+        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 36px" }}>
+          <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.verdeOscuro, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+            Reconocimiento Oficial
+          </span>
+          <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(26px, 3.4vw, 38px)", color: TOKENS.noche, margin: "6px 0 10px", fontWeight: 700 }}>
+            Tu apoyo es reconocido con un Certificado Digital
+          </h2>
+          <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "15px", color: TOKENS.conchaSuave, margin: 0 }}>
+            Al apadrinar un nido recibes tu documento digital personalizado con la ficha de la postura y la temporada.
+          </p>
+        </div>
 
-        <div style={{ marginTop: "28px", width: "100%", overflowX: "auto" }}>
-          <CertificateTemplate donorName="María Mercedes Pérez" temporada="Temporada 2026" fecha="14 de Septiembre, 2026" />
+        <div style={{ marginTop: "24px", width: "100%", overflowX: "auto" }}>
+          <CertificateTemplate donorName="María Mercedes Pérez" temporada="Temporada 2026 - 2027" fecha="14 de Septiembre, 2026" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Composición Vectorial de 3 Fotos Circulares en Tema Azulado */
+function VectorCircleArtworkAdopta() {
+  return (
+    <div className="tt-vector-adopta-wrap">
+      {/* 1. Círculo vectorial grande con gradiente azul mar (Bottom Right) */}
+      <div
+        className="tt-vector-adopta-bgcircle"
+        style={{
+          background: `linear-gradient(135deg, ${TOKENS.azulOla} 0%, ${TOKENS.azulOlaOscuro} 60%, ${TOKENS.nocheClara} 100%)`,
+          boxShadow: "0 16px 36px -8px rgba(44,92,109,0.42)",
+        }}
+      />
+
+      {/* 2. Anillo vectorial de acento azul (Left Edge) */}
+      <div
+        style={{
+          position: "absolute",
+          top: "35%",
+          left: "0px",
+          width: "54px",
+          height: "54px",
+          borderRadius: "50%",
+          border: `6px solid ${TOKENS.azulOla}`,
+          boxSizing: "border-box",
+          zIndex: 4,
+          boxShadow: "0 6px 18px rgba(62,124,147,0.3)",
+        }}
+      />
+
+      {/* 3. Anillo de acento azul cielo (Top Edge) */}
+      <div
+        style={{
+          position: "absolute",
+          top: "0px",
+          left: "22px",
+          width: "36px",
+          height: "36px",
+          borderRadius: "50%",
+          background: "#EAF5F8",
+          border: `3px solid ${TOKENS.cieloOscuro}`,
+          opacity: 0.95,
+          zIndex: 1,
+        }}
+      />
+
+      {/* 4. Foto circular principal (Centro-Derecha) — Crías de tortuga */}
+      <div className="tt-vector-adopta-main">
+        <img
+          src={IMAGES.hatchlingLeatherbackProfile}
+          alt="Crías de tortuga marina rumbo al mar"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      </div>
+
+      {/* 5. Foto circular secundaria (Arriba-Izquierda) — Cría closeup */}
+      <div className="tt-vector-adopta-sec">
+        <img
+          src={IMAGES.hatchlingSilhouetteSingle}
+          alt="Cría de tortuga marina"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      </div>
+
+      {/* 6. Foto circular terciaria (Abajo-Izquierda) — Tortuga al atardecer */}
+      <div className="tt-vector-adopta-tert">
+        <img
+          src={IMAGES.turtleDusk}
+          alt="Tortuga en patrullaje"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* 4. Preguntas Frecuentes: Composición vectorial a la izquierda y preguntas desplegables a la derecha */
+function FAQSection() {
+  const [openIdx, setOpenIdx] = useState(0);
+
+  return (
+    <section style={{ background: TOKENS.arena, padding: "64px 24px 88px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "36px", alignItems: "center" }}>
+          <Reveal from="left">
+            <VectorCircleArtworkAdopta />
+          </Reveal>
+
+          <Reveal from="right">
+            <div>
+              <div style={{ marginBottom: "24px" }}>
+                <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.coral, textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "4px" }}>
+                  Dudas Frecuentes
+                </span>
+                <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(26px, 3.4vw, 38px)", color: TOKENS.noche, margin: 0, fontWeight: 700, lineHeight: 1.2 }}>
+                  Preguntas sobre el apadrinamiento
+                </h2>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                {FAQS.map((faq, idx) => {
+                  const isOpen = openIdx === idx;
+                  return (
+                    <div
+                      key={faq.q}
+                      style={{
+                        background: "#ffffff",
+                        borderRadius: "18px",
+                        border: `1px solid ${isOpen ? TOKENS.azulOla : TOKENS.arenaOscura}`,
+                        padding: "20px 24px",
+                        boxShadow: "0 8px 24px -16px rgba(16,38,43,0.08)",
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      <button
+                        onClick={() => setOpenIdx(isOpen ? null : idx)}
+                        style={{
+                          width: "100%",
+                          background: "none",
+                          border: "none",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          textAlign: "left",
+                          cursor: "pointer",
+                          fontFamily: "'Fraunces', serif",
+                          fontSize: "18px",
+                          fontWeight: 700,
+                          color: isOpen ? TOKENS.azulOlaOscuro : TOKENS.noche,
+                          padding: 0,
+                        }}
+                      >
+                        <span>{faq.q}</span>
+                        <span style={{ fontSize: "22px", marginLeft: "12px", color: TOKENS.verdeOscuro }}>{isOpen ? "−" : "+"}</span>
+                      </button>
+                      {isOpen && (
+                        <div style={{ paddingTop: "14px", fontFamily: "'Public Sans', sans-serif", fontSize: "14.5px", color: TOKENS.conchaSuave, lineHeight: 1.65 }}>
+                          {faq.a}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -289,10 +628,16 @@ function CertificadoPreviewSection() {
 export function PageAdopta() {
   return (
     <div>
-      <Hero />
-      <CriasBanner />
+      <HeroAdopta />
       <Proceso />
+      <CriasBanner />
+
+      <ModuloAdoptaPago />
+      <div style={{ lineHeight: 0 }}><WaveDivider fromColor={TOKENS.espuma} toColor={TOKENS.cieloClaro} /></div>
+
       <CertificadoPreviewSection />
+      <div style={{ lineHeight: 0 }}><WaveDivider fromColor={TOKENS.cieloClaro} toColor={TOKENS.arena} /></div>
+
       <FAQSection />
     </div>
   );

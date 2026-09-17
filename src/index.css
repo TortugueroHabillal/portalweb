@@ -105,3 +105,89 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* Composición vectorial de 3 fotos — Adopta (Responsivo) */
+.tt-vector-adopta-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 410px;
+  margin: 0 auto;
+}
+
+.tt-vector-adopta-main {
+  position: absolute;
+  top: 16px;
+  right: 15px;
+  width: 285px;
+  height: 285px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 20px 42px -10px rgba(44,92,109,0.32);
+  z-index: 2;
+}
+
+.tt-vector-adopta-sec {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  width: 155px;
+  height: 155px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 16px 32px -10px rgba(16,38,43,0.25);
+  z-index: 3;
+}
+
+.tt-vector-adopta-tert {
+  position: absolute;
+  bottom: 10px;
+  left: 45px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 18px 36px -10px rgba(16,38,43,0.28);
+  z-index: 3;
+}
+
+.tt-vector-adopta-bgcircle {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  width: 205px;
+  height: 205px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .tt-vector-adopta-wrap {
+    max-width: 350px;
+    height: 320px;
+  }
+  .tt-vector-adopta-main {
+    top: 10px;
+    right: 10px;
+    width: 220px;
+    height: 220px;
+  }
+  .tt-vector-adopta-sec {
+    top: 20px;
+    left: 18px;
+    width: 125px;
+    height: 125px;
+  }
+  .tt-vector-adopta-tert {
+    bottom: 12px;
+    left: 32px;
+    width: 150px;
+    height: 150px;
+  }
+  .tt-vector-adopta-bgcircle {
+    bottom: 5px;
+    right: 8px;
+    width: 155px;
+    height: 155px;
+  }
+}
