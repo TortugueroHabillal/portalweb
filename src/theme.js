@@ -481,8 +481,76 @@ export const GLOBAL_STYLE = `
     .tt-species-grid { grid-template-columns: 1fr; gap: 20px; }
   }
 
-  @media (max-width: 640px) {
-    .tt-section-responsive { padding: 40px 18px !important; }
+  .tt-vector-composition-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .tt-vector-composition-wrap {
+    position: relative;
+    width: 450px;
+    height: 420px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+  @media (max-width: 900px) {
+    .tt-vector-composition-outer {
+      height: 350px;
+    }
+    .tt-vector-composition-wrap {
+      transform: scale(0.82);
+      transform-origin: center center;
+    }
+  }
+  @media (max-width: 480px) {
+    .tt-vector-composition-outer {
+      height: 300px;
+    }
+    .tt-vector-composition-wrap {
+      transform: scale(0.70);
+      transform-origin: center center;
+    }
+  }
+  @media (max-width: 360px) {
+    .tt-vector-composition-outer {
+      height: 260px;
+    }
+    .tt-vector-composition-wrap {
+      transform: scale(0.62);
+      transform-origin: center center;
+    }
+  }
+
+  /* About Page Wave Split Layout Styles */
+  .tt-about-wave-svg, .tt-about-desktop-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .tt-about-mobile-wave, .tt-about-mobile-wave-sketch {
+    display: none;
+  }
+  @media (max-width: 900px) {
+    .tt-about-desktop-wave {
+      display: none !important;
+    }
+    .tt-about-mobile-wave-sketch {
+      display: block !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
   }
 
   .tt-cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
