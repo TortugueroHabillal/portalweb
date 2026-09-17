@@ -27,7 +27,7 @@ const ICONS = {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="currentColor" strokeWidth="1.8" /><path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
   ),
   egg: (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3.2c3.9 4.5 6.2 8.8 6.2 11.7a6.2 6.2 0 1 1-12.4 0c0-2.9 2.3-7.2 6.2-11.7Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3.5C8.2 3.5 5.5 8.2 5.5 13.5C5.5 17.6 8.4 20.5 12 20.5C15.6 20.5 18.5 17.6 18.5 13.5C18.5 8.2 15.8 3.5 12 3.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
   ),
 };
 
