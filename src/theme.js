@@ -498,7 +498,8 @@ export const GLOBAL_STYLE = `
   }
   @media (max-width: 900px) {
     .tt-vector-composition-outer {
-      height: 350px;
+      height: 360px;
+      margin-top: 15px;
     }
     .tt-vector-composition-wrap {
       transform: scale(0.82);
@@ -507,7 +508,8 @@ export const GLOBAL_STYLE = `
   }
   @media (max-width: 480px) {
     .tt-vector-composition-outer {
-      height: 300px;
+      height: 320px;
+      margin-top: 20px;
     }
     .tt-vector-composition-wrap {
       transform: scale(0.70);
@@ -516,7 +518,8 @@ export const GLOBAL_STYLE = `
   }
   @media (max-width: 360px) {
     .tt-vector-composition-outer {
-      height: 260px;
+      height: 270px;
+      margin-top: 15px;
     }
     .tt-vector-composition-wrap {
       transform: scale(0.62);

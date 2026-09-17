@@ -46,7 +46,8 @@ function HeroBanner() {
         position: "relative",
         background: `linear-gradient(135deg, rgba(16,38,43,0.94) 0%, rgba(32,120,150,0.88) 100%), url("${IMAGES.criasAtardecer}") center/cover fixed`,
         padding: "52px 24px 60px",
-        minHeight: "75vh",
+        minHeight: "100vh",
+        minHeight: "100dvh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -196,14 +197,14 @@ function Intro() {
           {/* Lado Izquierdo (Texto): Resguardado dentro de la ola clara */}
           <div
             style={{
-              padding: "48px 24px 36px",
+              padding: "60px 24px 60px",
               boxSizing: "border-box",
             }}
           >
             <div style={{ maxWidth: "560px" }}>
               <Reveal>
                 <Eyebrow color={TOKENS.coral}>Quiénes somos</Eyebrow>
-                <H2 color={TOKENS.noche} style={{ margin: "14px 0 24px" }}>
+                <H2 color={TOKENS.noche} style={{ margin: "18px 0 48px", lineHeight: 1.28 }}>
                   Un campamento nacido de la comunidad, por amor a nuestras especies.
                 </H2>
                 <p
@@ -224,7 +225,7 @@ function Intro() {
           {/* Lado Derecho (Foto): Situada abajo sobre el área azul del vector en móvil */}
           <div
             style={{
-              padding: "24px 24px 48px",
+              padding: "60px 24px 60px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -460,21 +461,21 @@ function Team() {
       {/* Separador Ondulado SVG para Móvil */}
       <svg
         className="tt-about-mobile-wave-sketch"
-        viewBox="0 0 400 950"
+        viewBox="0 0 400 850"
         preserveAspectRatio="none"
       >
         <path
-          d="M0,0 L400,0 L400,560 C290,640 120,600 0,625 Z"
+          d="M0,0 L400,0 L400,450 C290,530 120,490 0,515 Z"
           fill="rgba(244, 235, 218, 0.96)"
         />
         <path
-          d="M400,560 C290,640 120,600 0,625"
+          d="M400,450 C290,530 120,490 0,515"
           fill="none"
           stroke={TOKENS.coral}
           strokeWidth="5.5"
         />
         <path
-          d="M400,552 C290,632 120,592 0,617"
+          d="M400,442 C290,522 120,482 0,507"
           fill="none"
           stroke="rgba(255, 255, 255, 0.85)"
           strokeWidth="3"
