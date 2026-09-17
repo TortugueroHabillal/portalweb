@@ -4,6 +4,9 @@ import { WaveDivider } from "../components/WaveDivider";
 import { PhotoFrame } from "../components/PhotoFrame";
 import { MosaicGrid } from "../components/MosaicGrid";
 
+// Color de verde claro unificado (Sólido RGB #D4E7D7) para eliminar discrepancias por opacidad
+const VERDE_CLARO_SOLIDO = "#D4E7D7";
+
 const TORTUFEST_1ED = [
   { tone: "azul", src: IMAGES.tortufest2edAdminspeech, caption: "", big: true },
   { tone: "coral", src: IMAGES.tortufest1edSpeech, caption: "" },
@@ -94,7 +97,7 @@ export function PageEventos() {
         </div>
       </section>
 
-      {/* 2. Sección Reconocimiento SEMARNAT con Vector Orgánico en Esquina (Restaurada 2da versión) */}
+      {/* 2. Sección Reconocimiento SEMARNAT con Vector Orgánico en Esquina */}
       <section
         style={{
           position: "relative",
@@ -103,44 +106,7 @@ export function PageEventos() {
           overflow: "hidden",
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none",
-            zIndex: 1,
-            opacity: 0.85,
-          }}
-        >
-          <svg viewBox="0 0 1440 450" width="100%" height="100%" preserveAspectRatio="none">
-            <path
-              d="M1440,0 L700,0 C880,150 1100,280 1440,420 Z"
-              fill={TOKENS.arenaOscura}
-              opacity="0.35"
-            />
-            <path
-              d="M1440,0 C1050,120 850,260 550,450 L1440,450 Z"
-              fill="rgba(226, 83, 31, 0.08)"
-            />
-            <path
-              d="M1440,30 C1080,140 880,280 580,450"
-              fill="none"
-              stroke={TOKENS.coral}
-              strokeWidth="4"
-              opacity="0.5"
-            />
-            <path
-              d="M1440,10 C1060,120 860,260 560,450"
-              fill="none"
-              stroke="#ffffff"
-              strokeWidth="2.5"
-              opacity="0.8"
-            />
-          </svg>
-        </div>
+
 
         <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2 }}>
           <Reveal>
@@ -187,11 +153,11 @@ export function PageEventos() {
         </div>
       </section>
 
-      {/* --- SECCIÓN 1: TortuFest 2da Edición (Fondo Verde Menta Pálido) --- */}
+      {/* --- WaveDivider Inferior adaptado al Azul Claro de la sección Reconocimiento --- */}
       <div style={{ lineHeight: 0, margin: 0, padding: 0 }}>
-        <WaveDivider fromColor={TOKENS.arena} toColor="rgba(196, 219, 199, 0.55)" />
+        <WaveDivider fromColor={TOKENS.arena} toColor={VERDE_CLARO_SOLIDO} />
       </div>
-      <section style={{ background: "rgba(196, 219, 199, 0.55)", padding: "52px 24px 68px", margin: 0 }}>
+      <section style={{ background: VERDE_CLARO_SOLIDO, padding: "52px 24px 68px", margin: 0 }}>
         <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
           <Reveal>
             <div style={{ marginBottom: "28px" }}>
@@ -218,7 +184,7 @@ export function PageEventos() {
 
       {/* --- SECCIÓN 2: Encuentro Hutchison Ports (Fondo Verde Botánica Orgánico) --- */}
       <div style={{ lineHeight: 0, margin: 0, padding: 0 }}>
-        <WaveDivider fromColor="rgba(196, 219, 199, 0.55)" toColor={TOKENS.verde} />
+        <WaveDivider fromColor={VERDE_CLARO_SOLIDO} toColor={TOKENS.verde} />
       </div>
       <section style={{ background: TOKENS.verde, padding: "52px 24px 68px", margin: 0 }}>
         <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
@@ -245,11 +211,11 @@ export function PageEventos() {
         </div>
       </section>
 
-      {/* --- SECCIÓN 3: TortuFest 1ra Edición (Fondo Verde Menta Pálido) --- */}
+      {/* --- SECCIÓN 3: TortuFest 1ra Edición (Fondo Verde Claro Sólido 100% Idéntico) --- */}
       <div style={{ lineHeight: 0, margin: 0, padding: 0 }}>
-        <WaveDivider fromColor={TOKENS.verde} toColor="rgba(196, 219, 199, 0.55)" />
+        <WaveDivider fromColor={TOKENS.verde} toColor={VERDE_CLARO_SOLIDO} />
       </div>
-      <section style={{ background: "rgba(196, 219, 199, 0.55)", padding: "52px 24px 68px", margin: 0 }}>
+      <section style={{ background: VERDE_CLARO_SOLIDO, padding: "52px 24px 68px", margin: 0 }}>
         <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
           <Reveal>
             <div style={{ marginBottom: "28px" }}>
@@ -276,7 +242,7 @@ export function PageEventos() {
 
       {/* --- SECCIÓN 4: Rodada El Habillal (Fondo Arena Cierre) --- */}
       <div style={{ lineHeight: 0, margin: 0, padding: 0 }}>
-        <WaveDivider fromColor="rgba(196, 219, 199, 0.55)" toColor={TOKENS.arena} />
+        <WaveDivider fromColor={VERDE_CLARO_SOLIDO} toColor={TOKENS.arena} />
       </div>
       <section style={{ background: TOKENS.arena, padding: "52px 24px 68px", margin: 0 }}>
         <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
