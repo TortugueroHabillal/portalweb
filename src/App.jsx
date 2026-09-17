@@ -25,7 +25,7 @@ export default function App() {
     switch (page) {
       case "home": return <PageHome go={setPage} />;
       case "about": return <PageAbout />;
-      case "convocatorias": return <PageConvocatorias />;
+      case "convocatorias": return <PageConvocatorias go={setPage} />;
       case "eventos": return <PageEventos />;
       case "visita": return <PageVisita />;
       case "adopta": return <PageAdopta />;
