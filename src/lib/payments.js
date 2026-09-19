@@ -51,6 +51,7 @@ function paymentError(code) {
     donation_registration_failed: "No se pudo reservar el donativo. Inténtalo nuevamente.",
     adoption_registration_failed: "No se pudo registrar la adopción. Inténtalo nuevamente.",
     adoption_checkout_not_found: "No encontramos esta confirmación de adopción.",
+    adoption_confirmation_pending: "El pago fue recibido y la adopción todavía se está conciliando.",
     adoption_status_unavailable: "No pudimos confirmar todavía la asignación del nido.",
   };
   return messages[code] || "No fue posible iniciar el pago. Inténtalo nuevamente.";

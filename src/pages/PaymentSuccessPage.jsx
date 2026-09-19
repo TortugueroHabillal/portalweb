@@ -45,7 +45,7 @@ export function PaymentSuccessPage({ type }) {
           {isDonation ? <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "8px", marginBottom: "24px" }}>
             <Amount label="Cobrado" value={money(result.amount_minor, result.currency)} />
             <Amount label="Comisión" value={money(result.processor_fee_minor, result.currency)} />
-            <Amount label="Neto recibido" value={money(result.net_amount_minor, result.currency)} strong />
+            <Amount label="Neto percibido" value={money(result.net_amount_minor, result.currency)} strong />
           </div> : <div style={{ marginBottom: "24px", padding: "16px", borderRadius: "8px", background: "#F0F8F2" }}><span style={{ display: "block", color: TOKENS.conchaSuave, fontSize: "12px" }}>Nido asignado</span><strong style={{ display: "block", marginTop: "4px", color: TOKENS.verdeOscuro, fontSize: "34px" }}>#{result.nest_code}</strong></div>}
           <button type="button" onClick={() => window.location.replace(isDonation ? "/dona" : "/adopta")} style={{ width: "100%", maxWidth: "320px", padding: "13px 18px", border: 0, borderRadius: "8px", background: TOKENS.verdeOscuro, color: "#fff", fontWeight: 800, cursor: "pointer" }}>Volver a {isDonation ? "donaciones" : "adopciones"}</button>
         </> : <>
