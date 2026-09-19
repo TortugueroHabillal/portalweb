@@ -93,7 +93,7 @@ export function CertificateTemplate({
                     Campamento Tortuguero "El Habillal" A.C.
                   </span>
                   <span style={{ fontSize: "10.5px", color: TOKENS.conchaSuave, letterSpacing: "0.08em" }}>
-                    Lázaro Cárdenas, Michoacán · Protección y Conservación Marina
+                    Lázaro Cárdenas, Michoacán, México
                   </span>
                 </div>
 

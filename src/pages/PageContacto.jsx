@@ -349,7 +349,7 @@ export function PageContacto() {
                           boxShadow: "none",
                         }}
                       >
-                        <span>WhatsApp directo</span>
+                        <span>WhatsApp</span>
                         <span>→</span>
                       </a>
                     </div>
@@ -372,22 +372,7 @@ export function PageContacto() {
                 }}
               >
                 <div style={{ textAlign: "center", marginBottom: "22px" }}>
-                  <span
-                    style={{
-                      background: `${TOKENS.azulOlaOscuro}15`,
-                      color: TOKENS.azulOlaOscuro,
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      padding: "6px 14px",
-                      borderRadius: 0,
-                      display: "inline-block",
-                      marginBottom: "12px",
-                    }}
-                  >
-                    Formulario de Contacto
-                  </span>
+
 
                   <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: "24px", color: TOKENS.noche, margin: "0 0 6px", fontWeight: 700 }}>
                     Envíanos un mensaje
