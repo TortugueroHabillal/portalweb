@@ -5,7 +5,7 @@
    Tipografía: Fraunces (display) + Public Sans (cuerpo)
    ============================================================ */
 
-export const LOGO_URL = "/icon_camp_vector.svg";
+export const LOGO_URL = "/logo-el-habillal.png";
 
 export const FONT_IMPORT = `@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&display=swap');`;
 

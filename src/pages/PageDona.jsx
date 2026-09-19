@@ -269,7 +269,7 @@ export function PageDona() {
                 </div>
               </label>
 
-              <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", margin: "-8px 0 24px", padding: "12px 14px", border: `1px solid ${TOKENS.arenaOscura}`, borderRadius: "10px", background: "#fff", cursor: checkoutPayload ? "default" : "pointer" }}>
+              <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", margin: "-8px 0 0", padding: "12px 14px", border: `1px solid ${TOKENS.arenaOscura}`, borderRadius: "10px", background: "#fff", cursor: checkoutPayload ? "default" : "pointer" }}>
                 <input type="checkbox" checked={coverProcessingCosts} disabled={Boolean(checkoutPayload)} onChange={(event) => setCoverProcessingCosts(event.target.checked)} style={{ marginTop: "2px", width: "16px", height: "16px", accentColor: TOKENS.verdeOscuro }} />
                 <span style={{ color: TOKENS.noche, fontSize: "12.5px", lineHeight: 1.45 }}>
                   <strong style={{ display: "block" }}>Cubrir comisión estimada de procesamiento digital</strong>
@@ -278,82 +278,76 @@ export function PageDona() {
                     : "Cálculo estimado para tarjeta nacional: 3.6% + $3 MXN, más IVA."}
                 </span>
               </label>
-
-              {/* ÁREA CONTENEDORA PARA PASARELA DIGITAL (STRIPE ELEMENTS) */}
-              <div
-                style={{
-                  border: "1px solid #D8DEE9",
-                  borderRadius: "14px",
-                  padding: "clamp(16px, 3vw, 24px)",
-                  background: "#F8FAFC",
-                  marginBottom: "24px",
-                  position: "relative",
-                  boxShadow: "0 16px 38px -30px rgba(15,23,42,.55)",
-                }}
-              >
-                {!checkoutPayload && (
-                  <>
-                    <StripeCheckoutHeader />
-
-                    <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
-                      <div>
-                        <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
-                          Nombre del Donador
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Tu nombre completo"
-                          value={donorName}
-                          onChange={(e) => setDonorName(e.target.value)}
-                          style={inputStyle}
-                        />
-                      </div>
-
-                      <div>
-                        <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
-                          Correo Electrónico
-                        </label>
-                        <input
-                          type="email"
-                          placeholder="tu@correo.com"
-                          value={donorEmail}
-                          onChange={(e) => setDonorEmail(e.target.value)}
-                          style={inputStyle}
-                        />
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
-                {checkoutPayload ? (
-                  <StripeEmbeddedCheckout
-                    checkoutKey={checkoutPayload.request_id}
-                    createClientSecret={() => createDonationCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
-                    onCancel={() => setCheckoutPayload(null)}
-                  />
-                ) : (
-                  <Button
-                    tone="verde"
-                    style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }}
-                    onClick={startDonationCheckout}
-                  >
-                    Continuar al pago seguro ({activeAmount})
-                  </Button>
-                )}
-              </div>
-
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button
-                  tone="azul"
-                  style={{ width: "100%", maxWidth: "380px", borderRadius: "8px", justifyContent: "center", padding: "12px 18px", boxShadow: "none" }}
-                  onClick={() => setShowBankModal(true)}
-                >
-                  Donar mediante transferencia SPEI
-                </Button>
-              </div>
             </div>
           </Reveal>
+        </div>
+
+        {/* PASARELA DIGITAL (STRIPE): fuera de la tarjeta blanca, a todo lo ancho disponible de la página */}
+        <div style={{ maxWidth: "1100px", margin: "32px auto 0", padding: "0 clamp(0px, 2vw, 12px)" }}>
+          <Reveal>
+            {!checkoutPayload && (
+              <>
+                <StripeCheckoutHeader />
+
+                <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "18px" }}>
+                  <div>
+                    <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                      Nombre del Donador
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Tu nombre completo"
+                      value={donorName}
+                      onChange={(e) => setDonorName(e.target.value)}
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                      Correo Electrónico
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="tu@correo.com"
+                      value={donorEmail}
+                      onChange={(e) => setDonorEmail(e.target.value)}
+                      style={inputStyle}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
+            {checkoutPayload ? (
+              <StripeEmbeddedCheckout
+                checkoutKey={checkoutPayload.request_id}
+                createClientSecret={() => createDonationCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
+                onCancel={() => setCheckoutPayload(null)}
+              />
+            ) : (
+              <div style={{ maxWidth: "520px", margin: "0 auto" }}>
+                <Button
+                  tone="verde"
+                  style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }}
+                  onClick={startDonationCheckout}
+                >
+                  Continuar al pago seguro ({activeAmount})
+                </Button>
+              </div>
+            )}
+          </Reveal>
+        </div>
+
+        <div style={{ maxWidth: "860px", margin: "24px auto 0", display: "flex", justifyContent: "center" }}>
+          <Button
+            tone="azul"
+            style={{ width: "100%", maxWidth: "380px", borderRadius: "8px", justifyContent: "center", padding: "12px 18px", boxShadow: "none" }}
+            onClick={() => setShowBankModal(true)}
+          >
+            Donar mediante transferencia SPEI
+          </Button>
         </div>
       </section>
 
