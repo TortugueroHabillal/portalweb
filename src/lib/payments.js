@@ -19,7 +19,7 @@ async function callFunction(name, { method = "POST", body } = {}) {
 
 export async function createDonationCheckout(payload) {
   const data = await callFunction("create-donation-checkout", {
-    body: { ...payload, request_id: crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/dona?checkout=complete&session_id={CHECKOUT_SESSION_ID}` },
+    body: { ...payload, request_id: payload.request_id || crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/dona?checkout=complete&session_id={CHECKOUT_SESSION_ID}` },
   });
   if (!data.client_secret) throw new Error("Stripe no devolvió una sesión de pago válida.");
   return data.client_secret;
@@ -27,15 +27,10 @@ export async function createDonationCheckout(payload) {
 
 export async function createAdoptionCheckout(payload) {
   const data = await callFunction("create-adoption-checkout", {
-    body: { ...payload, request_id: crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/adopta?checkout=complete&session_id={CHECKOUT_SESSION_ID}` },
+    body: { ...payload, request_id: payload.request_id || crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/adopta?checkout=complete&session_id={CHECKOUT_SESSION_ID}` },
   });
   if (!data.client_secret) throw new Error("Stripe no devolvió una sesión de pago válida.");
   return data.client_secret;
-}
-
-export async function listAdoptionMonths() {
-  const data = await callFunction("list-adoptable-nests", { method: "GET" });
-  return Array.isArray(data.months) ? data.months : [];
 }
 
 export async function getAdoptionCheckoutStatus(sessionId) {
@@ -48,11 +43,9 @@ function paymentError(code) {
     invalid_donor_email: "Escribe un correo electrónico válido.",
     invalid_sponsor_email: "Escribe un correo electrónico válido.",
     invalid_amount: "El monto del donativo no es válido.",
-    invalid_preferred_collection_month: "Selecciona un mes de colecta disponible.",
     checkout_not_configured: "La pasarela todavía no está configurada.",
     donation_registration_failed: "No se pudo reservar el donativo. Inténtalo nuevamente.",
-    adoption_registration_failed: "No se pudo reservar la adopción para ese mes. Inténtalo nuevamente.",
-    adoptable_nests_unavailable: "No se pudieron consultar los meses disponibles.",
+    adoption_registration_failed: "No se pudo registrar la adopción. Inténtalo nuevamente.",
     adoption_checkout_not_found: "No encontramos esta confirmación de adopción.",
     adoption_status_unavailable: "No pudimos confirmar todavía la asignación del nido.",
   };

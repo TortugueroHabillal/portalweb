@@ -28,11 +28,10 @@ test("donations are one-time and preserve variable amount", () => {
   assert.match(donation, /donativo mínimo.*\$10 MXN/);
 });
 
-test("web adoption creates one 220 MXN adoption using a collection-month preference", () => {
+test("web adoption creates one 220 MXN adoption with random server allocation", () => {
   assert.doesNotMatch(adoption, /nidosQty|\[1, 2, 3, 4\]/);
   assert.match(adoption, /\$220 MXN/);
-  assert.match(adoption, /listAdoptionMonths/);
-  assert.match(adoption, /preferred_collection_month: selectedMonth/);
-  assert.match(adoption, /entre 45 y 60 días/);
+  assert.doesNotMatch(adoption, /listAdoptionMonths|preferred_collection_month|selectedMonth/);
+  assert.match(adoption, /forma aleatoria un nido activo disponible/);
   assert.match(adoption, /nest_code/);
 });

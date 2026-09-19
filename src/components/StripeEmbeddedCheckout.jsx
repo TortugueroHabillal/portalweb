@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { TOKENS } from "../theme";
@@ -7,7 +7,9 @@ const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null;
 
 export function StripeEmbeddedCheckout({ checkoutKey, createClientSecret, onCancel }) {
-  const fetchClientSecret = useCallback(() => createClientSecret(), [createClientSecret]);
+  const createClientSecretRef = useRef(createClientSecret);
+  createClientSecretRef.current = createClientSecret;
+  const fetchClientSecret = useCallback(() => createClientSecretRef.current(), []);
   if (!stripePromise) {
     return <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600 }}>La clave publicable de Stripe todavía no está configurada.</p>;
   }

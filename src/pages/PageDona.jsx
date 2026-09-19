@@ -51,6 +51,7 @@ export function PageDona() {
       return;
     }
     setCheckoutPayload({
+      request_id: crypto.randomUUID(),
       donor_name: donorName.trim() || "ANONIMO",
       donor_email: donorEmail.trim().toLowerCase(),
       amount_minor: amountMinor,
@@ -325,7 +326,7 @@ export function PageDona() {
                 {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
                 {checkoutPayload ? (
                   <StripeEmbeddedCheckout
-                    checkoutKey={`${checkoutPayload.donor_email}-${checkoutPayload.amount_minor}`}
+                    checkoutKey={checkoutPayload.request_id}
                     createClientSecret={() => createDonationCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
                     onCancel={() => setCheckoutPayload(null)}
                   />
