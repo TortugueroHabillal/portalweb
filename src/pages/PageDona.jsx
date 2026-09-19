@@ -4,40 +4,43 @@ import { Reveal } from "../components/Reveal";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { Button } from "../components/Button";
 import { StripeEmbeddedCheckout } from "../components/StripeEmbeddedCheckout";
+import { StripeCheckoutHeader } from "../components/StripeCheckoutHeader";
 import { createDonationCheckout } from "../lib/payments";
 
 const DONATION_TIERS = [
-  { amount: 150, title: "$150 MXN", impact: "Cubre 1 linterna de luz roja de patrullaje nocturno para proteger hembras anidadoras." },
-  { amount: 350, title: "$350 MXN", impact: "Financia la protección completa de 1 nido (100+ huevos) en el corral de incubación." },
-  { amount: 700, title: "$700 MXN", impact: "Provee insumos médicos, tanques de hidratación y cuidado de crías en rehabilitación." },
-  { amount: 1500, title: "$1,500 MXN", impact: "Cubre combustible y mantenimiento de patrullaje de vigilancia en la playa." },
+  { amount: 100, title: "$100 MXN", impact: "Contribuye a los insumos utilizados durante la protección y vigilancia de nidos." },
+  { amount: 250, title: "$250 MXN", impact: "Apoya el resguardo y seguimiento de los nidos durante la temporada." },
+  { amount: 500, title: "$500 MXN", impact: "Fortalece el equipamiento y los materiales para el cuidado de crías." },
+  { amount: 1000, title: "$1,000 MXN", impact: "Apoya los recorridos de vigilancia y la operación del campamento." },
 ];
 
+const STRIPE_DOMESTIC_RATE_WITH_VAT = 0.036 * 1.16;
+const STRIPE_FIXED_FEE_MINOR_WITH_VAT = Math.ceil(300 * 1.16);
+
+function amountWithEstimatedProcessingCosts(baseAmountMinor) {
+  return Math.ceil((baseAmountMinor + STRIPE_FIXED_FEE_MINOR_WITH_VAT) / (1 - STRIPE_DOMESTIC_RATE_WITH_VAT));
+}
+
 export function PageDona() {
-  const checkoutComplete = new URLSearchParams(window.location.search).get("checkout") === "complete";
   const [selectedTier, setSelectedTier] = useState(DONATION_TIERS[1]);
   const [customAmount, setCustomAmount] = useState("");
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
+  const [coverProcessingCosts, setCoverProcessingCosts] = useState(false);
   const [showBankModal, setShowBankModal] = useState(false);
   const [copied, setCopied] = useState(false);
   const [checkoutPayload, setCheckoutPayload] = useState(null);
   const [paymentError, setPaymentError] = useState("");
 
-  const activeAmount = customAmount ? `$${Number(customAmount).toLocaleString()} MXN` : selectedTier.title;
-  const amountMinor = Math.round(Number(customAmount || selectedTier.amount) * 100);
+  const baseAmountMinor = Math.round(Number(customAmount || selectedTier.amount) * 100);
+  const amountMinor = coverProcessingCosts ? amountWithEstimatedProcessingCosts(baseAmountMinor) : baseAmountMinor;
+  const processingContributionMinor = Math.max(0, amountMinor - baseAmountMinor);
+  const activeAmount = `$${(amountMinor / 100).toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
 
   const handleCopyCLABE = () => {
     navigator.clipboard?.writeText("012 180 0150 1234 5678");
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
-  };
-
-  const handleWhatsAppDonate = () => {
-    const text = encodeURIComponent(
-      `Hola, quiero realizar un donativo único de ${activeAmount} para apoyar la conservación del Campamento Tortuguero El Habillal.`
-    );
-    window.open(`https://wa.me/527531631707?text=${text}`, "_blank");
   };
 
   const startDonationCheckout = () => {
@@ -180,7 +183,6 @@ export function PageDona() {
       {/* 2. Módulo de Donación (Con espacio para Pasarela Digital Stripe) */}
       <section style={{ padding: "56px 24px 72px", position: "relative", zIndex: 2 }}>
         <div style={{ maxWidth: "860px", margin: "0 auto" }}>
-          {checkoutComplete && <div role="status" style={{ marginBottom: "20px", border: `1px solid ${TOKENS.verde}`, borderRadius: "12px", padding: "16px", background: "#F0F8F2", color: TOKENS.verdeOscuro, fontWeight: 700, textAlign: "center" }}>Gracias. Stripe recibió tu pago y estamos confirmando el donativo.</div>}
           <Reveal>
             <div
               style={{
@@ -192,20 +194,7 @@ export function PageDona() {
               }}
             >
               <div style={{ textAlign: "center", marginBottom: "28px" }}>
-                <span
-                  style={{
-                    fontFamily: "'Public Sans', sans-serif",
-                    fontSize: "13px",
-                    fontWeight: 700,
-                    color: TOKENS.verdeOscuro,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em",
-                    display: "block",
-                    marginBottom: "6px",
-                  }}
-                >
-                  Plataforma de Donación Segura
-                </span>
+
                 <h2
                   style={{
                     fontFamily: "'Fraunces', serif",
@@ -238,7 +227,7 @@ export function PageDona() {
                         background: isSelected ? TOKENS.verdeOscuro : "#f8f6f0",
                         color: isSelected ? "#ffffff" : TOKENS.noche,
                         border: isSelected ? `2px solid ${TOKENS.verde}` : `1px solid ${TOKENS.arenaOscura}`,
-                        borderRadius: "14px",
+                        borderRadius: "8px",
                         padding: "14px 10px",
                         fontFamily: "'Fraunces', serif",
                         fontSize: "17px",
@@ -255,15 +244,32 @@ export function PageDona() {
               </div>
 
               {/* Monto Personalizado */}
-              <div style={{ marginBottom: "28px" }}>
-                <input
-                  type="number"
-                  placeholder="Otro monto ($ MXN)..."
-                  value={customAmount}
-                  onChange={(e) => setCustomAmount(e.target.value)}
-                  style={{ ...inputStyle, textAlign: "center", fontSize: "15px", fontWeight: 600 }}
-                />
-              </div>
+              <label style={{ display: "block", marginBottom: "28px", padding: "15px 16px", border: `2px solid ${customAmount ? TOKENS.azulOlaOscuro : TOKENS.cieloOscuro}`, borderRadius: "8px", background: customAmount ? "#F1F9FC" : "#F8FBFC", boxShadow: customAmount ? "0 8px 20px -16px rgba(44,92,109,.65)" : "none" }}>
+                <span style={{ display: "block", marginBottom: "7px", color: TOKENS.azulOlaOscuro, fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 800 }}>Monto personalizado</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <strong style={{ color: TOKENS.azulOlaOscuro, fontSize: "20px" }}>$</strong>
+                  <input
+                    type="number"
+                    min="10"
+                    inputMode="decimal"
+                    placeholder="Escribe una cantidad"
+                    value={customAmount}
+                    onChange={(e) => setCustomAmount(e.target.value)}
+                    style={{ ...inputStyle, height: "48px", border: `1px solid ${TOKENS.cieloOscuro}`, borderRadius: "6px", background: "#fff", fontSize: "16px", fontWeight: 700 }}
+                  />
+                  <strong style={{ color: TOKENS.conchaSuave, fontSize: "12px" }}>MXN</strong>
+                </div>
+              </label>
+
+              <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", margin: "-8px 0 24px", padding: "12px 14px", border: `1px solid ${TOKENS.arenaOscura}`, borderRadius: "10px", background: "#fff", cursor: checkoutPayload ? "default" : "pointer" }}>
+                <input type="checkbox" checked={coverProcessingCosts} disabled={Boolean(checkoutPayload)} onChange={(event) => setCoverProcessingCosts(event.target.checked)} style={{ marginTop: "2px", width: "16px", height: "16px", accentColor: TOKENS.verdeOscuro }} />
+                <span style={{ color: TOKENS.noche, fontSize: "12.5px", lineHeight: 1.45 }}>
+                  <strong style={{ display: "block" }}>Cubrir comisión estimada de procesamiento digital</strong>
+                  {coverProcessingCosts
+                    ? `Aportación adicional: $${(processingContributionMinor / 100).toFixed(2)} MXN · Total: ${activeAmount}`
+                    : "Cálculo estimado para tarjeta nacional: 3.6% + $3 MXN, más IVA."}
+                </span>
+              </label>
 
               {/* ÁREA CONTENEDORA PARA PASARELA DIGITAL (STRIPE ELEMENTS) */}
               <div
@@ -277,25 +283,9 @@ export function PageDona() {
                   boxShadow: "0 16px 38px -30px rgba(15,23,42,.55)",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginBottom: "16px",
-                    borderBottom: `1px solid ${TOKENS.arenaOscura}`,
-                    paddingBottom: "12px",
-                  }}
-                >
-                  <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.azulOlaOscuro }}>
-                    Pago seguro con Stripe
-                  </span>
-                  <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11px", color: "#6B7280", background: "#E5E7EB", padding: "3px 8px", borderRadius: "6px" }}>
-                    Tarjeta · Link · métodos disponibles
-                  </span>
-                </div>
+                <StripeCheckoutHeader />
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
+                <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
                   <div>
                     <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
                       Nombre del Donador
@@ -341,37 +331,14 @@ export function PageDona() {
                 )}
               </div>
 
-              {/* Opciones Alternativas (SPEI & WhatsApp) */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   tone="azul"
-                  style={{ borderRadius: "999px", justifyContent: "center", padding: "12px" }}
+                  style={{ width: "100%", maxWidth: "380px", borderRadius: "8px", justifyContent: "center", padding: "12px 18px", boxShadow: "none" }}
                   onClick={() => setShowBankModal(true)}
                 >
-                  Transferencia SPEI (CLABE Directa)
+                  Donar mediante transferencia SPEI
                 </Button>
-
-                <button
-                  type="button"
-                  onClick={handleWhatsAppDonate}
-                  style={{
-                    background: "#25D366",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "999px",
-                    padding: "12px 18px",
-                    fontFamily: "'Public Sans', sans-serif",
-                    fontSize: "14px",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                  }}
-                >
-                  <span>💬</span> Donar vía WhatsApp
-                </button>
               </div>
             </div>
           </Reveal>

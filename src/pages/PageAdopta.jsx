@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TOKENS, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { PhotoFrame } from "../components/PhotoFrame";
@@ -6,7 +6,8 @@ import { Button } from "../components/Button";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { CertificateTemplate } from "../components/CertificateTemplate";
 import { StripeEmbeddedCheckout } from "../components/StripeEmbeddedCheckout";
-import { createAdoptionCheckout, getAdoptionCheckoutStatus } from "../lib/payments";
+import { StripeCheckoutHeader } from "../components/StripeCheckoutHeader";
+import { createAdoptionCheckout } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
 
 const KPIS = [
@@ -323,35 +324,10 @@ function Proceso() {
 
 /* 3. Módulo de Pago / Pasarela Digital */
 function ModuloAdoptaPago() {
-  const searchParams = new URLSearchParams(window.location.search);
-  const checkoutComplete = searchParams.get("checkout") === "complete";
-  const checkoutSessionId = searchParams.get("session_id");
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
-  const [adoptionResult, setAdoptionResult] = useState(null);
   const [checkoutPayload, setCheckoutPayload] = useState(null);
   const [paymentError, setPaymentError] = useState("");
-
-  useEffect(() => {
-    if (!checkoutComplete || !checkoutSessionId) return undefined;
-    let active = true;
-    let timer;
-    let attempts = 0;
-    const refresh = async () => {
-      try {
-        const result = await getAdoptionCheckoutStatus(checkoutSessionId);
-        if (!active) return;
-        setAdoptionResult(result);
-        if (result.nest_code || result.payment_status === "FAILED" || result.payment_status === "CANCELLED" || attempts >= 14) return;
-      } catch (error) {
-        if (attempts >= 14 && active) setPaymentError(error.message);
-      }
-      attempts += 1;
-      if (active) timer = window.setTimeout(refresh, 2000);
-    };
-    refresh();
-    return () => { active = false; window.clearTimeout(timer); };
-  }, [checkoutComplete, checkoutSessionId]);
 
   const startAdoptionCheckout = () => {
     setPaymentError("");
@@ -381,12 +357,6 @@ function ModuloAdoptaPago() {
   return (
     <section style={{ padding: "56px 24px 64px", background: TOKENS.espuma, position: "relative" }}>
       <div style={{ maxWidth: "860px", margin: "0 auto" }}>
-        {checkoutComplete && <div role="status" style={{ marginBottom: "20px", border: `1px solid ${TOKENS.verde}`, borderRadius: "12px", padding: "22px", background: "#F0F8F2", color: TOKENS.verdeOscuro, textAlign: "center" }}>
-          <strong style={{ display: "block", fontFamily: "'Fraunces', serif", fontSize: "22px", marginBottom: "6px" }}>{adoptionResult?.nest_code ? "Tu nido ha sido asignado" : "Estamos confirmando tu adopción"}</strong>
-          {adoptionResult?.nest_code
-            ? <><span style={{ display: "block", fontSize: "15px" }}>Nido asignado</span><span style={{ display: "block", fontSize: "32px", fontWeight: 800, margin: "6px 0" }}>#{adoptionResult.nest_code}</span><span style={{ fontSize: "13px" }}>También enviaremos el seguimiento al correo registrado.</span></>
-            : <span style={{ fontSize: "14px", fontWeight: 600 }}>Stripe recibió el pago. La asignación automática suele completarse en unos segundos.</span>}
-        </div>}
         <Reveal>
           <div
             style={{
@@ -398,14 +368,12 @@ function ModuloAdoptaPago() {
             }}
           >
             <div style={{ textAlign: "center", marginBottom: "24px" }}>
-              <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.verdeOscuro, textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "6px" }}>
-                Pasarela Digital de Apadrinamiento
-              </span>
+
               <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(24px, 3.2vw, 36px)", fontWeight: 700, color: TOKENS.noche, margin: "0 0 8px" }}>
                 Adopta un nido de la temporada activa
               </h2>
               <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: 0 }}>
-                Aportación en línea: <strong>$220 MXN</strong> por una adopción virtual.
+                Cuota fija de aportación: <strong>$220 MXN</strong> por una adopción virtual.
               </p>
             </div>
 
@@ -422,19 +390,12 @@ function ModuloAdoptaPago() {
                 boxShadow: "0 16px 38px -30px rgba(15,23,42,.55)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px", borderBottom: `1px solid ${TOKENS.arenaOscura}`, paddingBottom: "10px" }}>
-                <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.azulOlaOscuro }}>
-                  Pago seguro con Stripe
-                </span>
-                <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11px", color: "#6B7280", background: "#E5E7EB", padding: "3px 8px", borderRadius: "6px" }}>
-                  Tarjeta · Link · métodos disponibles
-                </span>
-              </div>
+              <StripeCheckoutHeader />
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
+              <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
                 <div>
                   <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
-                    Nombre del Apadrinador
+                    Nombre del Adoptante
                   </label>
                   <input type="text" placeholder="Para tu certificado digital" value={donorName} onChange={(e) => setDonorName(e.target.value)} style={inputStyle} />
                 </div>

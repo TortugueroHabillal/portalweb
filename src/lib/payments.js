@@ -13,13 +13,13 @@ async function callFunction(name, { method = "POST", body } = {}) {
     throw new Error("No pudimos conectar con la pasarela. Comprueba tu conexión e inténtalo nuevamente.");
   }
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(paymentError(data.error));
+  if (!response.ok) throw new Error(typeof data.detail === "string" && data.detail ? data.detail : paymentError(data.error));
   return data;
 }
 
 export async function createDonationCheckout(payload) {
   const data = await callFunction("create-donation-checkout", {
-    body: { ...payload, request_id: payload.request_id || crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/dona?checkout=complete&session_id={CHECKOUT_SESSION_ID}` },
+    body: { ...payload, request_id: payload.request_id || crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/dona/exito?session_id={CHECKOUT_SESSION_ID}` },
   });
   if (!data.client_secret) throw new Error("Stripe no devolvió una sesión de pago válida.");
   return data.client_secret;
@@ -27,7 +27,7 @@ export async function createDonationCheckout(payload) {
 
 export async function createAdoptionCheckout(payload) {
   const data = await callFunction("create-adoption-checkout", {
-    body: { ...payload, request_id: payload.request_id || crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/adopta?checkout=complete&session_id={CHECKOUT_SESSION_ID}` },
+    body: { ...payload, request_id: payload.request_id || crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/adopta/exito?session_id={CHECKOUT_SESSION_ID}` },
   });
   if (!data.client_secret) throw new Error("Stripe no devolvió una sesión de pago válida.");
   return data.client_secret;
@@ -35,6 +35,10 @@ export async function createAdoptionCheckout(payload) {
 
 export async function getAdoptionCheckoutStatus(sessionId) {
   return callFunction(`adoption-checkout-status?session_id=${encodeURIComponent(sessionId)}`, { method: "GET" });
+}
+
+export async function getDonationCheckoutStatus(sessionId) {
+  return callFunction(`donation-checkout-status?session_id=${encodeURIComponent(sessionId)}`, { method: "GET" });
 }
 
 function paymentError(code) {

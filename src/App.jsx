@@ -11,10 +11,13 @@ import { PageVisita } from "./pages/PageVisita";
 import { PageAdopta } from "./pages/PageAdopta";
 import { PageDona } from "./pages/PageDona";
 import { PageContacto } from "./pages/PageContacto";
+import { PaymentSuccessPage } from "./pages/PaymentSuccessPage";
 
 export default function App() {
   const getInitialPage = () => {
     const path = window.location.pathname.replace(/^\//, "").toLowerCase();
+    if (path === "dona/exito") return "donation-success";
+    if (path === "adopta/exito") return "adoption-success";
     const valid = ["home", "about", "convocatorias", "eventos", "visita", "adopta", "dona", "contacto"];
     return valid.includes(path) ? path : "home";
   };
@@ -31,6 +34,8 @@ export default function App() {
       case "adopta": return <PageAdopta />;
       case "dona": return <PageDona />;
       case "contacto": return <PageContacto />;
+      case "donation-success": return <PaymentSuccessPage type="donation" />;
+      case "adoption-success": return <PaymentSuccessPage type="adoption" />;
       default: return null;
     }
   };
@@ -53,7 +58,7 @@ export default function App() {
     <div style={{ fontFamily: "'Public Sans', sans-serif" }}>
       <style>{FONT_IMPORT}</style>
       <style>{GLOBAL_STYLE}</style>
-      <Nav current={page} setCurrent={setPage} />
+      <Nav current={page === "donation-success" ? "dona" : page === "adoption-success" ? "adopta" : page} setCurrent={setPage} />
       {renderPage()}
       {page === "home" && <FinalCTA go={setPage} />}
       <Footer go={setPage} fromColor={getFooterFromColor()} />

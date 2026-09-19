@@ -162,6 +162,16 @@ code {
 }
 
 @media (max-width: 640px) {
+  .stripe-checkout-heading {
+    flex-direction: column;
+    justify-content: center !important;
+    text-align: center;
+  }
+
+  .stripe-customer-fields {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
   .tt-vector-adopta-wrap {
     max-width: 350px;
     height: 320px;
