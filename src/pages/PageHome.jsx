@@ -298,9 +298,9 @@ function FourFrentesBento() {
 
 /* Equivalencia de costo — cada tarjeta redirige a Dona y traduce el monto en impacto medible */
 const COST_EQUIVALENCES = [
-  { amount: "$100 MXN", impact: "Una noche de patrullaje: la diferencia entre que un nido sea detectado a tiempo o no.", tone: TOKENS.azulOlaOscuro },
-  { amount: "$250 MXN", impact: "Un nido resguardado en el corral durante toda su incubación — hasta 90 crías con la oportunidad de llegar al mar.", tone: TOKENS.verdeOscuro, featured: true },
-  { amount: "$1,000 MXN", impact: "Una semana completa de operación del campamento — decenas de nidos bajo vigilancia constante.", tone: TOKENS.coralOscuro },
+  { amount: "$100 MXN", value: 100, impact: "Una noche de patrullaje: la diferencia entre que un nido sea detectado a tiempo o no.", tone: TOKENS.azulOlaOscuro },
+  { amount: "$250 MXN", value: 250, impact: "Un nido resguardado en el corral durante toda su incubación — hasta 90 crías con la oportunidad de llegar al mar.", tone: TOKENS.verdeOscuro, featured: true },
+  { amount: "$1,000 MXN", value: 1000, impact: "Una semana completa de operación del campamento — decenas de nidos bajo vigilancia constante.", tone: TOKENS.coralOscuro },
 ];
 
 function CostEquivalence({ go }) {
@@ -319,7 +319,10 @@ function CostEquivalence({ go }) {
           {COST_EQUIVALENCES.map((c) => (
             <button
               key={c.amount}
-              onClick={() => go("dona")}
+              onClick={() => {
+                sessionStorage.setItem("donaMontoPersonalizado", String(c.value));
+                go("dona");
+              }}
               style={{
                 background: c.featured ? TOKENS.nocheClara : "#fff",
                 borderRadius: c.featured ? RADIUS.card + 2 : RADIUS.card,
@@ -342,9 +345,9 @@ function CostEquivalence({ go }) {
               }}
             >
               <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }} aria-hidden="true">
-                <TurtleSilhouette crawl size={22} color={c.featured ? "rgba(255,255,255,0.16)" : "rgba(16,38,43,0.14)"} style={{ top: "18%", animationDuration: "22s", animationDelay: "-2s" }} />
-                <TurtleSilhouette crawl size={16} color={c.featured ? "rgba(255,255,255,0.12)" : "rgba(16,38,43,0.1)"} style={{ top: "58%", animationDuration: "30s", animationDelay: "-14s" }} />
-                <TurtleSilhouette crawl size={18} color={c.featured ? "rgba(255,255,255,0.14)" : "rgba(16,38,43,0.12)"} style={{ top: "78%", animationDuration: "26s", animationDelay: "-8s" }} />
+                <TurtleSilhouette crawl size={34} color={c.featured ? "rgba(255,255,255,0.18)" : "rgba(16,38,43,0.14)"} style={{ top: "12%", animationDuration: "18s", animationDelay: "-3s" }} />
+                <TurtleSilhouette crawl size={26} color={c.featured ? "rgba(255,255,255,0.14)" : "rgba(16,38,43,0.1)"} style={{ top: "45%", animationDuration: "25s", animationDelay: "-11s" }} />
+                <TurtleSilhouette crawl size={30} color={c.featured ? "rgba(255,255,255,0.16)" : "rgba(16,38,43,0.12)"} style={{ top: "76%", animationDuration: "21s", animationDelay: "-17s" }} />
               </div>
               <div style={{ position: "relative", zIndex: 1 }}>
                 {c.featured && (
@@ -420,38 +423,9 @@ function TheAsk({ go }) {
 }
 
 /* 7. Compromiso secundario — visitar sin pagar */
-/* Camino de tortuguitas — dos arcos de fondo (arriba y abajo del contenido) que nunca cruzan el texto ni la foto */
-const TURTLE_PATH = [
-  // arco superior, dentro del margen antes de que empiece la cuadrícula de contenido
-  { top: "1.5%", left: "4%", size: 16, rotate: -10 },
-  { top: "3%", left: "18%", size: 24, rotate: 5 },
-  { top: "5%", left: "33%", size: 19, rotate: -8 },
-  { top: "5.5%", left: "50%", size: 28, rotate: 12 },
-  { top: "4.5%", left: "67%", size: 18, rotate: -14 },
-  { top: "2.5%", left: "83%", size: 25, rotate: 8 },
-  { top: "1%", left: "95%", size: 15, rotate: -6 },
-  // arco inferior, dentro del margen después de que termina la cuadrícula de contenido
-  { top: "98.5%", left: "9%", size: 17, rotate: 14 },
-  { top: "96.5%", left: "27%", size: 27, rotate: -9 },
-  { top: "95%", left: "45%", size: 20, rotate: 10 },
-  { top: "96%", left: "63%", size: 29, rotate: -12 },
-  { top: "97.5%", left: "76%", size: 22, rotate: 5 },
-  { top: "98.5%", left: "88%", size: 16, rotate: 7 },
-];
-
 function NextEvent({ go }) {
   return (
     <section className="tt-nextevent-section" style={{ background: SECTION_BG.claro, padding: `${SPACE.xl}px ${SPACE.lg}px`, position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }} aria-hidden="true">
-        {TURTLE_PATH.map((t, i) => (
-          <TurtleSilhouette
-            key={i}
-            size={t.size}
-            color="rgba(16,38,43,0.85)"
-            style={{ top: t.top, left: t.left, transform: `translate(-50%, -50%) rotate(${t.rotate}deg)` }}
-          />
-        ))}
-      </div>
       <div className="tt-proximo-grid" style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         <Reveal>
           <PhotoFrame shape="portrait" tone="arena" src={IMAGES.tortufest2edGroup} />

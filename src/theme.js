@@ -74,7 +74,7 @@ export const IMAGES = {
   // especies — tortugas adultas
   turtleCloseup: p("golfinacloseup.jpeg"),
   turtleInfrared: p("golfinainfrarrojo.jpeg"),
-  turtleOnBeach: p("tortunegraenplaya.jpeg"),
+  turtleOnBeach: p("tortuganegraenplaya.jpg"),
   turtleFrontal: p("WhatsApp Image 2026-05-24 at 11.49.17 PM.jpeg"),
   turtleDusk: p("WhatsApp Image 2026-03-24 at 9.50.06 PM.jpeg"),
   turtleSunrise: p("WhatsApp Image 2026-09-12 at 7.13.56 PM (1).jpeg"),
@@ -107,6 +107,8 @@ export const IMAGES = {
   nestEggsGeneric: p("nidotortu.jpeg"),
   corralNidos: p("corralnidos.jpeg"),
   corralNidosAmplio: p("corrar1.jpeg"),
+  tortu1: p("tortu1.jpg"),
+  tortus: p("tortus.jpg"),
 
   // equipo — para Nosotros y Contacto
   teamEntrance: p("equipo3.jpg"),
@@ -795,7 +797,26 @@ export const GLOBAL_STYLE = `
 
   @media (max-width: 900px) {
     .tt-hero-grid, .tt-cols-2, .tt-cols-3, .tt-event-grid, .tt-proximo-grid, .tt-footer-grid { grid-template-columns: 1fr; }
-    .tt-cols-4 { grid-template-columns: repeat(2, 1fr); }
+    /* Grid de Formulario para Visitas y Contacto */
+  .tt-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .tt-form-grid .tt-field-full {
+    grid-column: 1 / span 2;
+  }
+  @media (max-width: 640px) {
+    .tt-form-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .tt-form-grid .tt-field-full,
+    .tt-form-grid > div {
+      grid-column: 1 / span 1 !important;
+    }
+  }
+
+  .tt-cols-4 { grid-template-columns: repeat(2, 1fr); }
 
     .tt-adopta-hero-action {
       display: flex !important;

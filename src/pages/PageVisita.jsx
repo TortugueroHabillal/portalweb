@@ -247,7 +247,7 @@ export function PageVisita() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px" }}>
+                  <div className="tt-form-grid" style={{ gap: "18px" }}>
                     <div className="tt-field-full">
                       <FieldLabel>Nombre completo *</FieldLabel>
                       <input

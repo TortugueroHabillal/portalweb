@@ -23,7 +23,7 @@ export function Eyebrow({ children, color = TOKENS.verde, center = false }) {
   );
 }
 
-export function H2({ children, color = TOKENS.concha, center = false, maxWidth = "16ch" }) {
+export function H2({ children, color = TOKENS.concha, center = false, maxWidth = "16ch", style }) {
   return (
     <h2
       style={{
@@ -35,6 +35,7 @@ export function H2({ children, color = TOKENS.concha, center = false, maxWidth =
         margin: center ? "0 auto" : 0,
         maxWidth,
         textAlign: center ? "center" : "left",
+        ...style,
       }}
     >
       {children}

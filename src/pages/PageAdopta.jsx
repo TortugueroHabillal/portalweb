@@ -256,7 +256,7 @@ function ModuloAdoptaPago() {
         padding: "64px clamp(8px, 3vw, 24px) 64px",
         position: "relative",
         scrollMarginTop: "88px",
-        background: `linear-gradient(rgba(220,234,227,0.94), rgba(220,234,227,0.94)), url("${IMAGES.nestEggsHole}") center/cover`,
+        background: `linear-gradient(rgba(220,234,227,0.82), rgba(220,234,227,0.82)), url("${IMAGES.tortu1}") center/cover`,
       }}
     >
       {/* Difuminado hacia espuma sólido en ambos bordes — la foto de fondo no debe competir con las olas delgadas vecinas */}

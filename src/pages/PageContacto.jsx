@@ -21,9 +21,9 @@ const TIKTOK_SVG_WHITE = (
 
 function SiguenosDeCerca() {
   const socialItems = [
-    { network: "Facebook", handle: "Campamento Tortuguero El Habillal", icon: FACEBOOK_SVG_WHITE, btnBg: "#1877F2", href: "#" },
-    { network: "Instagram", handle: "@habillalcampamento", icon: INSTAGRAM_SVG_WHITE, btnBg: "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)", href: "#" },
-    { network: "TikTok", handle: "@tortuguero_habillal", icon: TIKTOK_SVG_WHITE, btnBg: "#111111", href: "#" },
+    { network: "Facebook", handle: "Campamento Tortuguero El Habillal", icon: FACEBOOK_SVG_WHITE, btnBg: TOKENS.azulOla, href: "#" },
+    { network: "Instagram", handle: "@habillalcampamento", icon: INSTAGRAM_SVG_WHITE, btnBg: TOKENS.azulOlaOscuro, href: "#" },
+    { network: "TikTok", handle: "@tortuguero_habillal", icon: TIKTOK_SVG_WHITE, btnBg: TOKENS.nocheClara, href: "#" },
   ];
 
   return (
@@ -293,9 +293,9 @@ export function PageContacto() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-                      <div>
+                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+                    <div className="tt-form-grid">
+                      <div className="tt-field-full">
                         <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: TOKENS.concha, display: "block", marginBottom: "5px" }}>
                           Nombre completo *
                         </label>
@@ -308,27 +308,27 @@ export function PageContacto() {
                         </label>
                         <input type="email" required value={form.correo} onChange={(e) => setForm({ ...form, correo: e.target.value })} placeholder="tu@correo.com" style={inputStyle} />
                       </div>
-                    </div>
 
-                    <div>
-                      <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: TOKENS.concha, display: "block", marginBottom: "5px" }}>
-                        Teléfono / WhatsApp (opcional)
-                      </label>
-                      <input type="tel" value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} placeholder="753 123 4567" style={inputStyle} />
-                    </div>
+                      <div>
+                        <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: TOKENS.concha, display: "block", marginBottom: "5px" }}>
+                          Teléfono / WhatsApp (opcional)
+                        </label>
+                        <input type="tel" value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} placeholder="753 123 4567" style={inputStyle} />
+                      </div>
 
-                    <div>
-                      <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: TOKENS.concha, display: "block", marginBottom: "5px" }}>
-                        Mensaje *
-                      </label>
-                      <textarea
-                        required
-                        rows={3}
-                        value={form.mensaje}
-                        onChange={(e) => setForm({ ...form, mensaje: e.target.value })}
-                        placeholder="Escribe aquí tus comentarios, dudas o solicitudes..."
-                        style={{ ...inputStyle, height: "96px", padding: "12px 14px", resize: "vertical" }}
-                      />
+                      <div className="tt-field-full">
+                        <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: TOKENS.concha, display: "block", marginBottom: "5px" }}>
+                          Mensaje *
+                        </label>
+                        <textarea
+                          required
+                          rows={3}
+                          value={form.mensaje}
+                          onChange={(e) => setForm({ ...form, mensaje: e.target.value })}
+                          placeholder="Escribe aquí tus comentarios, dudas o solicitudes..."
+                          style={{ ...inputStyle, height: "96px", padding: "12px 14px", resize: "vertical" }}
+                        />
+                      </div>
                     </div>
 
                     <Button tone="shock" size="lg" type="submit" style={{ marginTop: "8px", width: "100%", justifyContent: "center", opacity: sending ? 0.7 : 1 }}>

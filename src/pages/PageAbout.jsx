@@ -1,15 +1,18 @@
-import { TOKENS, IMAGES, LOGO_URL } from "../theme";
+import { TOKENS, SECTION_BG, IMAGES, LOGO_URL } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { PhotoFrame } from "../components/PhotoFrame";
 import { Eyebrow, H2 } from "../components/Typography";
+import { WaveDivider } from "../components/WaveDivider";
+import { CircleVectors } from "../components/CircleVectors";
+import { ThinWaveVector } from "../components/ThinWaveVector";
 
 const ACCIONES = [
   {
     accion: "Protegemos",
     desc: "Mediante patrullajes nocturnos en playa, colecta segura de nidos y resguardo activo en el corral de incubación.",
     cardBg: "rgba(255, 255, 255, 0.95)",
-    border: "1px solid rgba(190, 106, 74, 0.28)",
-    badgeBg: TOKENS.coral,
+    border: "1px solid rgba(62, 124, 147, 0.28)",
+    badgeBg: TOKENS.azulOla,
     src: IMAGES.teamNesting,
   },
   {
@@ -24,8 +27,8 @@ const ACCIONES = [
     accion: "Unimos",
     desc: "Alianzas comunitarias con pescadores, familias de El Habillal, voluntarios de Lázaro Cárdenas y comunidad externa.",
     cardBg: "rgba(255, 255, 255, 0.95)",
-    border: "1px solid rgba(190, 106, 74, 0.28)",
-    badgeBg: TOKENS.coral,
+    border: "1px solid rgba(62, 124, 147, 0.28)",
+    badgeBg: TOKENS.azulOla,
     src: IMAGES.teamDigging,
   },
   {
@@ -129,61 +132,16 @@ function Intro() {
     <section
       style={{
         position: "relative",
-        background: `linear-gradient(135deg, ${TOKENS.noche} 0%, ${TOKENS.azulOlaOscuro} 60%, ${TOKENS.verdeOscuro} 100%), url("${IMAGES.campAerial}") center/cover fixed`,
+        background: TOKENS.azulOlaOscuro,
         minHeight: "540px",
         overflow: "hidden",
         boxSizing: "border-box",
       }}
     >
-      {/* Separador Ondulado SVG para Escritorio con borde Naranja/Coral elegante */}
-      <svg
-        className="tt-about-desktop-wave"
-        viewBox="0 0 1440 600"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,0 L1180,0 C1340,180 880,360 940,600 L0,600 Z"
-          fill={TOKENS.espuma}
-        />
-        <path
-          d="M1195,-10 C1355,170 895,350 955,610"
-          fill="none"
-          stroke={TOKENS.coral}
-          strokeWidth="6.5"
-        />
-        <path
-          d="M1210,-20 C1370,160 910,340 970,620"
-          fill="none"
-          stroke="rgba(255, 255, 255, 0.7)"
-          strokeWidth="3.5"
-        />
-      </svg>
+      <CircleVectors variant="dark" />
+      <ThinWaveVector />
 
-      {/* Separador Ondulado SVG para Móvil */}
-      <svg
-        className="tt-about-mobile-wave-sketch"
-        viewBox="0 0 400 800"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,0 L400,0 L400,420 C290,490 120,450 0,475 Z"
-          fill={TOKENS.espuma}
-        />
-        <path
-          d="M400,420 C290,490 120,450 0,475"
-          fill="none"
-          stroke={TOKENS.coral}
-          strokeWidth="5.5"
-        />
-        <path
-          d="M400,412 C290,482 120,442 0,467"
-          fill="none"
-          stroke="rgba(255, 255, 255, 0.85)"
-          strokeWidth="3"
-        />
-      </svg>
-
-      {/* Contenido en 2 Columnas sobre la Ola */}
+      {/* Contenido en 2 Columnas */}
       <div
         style={{
           position: "relative",
@@ -203,14 +161,14 @@ function Intro() {
           >
             <div style={{ maxWidth: "560px" }}>
               <Reveal>
-                <Eyebrow color={TOKENS.coral}>Quiénes somos</Eyebrow>
-                <H2 color={TOKENS.noche} style={{ margin: "18px 0 48px", lineHeight: 1.28 }}>
+                <Eyebrow color={TOKENS.cielo}>Quiénes somos</Eyebrow>
+                <H2 color="#ffffff" style={{ margin: "18px 0 48px", lineHeight: 1.28 }}>
                   Un campamento nacido de la comunidad, por amor a nuestras especies.
                 </H2>
                 <p
                   style={{
                     fontFamily: "'Public Sans', sans-serif",
-                    color: TOKENS.conchaSuave,
+                    color: "#CBD9D6",
                     fontSize: "15.5px",
                     lineHeight: 1.75,
                     margin: 0,
@@ -236,29 +194,17 @@ function Intro() {
               <div style={{ maxWidth: "460px", margin: "0 auto", width: "100%" }}>
                 <div
                   style={{
-                    position: "relative",
-                    borderRadius: "24px",
-                    padding: "8px",
-                    background: "rgba(255, 255, 255, 0.25)",
-                    backdropFilter: "blur(12px)",
+                    borderRadius: "18px",
+                    overflow: "hidden",
+                    aspectRatio: "4/3",
                     boxShadow: "0 28px 56px -12px rgba(10,25,30,0.45)",
-                    border: "1.5px solid rgba(255, 255, 255, 0.4)",
                   }}
                 >
-                  <div
-                    style={{
-                      borderRadius: "18px",
-                      overflow: "hidden",
-                      aspectRatio: "4/3",
-                      boxShadow: "0 12px 28px rgba(0,0,0,0.25)",
-                    }}
-                  >
-                    <img
-                      src={IMAGES.teamFieldwork}
-                      alt="Equipo de trabajo en campo"
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  </div>
+                  <img
+                    src={IMAGES.teamFieldwork}
+                    alt="Equipo de trabajo en campo"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
                 </div>
               </div>
             </Reveal>
@@ -275,7 +221,7 @@ function MisionVision() {
     <section
       style={{
         position: "relative",
-        background: TOKENS.cieloClaro,
+        background: SECTION_BG.claro,
         padding: "54px 32px",
         zIndex: 3,
         boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
@@ -306,7 +252,7 @@ function MisionVision() {
 function VectorCircleArtwork() {
   return (
     <div className="tt-vector-composition-wrap">
-      {/* 1. Large Orange/Coral Gradient Vector Circle (Bottom Right) */}
+      {/* 1. Círculo vectorial grande con gradiente azul mar (Bottom Right) */}
       <div
         style={{
           position: "absolute",
@@ -315,13 +261,13 @@ function VectorCircleArtwork() {
           width: "175px",
           height: "175px",
           borderRadius: "50%",
-          background: `linear-gradient(135deg, ${TOKENS.atardecer} 0%, ${TOKENS.coral} 60%, #F39C12 100%)`,
-          boxShadow: "0 14px 32px -8px rgba(226,83,31,0.42)",
+          background: `linear-gradient(135deg, ${TOKENS.azulOla} 0%, ${TOKENS.azulOlaOscuro} 60%, ${TOKENS.nocheClara} 100%)`,
+          boxShadow: "0 14px 32px -8px rgba(44,92,109,0.42)",
           zIndex: 1,
         }}
       />
 
-      {/* 2. Coral Vector Ring / Donut Element (Left Edge) */}
+      {/* 2. Anillo vectorial verde (Left Edge) */}
       <div
         style={{
           position: "absolute",
@@ -330,10 +276,10 @@ function VectorCircleArtwork() {
           width: "56px",
           height: "56px",
           borderRadius: "50%",
-          border: `7px solid ${TOKENS.coral}`,
+          border: `7px solid ${TOKENS.verde}`,
           boxSizing: "border-box",
           zIndex: 4,
-          boxShadow: "0 6px 18px rgba(190,106,74,0.3)",
+          boxShadow: "0 6px 18px rgba(76,107,79,0.3)",
         }}
       />
 
@@ -425,59 +371,15 @@ function Team() {
     <section
       style={{
         position: "relative",
-        background: `linear-gradient(135deg, ${TOKENS.noche} 0%, ${TOKENS.azulOlaOscuro} 60%, ${TOKENS.verdeOscuro} 100%), url("${IMAGES.campAerial}") center/cover fixed`,
+        background: TOKENS.verdeOscuro,
+        paddingTop: "60px",
         paddingBottom: "60px",
         boxSizing: "border-box",
         overflow: "hidden",
       }}
     >
-      {/* Separador Ondulado SVG para Escritorio */}
-      <svg
-        className="tt-about-desktop-wave"
-        viewBox="0 0 1440 600"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,0 L780,0 C600,150 960,350 680,600 L0,600 Z"
-          fill="rgba(244, 235, 218, 0.96)"
-        />
-        <path
-          d="M795,-10 C615,140 975,340 695,610"
-          fill="none"
-          stroke={TOKENS.coral}
-          strokeWidth="6.5"
-        />
-        <path
-          d="M810,-20 C630,130 990,330 710,620"
-          fill="none"
-          stroke="rgba(255, 255, 255, 0.5)"
-          strokeWidth="3.5"
-        />
-      </svg>
-
-      {/* Separador Ondulado SVG para Móvil */}
-      <svg
-        className="tt-about-mobile-wave-sketch"
-        viewBox="0 0 400 850"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,0 L400,0 L400,450 C290,530 120,490 0,515 Z"
-          fill="rgba(244, 235, 218, 0.96)"
-        />
-        <path
-          d="M400,450 C290,530 120,490 0,515"
-          fill="none"
-          stroke={TOKENS.coral}
-          strokeWidth="5.5"
-        />
-        <path
-          d="M400,442 C290,522 120,482 0,507"
-          fill="none"
-          stroke="rgba(255, 255, 255, 0.85)"
-          strokeWidth="3"
-        />
-      </svg>
+      <CircleVectors variant="dark" />
+      <ThinWaveVector part="bottom" />
 
       <div style={{ maxWidth: "1280px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <div className="tt-cols-2" style={{ gap: "32px", alignItems: "center" }}>
@@ -495,7 +397,7 @@ function Team() {
                     fontFamily: "'Fraunces', serif",
                     fontSize: "clamp(24px, 3.4vw, 34px)",
                     fontWeight: 700,
-                    color: TOKENS.noche,
+                    color: "#ffffff",
                     margin: "0 0 14px",
                     lineHeight: 1.22,
                   }}
@@ -506,7 +408,7 @@ function Team() {
                   style={{
                     fontFamily: "'Public Sans', sans-serif",
                     fontSize: "14.5px",
-                    color: TOKENS.conchaSuave,
+                    color: "#CBD9D6",
                     lineHeight: 1.55,
                     margin: "0 0 24px",
                   }}
@@ -608,7 +510,9 @@ export function PageAbout() {
     <div>
       <HeroBanner />
       <Intro />
+      <WaveDivider fromColor={TOKENS.azulOlaOscuro} toColor={SECTION_BG.claro} />
       <MisionVision />
+      <WaveDivider fromColor={SECTION_BG.claro} toColor={TOKENS.verdeOscuro} />
       <Team />
     </div>
   );

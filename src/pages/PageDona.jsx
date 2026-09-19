@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TOKENS, SECTION_BG, SPACE, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { AnimatedCounter } from "../components/AnimatedCounter";
@@ -10,7 +10,6 @@ import { StripeCheckoutHeader } from "../components/StripeCheckoutHeader";
 import { createDonationCheckout } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
 import { FourFrentesBento } from "../components/FourFrentesBento";
-import { ThinWaveVector } from "../components/ThinWaveVector";
 
 const DONA_KPIS = [
   { value: 9000, suffix: "+", label: "Nidos resguardados" },
@@ -71,10 +70,11 @@ function DonaConclusion({ scrollToPago }) {
         padding: "64px 24px 72px",
         overflow: "hidden",
         textAlign: "center",
-        background: `linear-gradient(rgba(220,234,227,0.92), rgba(220,234,227,0.92)), url("${IMAGES.liberacionCrowd}") center/cover`,
+        background: `linear-gradient(rgba(220,234,227,0.8), rgba(220,234,227,0.8)), url("${IMAGES.liberacionCrowd}") center/cover`,
       }}
     >
-      <ThinWaveVector />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "22%", background: `linear-gradient(180deg, ${TOKENS.espuma} 0%, rgba(220,234,227,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "22%", background: `linear-gradient(0deg, ${TOKENS.espuma} 0%, rgba(220,234,227,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
       <div style={{ maxWidth: "700px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <Reveal>
           <SectionHead
@@ -84,7 +84,9 @@ function DonaConclusion({ scrollToPago }) {
             titleMaxWidth="20ch"
           >
             <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15.5px", lineHeight: 1.6, margin: "14px 0 28px" }}>
-              Cada donativo, sin importar el monto, se convierte en patrullajes, corrales de incubación y crías que llegan vivas al mar. Gracias por ser parte de esta labor.
+              Cada donativo, sin importar el monto, se convierte en patrullajes, corrales de incubación y crías que llegan vivas al mar.
+              <br />
+              Gracias por ser parte de esta labor.
             </p>
           </SectionHead>
           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -120,6 +122,14 @@ export function PageDona() {
   const [copied, setCopied] = useState(false);
   const [checkoutPayload, setCheckoutPayload] = useState(null);
   const [paymentError, setPaymentError] = useState("");
+
+  useEffect(() => {
+    const prefill = sessionStorage.getItem("donaMontoPersonalizado");
+    if (prefill) {
+      setCustomAmount(prefill);
+      sessionStorage.removeItem("donaMontoPersonalizado");
+    }
+  }, []);
 
   const baseAmountMinor = Math.round(Number(customAmount || selectedTier.amount) * 100);
   const amountMinor = coverProcessingCosts ? amountWithEstimatedProcessingCosts(baseAmountMinor) : baseAmountMinor;
@@ -198,7 +208,7 @@ export function PageDona() {
             margin: "0 0 18px",
           }}
         >
-          Tu aporte se convierte en <span style={{ color: TOKENS.coral }}>vida</span>.
+          Tu aporte se convierte en <span style={{ color: TOKENS.atardecer }}>vida</span>.
         </h1>
 
         <p
@@ -229,7 +239,7 @@ export function PageDona() {
           position: "relative",
           zIndex: 2,
           scrollMarginTop: "88px",
-          background: `linear-gradient(rgba(220,234,227,0.94), rgba(220,234,227,0.94)), url("${IMAGES.corralNidos}") center/cover`,
+          background: `linear-gradient(rgba(220,234,227,0.82), rgba(220,234,227,0.82)), url("${IMAGES.tortus}") center/cover`,
         }}
       >
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "18%", background: `linear-gradient(180deg, ${TOKENS.espuma} 0%, rgba(220,234,227,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
@@ -280,24 +290,22 @@ export function PageDona() {
                 })}
               </div>
 
-              {/* Monto Personalizado */}
-              <label style={{ display: "block", marginBottom: "28px", padding: "15px 16px", textAlign: "center", border: `2px solid ${customAmount ? TOKENS.verdeOscuro : TOKENS.arenaOscura}`, borderRadius: "8px", background: customAmount ? "#F5F3EC" : "#F8F6F0" }}>
-                <span style={{ display: "block", marginBottom: "7px", color: TOKENS.noche, fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.04em" }}>Monto personalizado</span>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
-                  <strong style={{ color: TOKENS.noche, fontSize: "20px" }}>$</strong>
-                  <input
-                    type="number"
-                    min="10"
-                    step="0.01"
-                    inputMode="decimal"
-                    placeholder="0.00"
-                    value={customAmount}
-                    onChange={(e) => setCustomAmount(e.target.value)}
-                    style={{ ...inputStyle, height: "48px", width: "auto", flex: "0 1 200px", textAlign: "center", border: `1px solid ${TOKENS.arenaOscura}`, borderRadius: "6px", background: "#fff", fontFamily: "'Fraunces', serif", fontSize: "18px", fontWeight: 700 }}
-                  />
-                  <strong style={{ color: TOKENS.conchaSuave, fontSize: "12px" }}>MXN</strong>
-                </div>
-              </label>
+              {/* Monto Personalizado: campo de texto con fondo blanco e indicador */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", margin: "18px 0 22px" }}>
+                <span style={{ color: TOKENS.noche, fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginRight: "4px" }}>Otro monto:</span>
+                <strong style={{ color: TOKENS.noche, fontSize: "20px" }}>$</strong>
+                <input
+                  type="number"
+                  min="10"
+                  step="0.01"
+                  inputMode="decimal"
+                  placeholder="0.00"
+                  value={customAmount}
+                  onChange={(e) => setCustomAmount(e.target.value)}
+                  style={{ ...inputStyle, height: "46px", width: "160px", textAlign: "center", border: `2px solid ${customAmount ? TOKENS.verdeOscuro : TOKENS.arenaOscura}`, borderRadius: "8px", background: "#ffffff", boxShadow: "0 2px 8px rgba(16,38,43,0.06)", fontFamily: "'Fraunces', serif", fontSize: "18px", fontWeight: 700 }}
+                />
+                <strong style={{ color: TOKENS.conchaSuave, fontSize: "12.5px" }}>MXN</strong>
+              </div>
 
               <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", margin: "-8px 0 0", padding: "12px 14px", border: `1px solid ${TOKENS.arenaOscura}`, borderRadius: "10px", background: "#fff", cursor: checkoutPayload ? "default" : "pointer" }}>
                 <input type="checkbox" checked={coverProcessingCosts} disabled={Boolean(checkoutPayload)} onChange={(event) => setCoverProcessingCosts(event.target.checked)} style={{ marginTop: "2px", width: "16px", height: "16px", accentColor: TOKENS.verdeOscuro }} />
