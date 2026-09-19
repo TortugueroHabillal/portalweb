@@ -245,7 +245,7 @@ export function PageContacto() {
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
-                          background: "#25D366",
+                          background: "#21c75eff",
                           color: "#ffffff",
                           padding: "7px 18px",
                           borderRadius: "999px",
@@ -331,7 +331,7 @@ export function PageContacto() {
                       </div>
                     </div>
 
-                    <Button tone="shock" size="lg" type="submit" style={{ marginTop: "8px", width: "100%", justifyContent: "center", opacity: sending ? 0.7 : 1 }}>
+                    <Button tone="coral" size="lg" type="submit" style={{ marginTop: "8px", width: "100%", justifyContent: "center", opacity: sending ? 0.7 : 1 }}>
                       {sending ? "Enviando mensaje..." : "Enviar mensaje"}
                     </Button>
                   </form>

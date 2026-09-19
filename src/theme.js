@@ -717,7 +717,7 @@ export const GLOBAL_STYLE = `
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: visible;
   }
   .tt-vector-composition-wrap {
     position: relative;

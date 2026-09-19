@@ -60,6 +60,9 @@ function HeroBanner() {
         boxSizing: "border-box",
       }}
     >
+      {/* Difuminado inferior — funde la foto de fondo hacia noche sólido, para que la ola divisora calce con el tono real */}
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(0deg, ${TOKENS.noche} 0%, rgba(16,38,43,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+
       {/* Círculos de luz ambiental */}
       <div
         style={{
@@ -132,13 +135,13 @@ function Intro() {
     <section
       style={{
         position: "relative",
-        background: TOKENS.azulOlaOscuro,
+        background: SECTION_BG.claro,
         minHeight: "540px",
         overflow: "hidden",
         boxSizing: "border-box",
       }}
     >
-      <CircleVectors variant="dark" />
+      <CircleVectors variant="light" />
       <ThinWaveVector />
 
       {/* Contenido en 2 Columnas */}
@@ -161,14 +164,14 @@ function Intro() {
           >
             <div style={{ maxWidth: "560px" }}>
               <Reveal>
-                <Eyebrow color={TOKENS.cielo}>Quiénes somos</Eyebrow>
-                <H2 color="#ffffff" style={{ margin: "18px 0 48px", lineHeight: 1.28 }}>
+                <Eyebrow color={TOKENS.azulOlaOscuro}>Quiénes somos</Eyebrow>
+                <H2 color={TOKENS.noche} style={{ margin: "18px 0 48px", lineHeight: 1.28 }}>
                   Un campamento nacido de la comunidad, por amor a nuestras especies.
                 </H2>
                 <p
                   style={{
                     fontFamily: "'Public Sans', sans-serif",
-                    color: "#CBD9D6",
+                    color: TOKENS.conchaSuave,
                     fontSize: "15.5px",
                     lineHeight: 1.75,
                     margin: 0,
@@ -223,8 +226,6 @@ function MisionVision() {
         position: "relative",
         background: SECTION_BG.claro,
         padding: "54px 32px",
-        zIndex: 3,
-        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
       }}
     >
       <div
@@ -371,14 +372,14 @@ function Team() {
     <section
       style={{
         position: "relative",
-        background: TOKENS.verdeOscuro,
+        background: TOKENS.espuma,
         paddingTop: "60px",
         paddingBottom: "60px",
         boxSizing: "border-box",
         overflow: "hidden",
       }}
     >
-      <CircleVectors variant="dark" />
+      <CircleVectors variant="light" />
       <ThinWaveVector part="bottom" />
 
       <div style={{ maxWidth: "1280px", margin: "0 auto", position: "relative", zIndex: 2 }}>
@@ -397,7 +398,7 @@ function Team() {
                     fontFamily: "'Fraunces', serif",
                     fontSize: "clamp(24px, 3.4vw, 34px)",
                     fontWeight: 700,
-                    color: "#ffffff",
+                    color: TOKENS.noche,
                     margin: "0 0 14px",
                     lineHeight: 1.22,
                   }}
@@ -408,7 +409,7 @@ function Team() {
                   style={{
                     fontFamily: "'Public Sans', sans-serif",
                     fontSize: "14.5px",
-                    color: "#CBD9D6",
+                    color: TOKENS.conchaSuave,
                     lineHeight: 1.55,
                     margin: "0 0 24px",
                   }}
@@ -509,10 +510,11 @@ export function PageAbout() {
   return (
     <div>
       <HeroBanner />
+      <WaveDivider fromColor={TOKENS.noche} toColor={SECTION_BG.claro} />
       <Intro />
-      <WaveDivider fromColor={TOKENS.azulOlaOscuro} toColor={SECTION_BG.claro} />
+      <WaveDivider fromColor={SECTION_BG.claro} toColor={SECTION_BG.claro} />
       <MisionVision />
-      <WaveDivider fromColor={SECTION_BG.claro} toColor={TOKENS.verdeOscuro} />
+      <WaveDivider fromColor={SECTION_BG.claro} toColor={TOKENS.espuma} />
       <Team />
     </div>
   );

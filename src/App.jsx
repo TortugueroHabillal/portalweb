@@ -84,7 +84,7 @@ export default function App() {
   const getFooterFromColor = () => {
     switch (page) {
       case "home": return TOKENS.espuma;
-      case "about": return TOKENS.verdeOscuro;
+      case "about": return TOKENS.espuma;
       case "convocatorias": return TOKENS.cieloClaro;
       case "eventos": return TOKENS.espuma;
       case "visita": return TOKENS.espuma;

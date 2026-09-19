@@ -239,7 +239,7 @@ export function PageVisita() {
                     ¡Solicitud enviada con éxito!
                   </h3>
                   <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "15px", color: TOKENS.conchaSuave, lineHeight: 1.6, margin: "0 0 24px" }}>
-                    Gracias <strong>{form.nombre}</strong>. Registramos tu solicitud con el folio <strong>#{requestNumber}</strong>. Nos pondremos en contacto contigo vía <strong>{form.correo}</strong> para confirmar la fecha de tu visita.
+                    Gracias <strong>{form.nombre}</strong>. Registramos tu solicitud. Nos pondremos en contacto contigo vía <strong>{form.correo}</strong> para confirmar la fecha de tu visita.
                   </p>
                   <Button tone="verde" style={{ borderRadius: "999px", padding: "12px 28px" }} onClick={resetRequest}>
                     Agendar otra visita
@@ -322,7 +322,7 @@ export function PageVisita() {
                       />
                     </div>
 
-                    <div className="tt-field-full">
+                    <div>
                       <FieldLabel>Tipo de grupo</FieldLabel>
                       <select
                         value={form.tipo}
