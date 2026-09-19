@@ -630,37 +630,41 @@ export const GLOBAL_STYLE = `
 
   @media (max-width: 900px) {
     .tt-frentes-bento-grid {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
-    .tt-frentes-bento-grid .tt-frente-patrullajes {
-      grid-column: 1 / span 2;
-      height: 220px;
-    }
-    .tt-frentes-bento-grid .tt-frente-reubicacion {
-      grid-column: 1;
-      height: 240px;
-    }
-    .tt-frentes-bento-grid .tt-frente-liberacion {
-      grid-column: 2;
-      height: 240px;
-    }
-    .tt-frentes-bento-grid .tt-frente-educacion {
-      grid-column: 1 / span 2;
-      height: 220px;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .tt-frentes-bento-grid {
-      grid-template-columns: 1fr;
-    }
+    .tt-frentes-bento-grid .tt-frente-bento-card,
     .tt-frentes-bento-grid .tt-frente-patrullajes,
     .tt-frentes-bento-grid .tt-frente-reubicacion,
     .tt-frentes-bento-grid .tt-frente-liberacion,
     .tt-frentes-bento-grid .tt-frente-educacion {
-      grid-column: 1;
-      height: 220px;
+      display: block !important;
+      grid-column: auto !important;
+      grid-row: auto !important;
+      width: 100% !important;
+      height: 220px !important;
+      min-height: 220px !important;
+    }
+
+    .tt-nextevent-section,
+    .tt-theask-section {
+      text-align: center;
+    }
+    .tt-nextevent-section p,
+    .tt-theask-section p {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .tt-nextevent-buttons,
+    .tt-theask-buttons {
+      justify-content: center !important;
+      align-items: center !important;
+    }
+
+    .tt-onu-impact-card {
+      text-align: center !important;
+      align-items: center !important;
     }
   }
 

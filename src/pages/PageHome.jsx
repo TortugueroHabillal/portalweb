@@ -27,7 +27,7 @@ function Hero({ go }) {
           marginBottom: SPACE.sm,
         }}
       >
-        Somos
+        SÚMATE
       </span>
       <h1
         style={{
@@ -43,7 +43,7 @@ function Hero({ go }) {
         Tú puedes ser la diferencia
         <br />
         para que una tortuga{" "}
-        <span style={{ color: TOKENS.coral, fontWeight: 700 }}>llegue viva</span>{" "}
+        <span style={{ color: TOKENS.atardecer, fontWeight: 700 }}>llegue viva</span>{" "}
         al mar.
       </h1>
       <p
@@ -199,6 +199,7 @@ function TurtleSpecies() {
           </Reveal>
           <Reveal from="right" delay={260} className="tt-species-tile-urgent">
             <div
+              className="tt-onu-impact-card"
               style={{
                 background: TOKENS.azulOla,
                 borderRadius: RADIUS.card + 2,
@@ -407,7 +408,7 @@ function CostEquivalence({ go }) {
 /* 5. El Ask — urgencia de temporada + un único par de botones, la única otra vez que se piden ambos en la página */
 function TheAsk({ go }) {
   return (
-    <section style={{ background: TOKENS.noche, padding: `${SPACE.xxl}px ${SPACE.lg}px`, overflow: "hidden" }}>
+    <section className="tt-theask-section" style={{ background: TOKENS.noche, padding: `${SPACE.xxl}px ${SPACE.lg}px`, overflow: "hidden" }}>
       <div className="tt-proximo-grid" style={{ maxWidth: "1100px", margin: "0 auto" }}>
         <Reveal from="left">
           <div style={{ position: "relative", padding: "22px 0 0 22px" }}>
@@ -439,7 +440,7 @@ function TheAsk({ go }) {
           <p style={{ fontFamily: "'Public Sans', sans-serif", color: "#CBD9D6", fontSize: "15.5px", lineHeight: 1.6, margin: `0 0 ${SPACE.lg}px`, maxWidth: "48ch" }}>
             Ahora mismo hay nidos en playa esperando protección en Lázaro Cárdenas. Adopta uno y sigue su historia hasta el mar, o dona para sostener los patrullajes de esta temporada.
           </p>
-          <div style={{ display: "flex", gap: SPACE.md - 4, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: SPACE.md - 4, flexWrap: "wrap" }} className="tt-theask-buttons">
             <Button tone="verde" size="lg" onClick={() => go("adopta")}>Adopta un nido</Button>
             <Button tone="shock" size="lg" onClick={() => go("dona")}>Dona ahora</Button>
           </div>
@@ -470,7 +471,7 @@ const TURTLE_PATH = [
 
 function NextEvent({ go }) {
   return (
-    <section style={{ background: SECTION_BG.claro, padding: `${SPACE.xl}px ${SPACE.lg}px`, position: "relative", overflow: "hidden" }}>
+    <section className="tt-nextevent-section" style={{ background: SECTION_BG.claro, padding: `${SPACE.xl}px ${SPACE.lg}px`, position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }} aria-hidden="true">
         {TURTLE_PATH.map((t, i) => (
           <TurtleSilhouette
@@ -491,7 +492,7 @@ function NextEvent({ go }) {
           <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", lineHeight: 1.6, maxWidth: "50ch", margin: "14px 0 20px" }}>
             Temporada 2026-2027: acompáñanos en la liberación abierta al público en El Habillal. Y si quieres involucrarte más de cerca, súmate a nuestro equipo de voluntarios.
           </p>
-          <div style={{ display: "flex", gap: SPACE.sm - 4, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: SPACE.sm - 4, flexWrap: "wrap" }} className="tt-nextevent-buttons">
             <Button tone="verde" onClick={() => go("visita")}>Agendar mi visita</Button>
             <Button tone="outline" onClick={() => go("convocatorias")}>
               <span style={{ color: TOKENS.concha }}>Súmate al equipo</span>
