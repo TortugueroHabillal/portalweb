@@ -6,7 +6,7 @@ import { Button } from "../components/Button";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { CertificateTemplate } from "../components/CertificateTemplate";
 import { StripeEmbeddedCheckout } from "../components/StripeEmbeddedCheckout";
-import { createAdoptionCheckout, listAdoptableNests } from "../lib/payments";
+import { createAdoptionCheckout, getAdoptionCheckoutStatus, listAdoptionMonths } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
 
 const KPIS = [
@@ -323,35 +323,60 @@ function Proceso() {
 
 /* 3. Módulo de Pago / Pasarela Digital */
 function ModuloAdoptaPago() {
-  const checkoutComplete = new URLSearchParams(window.location.search).get("checkout") === "complete";
+  const searchParams = new URLSearchParams(window.location.search);
+  const checkoutComplete = searchParams.get("checkout") === "complete";
+  const checkoutSessionId = searchParams.get("session_id");
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
-  const [nests, setNests] = useState([]);
-  const [selectedNestId, setSelectedNestId] = useState("");
-  const [loadingNests, setLoadingNests] = useState(true);
+  const [months, setMonths] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [loadingMonths, setLoadingMonths] = useState(!checkoutComplete);
+  const [adoptionResult, setAdoptionResult] = useState(null);
   const [checkoutPayload, setCheckoutPayload] = useState(null);
   const [paymentError, setPaymentError] = useState("");
 
   useEffect(() => {
+    if (checkoutComplete) return undefined;
     let active = true;
-    listAdoptableNests()
+    listAdoptionMonths()
       .then((records) => {
         if (!active) return;
-        setNests(records);
-        setSelectedNestId(records[0]?.id || "");
+        setMonths(records);
+        setSelectedMonth(records[0]?.value || "");
       })
       .catch((error) => active && setPaymentError(error.message))
-      .finally(() => active && setLoadingNests(false));
+      .finally(() => active && setLoadingMonths(false));
     return () => { active = false; };
-  }, []);
+  }, [checkoutComplete]);
+
+  useEffect(() => {
+    if (!checkoutComplete || !checkoutSessionId) return undefined;
+    let active = true;
+    let timer;
+    let attempts = 0;
+    const refresh = async () => {
+      try {
+        const result = await getAdoptionCheckoutStatus(checkoutSessionId);
+        if (!active) return;
+        setAdoptionResult(result);
+        if (result.nest_code || result.payment_status === "FAILED" || result.payment_status === "CANCELLED" || attempts >= 14) return;
+      } catch (error) {
+        if (attempts >= 14 && active) setPaymentError(error.message);
+      }
+      attempts += 1;
+      if (active) timer = window.setTimeout(refresh, 2000);
+    };
+    refresh();
+    return () => { active = false; window.clearTimeout(timer); };
+  }, [checkoutComplete, checkoutSessionId]);
 
   const startAdoptionCheckout = () => {
     setPaymentError("");
     if (donorName.trim().length < 2) return setPaymentError("Escribe el nombre que aparecerá en el certificado.");
     if (!/^\S+@\S+\.\S+$/.test(donorEmail.trim())) return setPaymentError("Escribe un correo electrónico válido.");
-    if (!selectedNestId) return setPaymentError("Selecciona un nido disponible.");
+    if (!selectedMonth) return setPaymentError("Selecciona un mes de colecta disponible.");
     setCheckoutPayload({
-      requested_nest_id: selectedNestId,
+      preferred_collection_month: selectedMonth,
       sponsor_name: donorName.trim(),
       sponsor_email: donorEmail.trim().toLowerCase(),
     });
@@ -374,7 +399,12 @@ function ModuloAdoptaPago() {
   return (
     <section style={{ padding: "56px 24px 64px", background: TOKENS.espuma, position: "relative" }}>
       <div style={{ maxWidth: "860px", margin: "0 auto" }}>
-        {checkoutComplete && <div role="status" style={{ marginBottom: "20px", border: `1px solid ${TOKENS.verde}`, borderRadius: "12px", padding: "16px", background: "#F0F8F2", color: TOKENS.verdeOscuro, fontWeight: 700, textAlign: "center" }}>Gracias. Stripe recibió tu pago y estamos confirmando la adopción.</div>}
+        {checkoutComplete && <div role="status" style={{ marginBottom: "20px", border: `1px solid ${TOKENS.verde}`, borderRadius: "12px", padding: "22px", background: "#F0F8F2", color: TOKENS.verdeOscuro, textAlign: "center" }}>
+          <strong style={{ display: "block", fontFamily: "'Fraunces', serif", fontSize: "22px", marginBottom: "6px" }}>{adoptionResult?.nest_code ? "Tu nido ha sido asignado" : "Estamos confirmando tu adopción"}</strong>
+          {adoptionResult?.nest_code
+            ? <><span style={{ display: "block", fontSize: "15px" }}>Nido asignado</span><span style={{ display: "block", fontSize: "32px", fontWeight: 800, margin: "6px 0" }}>#{adoptionResult.nest_code}</span><span style={{ fontSize: "13px" }}>También enviaremos el seguimiento al correo registrado.</span></>
+            : <span style={{ fontSize: "14px", fontWeight: 600 }}>Stripe recibió el pago. La asignación automática suele completarse en unos segundos.</span>}
+        </div>}
         <Reveal>
           <div
             style={{
@@ -390,7 +420,7 @@ function ModuloAdoptaPago() {
                 Pasarela Digital de Apadrinamiento
               </span>
               <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(24px, 3.2vw, 36px)", fontWeight: 700, color: TOKENS.noche, margin: "0 0 8px" }}>
-                Selecciona el nido que deseas apadrinar
+                Elige el mes de colecta de tu nido
               </h2>
               <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: 0 }}>
                 Aportación en línea: <strong>$220 MXN</strong> por una adopción virtual.
@@ -398,30 +428,32 @@ function ModuloAdoptaPago() {
             </div>
 
             <div style={{ marginBottom: "24px" }}>
-              <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 700, color: TOKENS.noche, display: "block", marginBottom: "6px" }}>Nido disponible</label>
-              <select value={selectedNestId} disabled={loadingNests || !nests.length || Boolean(checkoutPayload)} onChange={(event) => setSelectedNestId(event.target.value)} style={inputStyle}>
-                {loadingNests && <option value="">Consultando disponibilidad...</option>}
-                {!loadingNests && !nests.length && <option value="">Sin nidos disponibles por el momento</option>}
-                {nests.map((nest) => <option key={nest.id} value={nest.id}>Nido {nest.nest_code} · {nest.species_name || "Tortuga marina"}{nest.estimated_hatching_date ? ` · eclosión estimada ${new Date(nest.estimated_hatching_date).toLocaleDateString("es-MX")}` : ""}</option>)}
+              <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 700, color: TOKENS.noche, display: "block", marginBottom: "6px" }}>Mes de colecta preferido</label>
+              <select value={selectedMonth} disabled={loadingMonths || !months.length || Boolean(checkoutPayload)} onChange={(event) => setSelectedMonth(event.target.value)} style={inputStyle}>
+                {loadingMonths && <option value="">Consultando disponibilidad...</option>}
+                {!loadingMonths && !months.length && <option value="">Sin meses disponibles por el momento</option>}
+                {months.map((month) => <option key={month.value} value={month.value}>{new Intl.DateTimeFormat("es-MX", { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${month.value}-01T00:00:00Z`))}</option>)}
               </select>
+              <p style={{ margin: "8px 0 0", color: TOKENS.conchaSuave, fontSize: "12.5px", lineHeight: 1.5 }}>Asignaremos automáticamente un nido disponible recolectado en ese mes. Si la disponibilidad cambia durante el pago, se asignará la alternativa más próxima. La incubación suele durar entre 45 y 60 días, según la especie.</p>
             </div>
 
             {/* ÁREA CONTENEDORA DE PAGO EN LÍNEA STRIPE */}
             <div
               style={{
-                border: `2px dashed ${TOKENS.azulOla}`,
-                borderRadius: "20px",
-                padding: "24px",
-                background: "#FAFCFC",
+                border: "1px solid #D8DEE9",
+                borderRadius: "14px",
+                padding: "clamp(16px, 3vw, 24px)",
+                background: "#F8FAFC",
                 marginBottom: "20px",
+                boxShadow: "0 16px 38px -30px rgba(15,23,42,.55)",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px", borderBottom: `1px solid ${TOKENS.arenaOscura}`, paddingBottom: "10px" }}>
                 <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.azulOlaOscuro }}>
-                  Pago seguro de adopción virtual
+                  Pago seguro con Stripe
                 </span>
                 <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11px", color: "#6B7280", background: "#E5E7EB", padding: "3px 8px", borderRadius: "6px" }}>
-                  SSL 256-Bit
+                  Tarjeta · Link · métodos disponibles
                 </span>
               </div>
 
@@ -443,12 +475,12 @@ function ModuloAdoptaPago() {
               {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
               {checkoutPayload ? (
                 <StripeEmbeddedCheckout
-                  checkoutKey={`${checkoutPayload.requested_nest_id}-${checkoutPayload.sponsor_email}`}
+                  checkoutKey={`${checkoutPayload.preferred_collection_month}-${checkoutPayload.sponsor_email}`}
                   createClientSecret={() => createAdoptionCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
                   onCancel={() => setCheckoutPayload(null)}
                 />
               ) : (
-                <Button tone="verde" style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }} onClick={startAdoptionCheckout} disabled={loadingNests || !nests.length}>
+                <Button tone="verde" style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }} onClick={startAdoptionCheckout} disabled={loadingMonths || !months.length}>
                   Continuar al pago seguro ($220 MXN)
                 </Button>
               )}

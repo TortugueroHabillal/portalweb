@@ -267,12 +267,13 @@ export function PageDona() {
               {/* ÁREA CONTENEDORA PARA PASARELA DIGITAL (STRIPE ELEMENTS) */}
               <div
                 style={{
-                  border: `2px dashed ${TOKENS.azulOla}`,
-                  borderRadius: "20px",
-                  padding: "24px",
-                  background: "#FAFCFC",
+                  border: "1px solid #D8DEE9",
+                  borderRadius: "14px",
+                  padding: "clamp(16px, 3vw, 24px)",
+                  background: "#F8FAFC",
                   marginBottom: "24px",
                   position: "relative",
+                  boxShadow: "0 16px 38px -30px rgba(15,23,42,.55)",
                 }}
               >
                 <div
@@ -286,10 +287,10 @@ export function PageDona() {
                   }}
                 >
                   <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.azulOlaOscuro }}>
-                    💳 Pago en línea con Tarjeta (Pasarela Digital Stripe)
+                    Pago seguro con Stripe
                   </span>
                   <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11px", color: "#6B7280", background: "#E5E7EB", padding: "3px 8px", borderRadius: "6px" }}>
-                    SSL 256-Bit Encrypted
+                    Tarjeta · Link · métodos disponibles
                   </span>
                 </div>
 
