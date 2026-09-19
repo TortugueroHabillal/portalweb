@@ -44,6 +44,7 @@ test("web adoption creates one 220 MXN adoption with random server allocation", 
   assert.match(success, /nest_code/);
   assert.match(success, /Donativo confirmado/);
   assert.match(success, /Adopción confirmada/);
-  assert.match(success, /processor_fee_minor/);
-  assert.match(success, /net_amount_minor/);
+  assert.match(success, /Monto cobrado/);
+  assert.match(success, /certificado digital/);
+  assert.doesNotMatch(success, /processor_fee_minor|net_amount_minor/);
 });
