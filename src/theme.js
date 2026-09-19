@@ -543,6 +543,36 @@ export const GLOBAL_STYLE = `
     }
   }
 
+  /* Reglas de Visita — fotos asimétricas a un lado, lineamientos al otro */
+  .tt-visita-reglas-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 32px; align-items: start; }
+  @media (max-width: 860px) {
+    .tt-visita-reglas-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Galería de Visita — bento de 3 fotos (una grande + dos apiladas), mismo lenguaje que el collage de Especies */
+  .tt-visita-gallery {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 200px 200px;
+    gap: 16px;
+  }
+  .tt-visita-gallery .tt-visita-photo-main { grid-column: 1; grid-row: 1 / span 2; }
+  .tt-visita-gallery .tt-visita-photo-b { grid-column: 2; grid-row: 1; }
+  .tt-visita-gallery .tt-visita-photo-c { grid-column: 2; grid-row: 2; }
+  @media (max-width: 760px) {
+    .tt-visita-gallery {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+    }
+    .tt-visita-gallery .tt-visita-photo-main,
+    .tt-visita-gallery .tt-visita-photo-b,
+    .tt-visita-gallery .tt-visita-photo-c {
+      grid-column: 1;
+      grid-row: auto;
+      height: 240px;
+    }
+  }
+
   .tt-species-tile {
     position: relative;
     width: 100%;

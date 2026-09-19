@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { TOKENS, SECTION_BG, IMAGES } from "../theme";
+import { TOKENS, SECTION_BG, SPACE, RADIUS, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { WaveDivider } from "../components/WaveDivider";
-import { PhotoFrame } from "../components/PhotoFrame";
 import { Button } from "../components/Button";
 import { HeroShock } from "../components/HeroShock";
+import { SectionHead } from "../components/Typography";
+import { CircleVectors } from "../components/CircleVectors";
 
 function scrollToReserva() {
   document.getElementById("reserva-visita")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -19,6 +20,21 @@ function FieldLabel({ children }) {
     </label>
   );
 }
+
+const GALLERY = [
+  { src: IMAGES.touristsSunsetRelease, tone: TOKENS.azulOla, title: "Liberaciones al atardecer", d: "Momentos inolvidables acompañando a las crías hacia el mar.", size: "main" },
+  { src: IMAGES.tourists1, tone: TOKENS.verde, title: "Educación ambiental", d: "Charlas y demostraciones sobre los procedimientos de protección de especies.", size: "b" },
+  { src: IMAGES.nightPatrolTeam, tone: TOKENS.coralOscuro, title: "Recorridos y patrullajes", d: "Experiencia directa con nuestro equipo técnico de campo.", size: "c" },
+];
+
+const REGLAS_VISITA = [
+  { t: "Sigue las indicaciones de tu guía", tone: TOKENS.azulOla },
+  { t: "No dejes basura ni la entierres en la arena", tone: TOKENS.verde },
+  { t: "Evita luces artificiales directas hacia tortugas y nidos", tone: TOKENS.coralOscuro },
+  { t: "Mantén distancia prudente de nidos y crías", tone: TOKENS.azulOlaOscuro },
+  { t: "No toques ni levantes a las tortugas sin autorización", tone: TOKENS.verdeOscuro },
+  { t: "Evita ruidos fuertes durante los recorridos nocturnos", tone: TOKENS.azulOla },
+];
 
 export function PageVisita() {
   const [form, setForm] = useState({
@@ -60,8 +76,8 @@ export function PageVisita() {
             fontFamily: "'Public Sans', sans-serif",
             fontSize: "12.5px",
             fontWeight: 700,
-            color: TOKENS.cieloClaro,
-            letterSpacing: "0.12em",
+            color: TOKENS.cielo,
+            letterSpacing: "0.18em",
             textTransform: "uppercase",
             margin: "0 0 10px",
             display: "block",
@@ -77,11 +93,13 @@ export function PageVisita() {
             fontWeight: 700,
             color: "#ffffff",
             margin: "0 0 16px",
-            lineHeight: 1.15,
+            lineHeight: 1.2,
             letterSpacing: "-0.01em",
           }}
         >
-          Visítanos y Vive la Conservación
+          Visítanos y vive
+          <br />
+          la <span style={{ color: TOKENS.cieloOscuro }}>conservación</span> de cerca.
         </h1>
 
         <p
@@ -91,14 +109,10 @@ export function PageVisita() {
             color: "#E7F0EC",
             lineHeight: 1.6,
             maxWidth: "48ch",
-            margin: "0 auto 12px",
+            margin: "0 auto 24px",
           }}
         >
-          Forma parte de nuestros recorridos guiados, pláticas ambientales y actividades de conservación de tortugas marinas junto a nuestro equipo especializado.
-        </p>
-
-        <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "16px", color: TOKENS.atardecer, fontWeight: 700, margin: "0 0 20px" }}>
-          Una experiencia envolvente única.
+          Recorridos guiados, pláticas ambientales y actividades de conservación de tortugas marinas junto a nuestro equipo especializado.
         </p>
 
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -106,14 +120,17 @@ export function PageVisita() {
         </div>
       </HeroShock>
 
-      {/* 2. Sección del Formulario de Reserva (Sin mención de 'hasta 12 personas') */}
-      <section id="reserva-visita" style={{ padding: "48px 24px 72px", position: "relative", zIndex: 2, background: TOKENS.arena, scrollMarginTop: "88px" }}>
-        <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+      <WaveDivider fromColor={TOKENS.noche} toColor={SECTION_BG.claro} />
+
+      {/* 2. Sección del Formulario de Reserva */}
+      <section id="reserva-visita" style={{ padding: "48px 24px 72px", position: "relative", zIndex: 2, background: SECTION_BG.claro, scrollMarginTop: "88px", overflow: "hidden" }}>
+        <CircleVectors variant="light" />
+        <div style={{ maxWidth: "860px", margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Reveal>
             <div
               style={{
                 background: "#ffffff",
-                borderRadius: "28px",
+                borderRadius: RADIUS.card + 12,
                 padding: "clamp(28px, 5vw, 48px)",
                 boxShadow: "0 20px 48px -18px rgba(16,38,43,0.12)",
                 border: `1px solid ${TOKENS.arenaOscura}`,
@@ -132,7 +149,7 @@ export function PageVisita() {
                     marginBottom: "6px",
                   }}
                 >
-                  Reserva tu Lugar
+                  Reserva tu lugar
                 </span>
                 <h2
                   style={{
@@ -276,85 +293,64 @@ export function PageVisita() {
         </div>
       </section>
 
-      {/* 4. Sección de Galería de Fotos Elegante con PhotoFrames Integradas */}
-      <div style={{ lineHeight: 0, margin: 0, padding: 0 }}>
-        <WaveDivider fromColor={TOKENS.arena} toColor={SECTION_BG.claro} />
-      </div>
+      <WaveDivider fromColor={SECTION_BG.claro} toColor={TOKENS.espuma} />
 
-      <section style={{ background: SECTION_BG.claro, padding: "64px 24px 88px", position: "relative" }}>
-        <div style={{ maxWidth: "1180px", margin: "0 auto", position: "relative", zIndex: 2 }}>
-          <Reveal>
-            <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 48px" }}>
-              <span
-                style={{
-                  fontFamily: "'Public Sans', sans-serif",
-                  fontSize: "13.5px",
-                  fontWeight: 700,
-                  color: TOKENS.verdeOscuro,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.1em",
-                }}
-              >
-                Galería de Visitas
-              </span>
-              <h2
-                style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontSize: "clamp(26px, 3.4vw, 38px)",
-                  color: TOKENS.noche,
-                  margin: "8px 0 0",
-                  fontWeight: 700,
-                }}
-              >
-                Comunidad y Turistas en Acción
-              </h2>
+      {/* 3. Reglas de visita — fotos en display asimétrico + lineamientos, cierre de página en espuma */}
+      <section style={{ background: TOKENS.espuma, padding: "64px 24px 88px", position: "relative", overflow: "hidden" }}>
+        <CircleVectors variant="light" />
+        <div style={{ maxWidth: "1180px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <SectionHead eyebrow="Antes de tu visita" eyebrowColor={TOKENS.azulOlaOscuro} title="Reglas para cuidar el santuario" titleMaxWidth="26ch" />
+
+          <div className="tt-visita-reglas-grid" style={{ marginTop: SPACE.xl }}>
+            <div className="tt-visita-gallery">
+              {GALLERY.map((g, i) => (
+                <Reveal key={g.title} delay={100 + i * 100} className={`tt-visita-photo-${g.size}`} from={g.size === "main" ? "left" : "up"}>
+                  <div className="tt-species-tile" style={{ width: "100%", height: "100%" }}>
+                    <img src={g.src} alt={g.title} />
+                  </div>
+                </Reveal>
+              ))}
             </div>
 
-            {/* Display Visual Elegante de 3 Fotos usando PhotoFrame en composición tipo Tríptico Armónico */}
-            <div
+            <div style={{ display: "flex", flexDirection: "column", gap: SPACE.sm - 4 }}>
+              {REGLAS_VISITA.map((r, i) => (
+                <Reveal key={r.t} delay={100 + i * 60}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: SPACE.sm,
+                      background: "#fff",
+                      borderRadius: RADIUS.card,
+                      padding: `${SPACE.sm}px ${SPACE.md - 4}px`,
+                      boxShadow: "0 10px 26px -18px rgba(16,38,43,0.16)",
+                    }}
+                  >
+                    <span style={{ flexShrink: 0, width: "10px", height: "10px", borderRadius: "50%", background: r.tone }} aria-hidden="true" />
+                    <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14px", fontWeight: 600, color: TOKENS.noche, margin: 0, lineHeight: 1.4 }}>
+                      {r.t}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+
+          <Reveal delay={300}>
+            <p
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-                gap: "32px",
-                alignItems: "center",
+                fontFamily: "'Fraunces', serif",
+                fontWeight: 600,
+                fontSize: "20px",
+                color: TOKENS.azulOlaOscuro,
+                lineHeight: 1.6,
+                textAlign: "center",
+                maxWidth: "62ch",
+                margin: `${SPACE.xxl}px auto 0`,
               }}
             >
-              <Reveal delay={100}>
-                <div style={{ textAlign: "center" }}>
-                  <PhotoFrame shape="square" tone="azul" src={IMAGES.touristsSunsetRelease} />
-                  <h4 style={{ fontFamily: "'Fraunces', serif", fontSize: "18px", color: TOKENS.noche, margin: "14px 0 4px", fontWeight: 700 }}>
-                    Liberaciones al Atardecer
-                  </h4>
-                  <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14px", color: TOKENS.conchaSuave, margin: 0 }}>
-                    Momentos inolvidables acompañando a las crías hacia el mar.
-                  </p>
-                </div>
-              </Reveal>
-
-              <Reveal delay={200}>
-                <div style={{ textAlign: "center" }}>
-                  <PhotoFrame shape="square" tone="verde" src={IMAGES.tourists1} />
-                  <h4 style={{ fontFamily: "'Fraunces', serif", fontSize: "18px", color: TOKENS.noche, margin: "14px 0 4px", fontWeight: 700 }}>
-                    Educación Ambiental
-                  </h4>
-                  <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14px", color: TOKENS.conchaSuave, margin: 0 }}>
-                    Charlas y demostraciones sobre los procedimientos de protección de especies.
-                  </p>
-                </div>
-              </Reveal>
-
-              <Reveal delay={300}>
-                <div style={{ textAlign: "center" }}>
-                  <PhotoFrame shape="square" tone="coral" src={IMAGES.nightPatrolTeam} />
-                  <h4 style={{ fontFamily: "'Fraunces', serif", fontSize: "18px", color: TOKENS.noche, margin: "14px 0 4px", fontWeight: 700 }}>
-                    Recorridos y Patrullajes
-                  </h4>
-                  <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14px", color: TOKENS.conchaSuave, margin: 0 }}>
-                    Experiencia directa con nuestro equipo técnico de campo.
-                  </p>
-                </div>
-              </Reveal>
-            </div>
+              En El Habillal creemos en el turismo responsable: cada visita sigue nuestros protocolos de seguridad y de protección de las especies, para que tu experiencia y la de las tortugas sean igual de seguras.
+            </p>
           </Reveal>
         </div>
       </section>

@@ -10,6 +10,7 @@ import { MapEmbed } from "../components/MapEmbed";
 import { ContactInfo } from "../components/ContactInfo";
 import { SponsorsStrip } from "../components/SponsorsStrip";
 import { TurtleSilhouette } from "../components/TurtleSilhouette";
+import { CircleVectors } from "../components/CircleVectors";
 
 /* 1. Hero — gancho emocional + identidad + doble CTA */
 function Hero({ go }) {
@@ -105,22 +106,6 @@ function TrustBar() {
         <SponsorsStrip />
       </div>
     </section>
-  );
-}
-
-/* Círculos decorativos — motivo vector reutilizable, en variaciones de azul/verde (el naranja se reserva para CTAs) */
-function CircleVectors({ variant = "light" }) {
-  const c1 = variant === "light" ? "rgba(62,124,147,0.14)" : "rgba(62,124,147,0.45)";
-  const c2 = variant === "light" ? "rgba(76,107,79,0.16)" : "rgba(76,107,79,0.4)";
-  const c3 = variant === "light" ? "rgba(191,225,234,0.6)" : "rgba(191,225,234,0.3)";
-  return (
-    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }} aria-hidden="true">
-      <div style={{ position: "absolute", top: "-60px", right: "-40px", width: "220px", height: "220px", borderRadius: "50%", background: c1 }} />
-      <div style={{ position: "absolute", bottom: "8%", left: "-70px", width: "180px", height: "180px", borderRadius: "50%", border: `2px solid ${c3}`, background: "transparent" }} />
-      <div style={{ position: "absolute", top: "38%", left: "6%", width: "16px", height: "16px", borderRadius: "50%", background: c3 }} />
-      <div style={{ position: "absolute", top: "18%", right: "18%", width: "10px", height: "10px", borderRadius: "50%", background: c2 }} />
-      <div style={{ position: "absolute", bottom: "14%", right: "10%", width: "90px", height: "90px", borderRadius: "50%", background: c2 }} />
-    </div>
   );
 }
 
@@ -354,11 +339,11 @@ function CostEquivalence({ go }) {
               style={{
                 background: c.featured ? TOKENS.nocheClara : "#fff",
                 borderRadius: c.featured ? RADIUS.card + 2 : RADIUS.card,
-                borderTop: `3px solid ${c.featured ? TOKENS.atardecer : c.tone}`,
+                borderTop: `3px solid ${c.featured ? TOKENS.cielo : c.tone}`,
                 border: "none",
                 borderTopWidth: "3px",
                 borderTopStyle: "solid",
-                borderTopColor: c.featured ? TOKENS.atardecer : c.tone,
+                borderTopColor: c.featured ? TOKENS.cielo : c.tone,
                 padding: c.featured ? `${SPACE.lg}px ${SPACE.md - 4}px` : `${SPACE.md}px ${SPACE.md - 4}px`,
                 textAlign: "center",
                 boxShadow: c.featured ? "0 20px 44px -20px rgba(16,38,43,0.5)" : "0 10px 26px -18px rgba(16,38,43,0.18)",
@@ -379,11 +364,11 @@ function CostEquivalence({ go }) {
               </div>
               <div style={{ position: "relative", zIndex: 1 }}>
                 {c.featured && (
-                  <span style={{ display: "inline-block", marginBottom: SPACE.xs, fontSize: "10.5px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: TOKENS.atardecer }}>
+                  <span style={{ display: "inline-block", marginBottom: SPACE.xs, fontSize: "10.5px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: TOKENS.cielo }}>
                     Más elegido
                   </span>
                 )}
-                <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: c.featured ? "28px" : "22px", color: c.featured ? TOKENS.atardecer : c.tone }}>{c.amount}</div>
+                <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: c.featured ? "28px" : "22px", color: c.featured ? TOKENS.cielo : c.tone }}>{c.amount}</div>
                 <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13.5px", color: c.featured ? "#E7F0EC" : TOKENS.conchaSuave, marginTop: "8px", lineHeight: 1.5 }}>{c.impact}</div>
                 <span
                   style={{
@@ -391,7 +376,7 @@ function CostEquivalence({ go }) {
                     marginTop: SPACE.sm,
                     fontSize: "12.5px",
                     fontWeight: 700,
-                    color: c.featured ? TOKENS.atardecer : c.tone,
+                    color: c.featured ? TOKENS.cielo : c.tone,
                   }}
                 >
                   Donar este monto →

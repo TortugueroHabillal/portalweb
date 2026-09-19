@@ -87,7 +87,7 @@ export default function App() {
       case "about": return TOKENS.arena;
       case "convocatorias": return TOKENS.arena;
       case "eventos": return TOKENS.arena;
-      case "visita": return TOKENS.cieloClaro;
+      case "visita": return TOKENS.espuma;
       case "adopta": return TOKENS.arena;
       case "dona": return TOKENS.arena;
       case "contacto": return TOKENS.cieloClaro;
