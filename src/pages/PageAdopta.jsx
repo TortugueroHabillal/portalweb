@@ -385,54 +385,49 @@ function ModuloAdoptaPago() {
               </p>
             </div>
 
-            <p style={{ margin: "0 0 24px", padding: "14px 16px", borderLeft: `3px solid ${TOKENS.verde}`, background: "#F5F9F6", color: TOKENS.conchaSuave, fontSize: "13px", lineHeight: 1.6 }}>Después de confirmar el pago, el sistema asignará de forma aleatoria un nido activo disponible. Al finalizar verás inmediatamente el número de nido que acompañarás.</p>
-
-            {/* ÁREA CONTENEDORA DE PAGO EN LÍNEA STRIPE */}
-            <div
-              style={{
-                border: "1px solid #D8DEE9",
-                borderRadius: "14px",
-                padding: "clamp(16px, 3vw, 24px)",
-                background: "#F8FAFC",
-                marginBottom: "20px",
-                boxShadow: "0 16px 38px -30px rgba(15,23,42,.55)",
-              }}
-            >
-              {!checkoutPayload && (
-                <>
-                  <StripeCheckoutHeader />
-
-                  <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
-                    <div>
-                      <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
-                        Nombre del Adoptante
-                      </label>
-                      <input type="text" placeholder="Para tu certificado digital" value={donorName} onChange={(e) => setDonorName(e.target.value)} style={inputStyle} />
-                    </div>
-                    <div>
-                      <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
-                        Correo Electrónico
-                      </label>
-                      <input type="email" placeholder="Para enviarte la ficha del nido" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} style={inputStyle} />
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
-              {checkoutPayload ? (
-                <StripeEmbeddedCheckout
-                  checkoutKey={checkoutPayload.request_id}
-                  createClientSecret={() => createAdoptionCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
-                  onCancel={() => setCheckoutPayload(null)}
-                />
-              ) : (
-                <Button tone="verde" style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }} onClick={startAdoptionCheckout}>
-                  Continuar al pago seguro ($220 MXN)
-                </Button>
-              )}
-            </div>
+            <p style={{ margin: 0, padding: "14px 16px", borderLeft: `3px solid ${TOKENS.verde}`, background: "#F5F9F6", color: TOKENS.conchaSuave, fontSize: "13px", lineHeight: 1.6 }}>Después de confirmar el pago, el sistema asignará de forma aleatoria un nido activo disponible. Al finalizar verás inmediatamente el número de nido que acompañarás.</p>
           </div>
+        </Reveal>
+      </div>
+
+      {/* PASARELA DIGITAL (STRIPE): fuera de la tarjeta blanca, a todo lo ancho disponible de la página */}
+      <div style={{ maxWidth: "1100px", margin: "32px auto 0", padding: "0 clamp(0px, 2vw, 12px)" }}>
+        <Reveal>
+          {!checkoutPayload && (
+            <>
+              <StripeCheckoutHeader />
+
+              <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "18px" }}>
+                <div>
+                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                    Nombre del Adoptante
+                  </label>
+                  <input type="text" placeholder="Para tu certificado digital" value={donorName} onChange={(e) => setDonorName(e.target.value)} style={inputStyle} />
+                </div>
+                <div>
+                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                    Correo Electrónico
+                  </label>
+                  <input type="email" placeholder="Para enviarte la ficha del nido" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} style={inputStyle} />
+                </div>
+              </div>
+            </>
+          )}
+
+          {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
+          {checkoutPayload ? (
+            <StripeEmbeddedCheckout
+              checkoutKey={checkoutPayload.request_id}
+              createClientSecret={() => createAdoptionCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
+              onCancel={() => setCheckoutPayload(null)}
+            />
+          ) : (
+            <div style={{ maxWidth: "520px", margin: "0 auto" }}>
+              <Button tone="verde" style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }} onClick={startAdoptionCheckout}>
+                Continuar al pago seguro ($220 MXN)
+              </Button>
+            </div>
+          )}
         </Reveal>
       </div>
     </section>
