@@ -1,0 +1,39 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import test from 'node:test';
+
+const api = readFileSync(new URL('../src/lib/visits.js', import.meta.url), 'utf8');
+const page = readFileSync(new URL('../src/pages/PageVisita.jsx', import.meta.url), 'utf8');
+const button = readFileSync(new URL('../src/components/Button.jsx', import.meta.url), 'utf8');
+
+test('visit form uses the public RPC and only the publishable Supabase client', () => {
+  assert.match(api, /fn_public_create_visit_request/);
+  assert.match(api, /p_idempotency_key/);
+  assert.doesNotMatch(`${api}${page}`, /SUPABASE_SECRET_KEY|service_role|sb_secret_/i);
+});
+
+test('current public fields map to the visit request contract', () => {
+  for (const field of ['p_requester_name', 'p_requester_email', 'p_origin', 'p_preferred_date', 'p_attendees', 'p_group_type']) {
+    assert.match(api, new RegExp(field));
+  }
+});
+
+test('success waits for the backend and displays the returned folio', () => {
+  assert.match(page, /await createVisitRequest/);
+  assert.match(page, /setRequestNumber\(result\.request_number\)/);
+  assert.match(page, /folio <strong>#\{requestNumber\}/);
+  assert.match(page, /sending \? "Enviando solicitud\.\.\."/);
+  assert.match(page, /role="alert"/);
+});
+
+test('retry keeps one idempotency key and a new request rotates it', () => {
+  assert.match(page, /useRef\(crypto\.randomUUID\(\)\)/);
+  assert.match(page, /idempotencyKey: idempotencyKey\.current/);
+  assert.match(page, /idempotencyKey\.current = crypto\.randomUUID\(\)/);
+});
+
+test('submit button forwards native type and disabled state', () => {
+  assert.match(button, /type=\{type\}/);
+  assert.match(button, /disabled=\{disabled\}/);
+  assert.match(page, /disabled=\{sending\}/);
+});

@@ -1,7 +1,7 @@
 import { TOKENS } from "../theme";
 
 /* ---------- Botón CTA ---------- */
-export function Button({ children, tone = "coral", onClick, size = "md", style }) {
+export function Button({ children, tone = "coral", onClick, size = "md", style, type = "button", disabled = false }) {
   const bgMap = {
     coral: TOKENS.coral,
     verde: TOKENS.verde,
@@ -13,6 +13,8 @@ export function Button({ children, tone = "coral", onClick, size = "md", style }
   const color = tone === "outline" ? TOKENS.arena : "#FBF8F2";
   return (
     <button
+      type={type}
+      disabled={disabled}
       onClick={onClick}
       style={{
         fontFamily: "'Public Sans', sans-serif",
@@ -23,12 +25,13 @@ export function Button({ children, tone = "coral", onClick, size = "md", style }
         background: bgMap[tone],
         border,
         color,
-        cursor: "pointer",
+        cursor: disabled ? "not-allowed" : "pointer",
         boxShadow: "none",
         transition: "transform 0.18s ease, opacity 0.18s ease",
         ...style,
       }}
       onMouseEnter={(e) => {
+        if (disabled) return;
         e.currentTarget.style.transform = "translateY(-2px) scale(1.015)";
       }}
       onMouseLeave={(e) => {

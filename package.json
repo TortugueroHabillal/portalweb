@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test:payments": "node tests/payments-contract.test.mjs",
+    "test:visits": "node tests/visits-contract.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

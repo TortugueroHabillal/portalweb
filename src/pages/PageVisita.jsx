@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { TOKENS, SECTION_BG, SPACE, RADIUS, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { WaveDivider } from "../components/WaveDivider";
@@ -6,6 +6,7 @@ import { Button } from "../components/Button";
 import { HeroShock } from "../components/HeroShock";
 import { SectionHead } from "../components/Typography";
 import { CircleVectors } from "../components/CircleVectors";
+import { createVisitRequest } from "../lib/visits";
 
 function scrollToReserva() {
   document.getElementById("reserva-visita")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -46,10 +47,41 @@ export function PageVisita() {
     tipo: "",
   });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [requestNumber, setRequestNumber] = useState(null);
+  const idempotencyKey = useRef(crypto.randomUUID());
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
+    if (sending) return;
+    setSending(true);
+    setSubmitError("");
+    try {
+      const result = await createVisitRequest({
+        idempotencyKey: idempotencyKey.current,
+        name: form.nombre.trim(),
+        email: form.correo.trim().toLowerCase(),
+        origin: form.origen.trim(),
+        preferredDate: form.fecha,
+        attendees: form.asistentes ? Number(form.asistentes) : 1,
+        groupType: form.tipo,
+      });
+      setRequestNumber(result.request_number);
+      setSent(true);
+    } catch (error) {
+      setSubmitError(error.message || "No pudimos registrar tu solicitud.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const resetRequest = () => {
+    setForm({ nombre: "", correo: "", origen: "", fecha: "", asistentes: "", tipo: "" });
+    setSent(false);
+    setSubmitError("");
+    setRequestNumber(null);
+    idempotencyKey.current = crypto.randomUUID();
   };
 
   const inputStyle = {
@@ -198,9 +230,9 @@ export function PageVisita() {
                     ¡Solicitud enviada con éxito!
                   </h3>
                   <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "15px", color: TOKENS.conchaSuave, lineHeight: 1.6, margin: "0 0 24px" }}>
-                    Gracias <strong>{form.nombre}</strong>. Nos pondremos en contacto contigo vía <strong>{form.correo}</strong> para confirmar la fecha de tu visita.
+                    Gracias <strong>{form.nombre}</strong>. Registramos tu solicitud con el folio <strong>#{requestNumber}</strong>. Nos pondremos en contacto contigo vía <strong>{form.correo}</strong> para confirmar la fecha de tu visita.
                   </p>
-                  <Button tone="verde" style={{ borderRadius: "999px", padding: "12px 28px" }} onClick={() => setSent(false)}>
+                  <Button tone="verde" style={{ borderRadius: "999px", padding: "12px 28px" }} onClick={resetRequest}>
                     Agendar otra visita
                   </Button>
                 </div>
@@ -282,8 +314,9 @@ export function PageVisita() {
                   </div>
 
                   <div style={{ marginTop: "28px" }}>
-                    <Button type="submit" tone="verde" style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "14px 20px" }}>
-                      Enviar solicitud de reserva
+                    {submitError && <p role="alert" style={{ margin: "0 0 14px", color: "#B42318", fontFamily: "'Public Sans', sans-serif", fontSize: "13px", lineHeight: 1.5 }}>{submitError}</p>}
+                    <Button type="submit" tone="verde" disabled={sending} style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "14px 20px", opacity: sending ? 0.65 : 1 }}>
+                      {sending ? "Enviando solicitud..." : "Enviar solicitud de reserva"}
                     </Button>
                   </div>
                 </form>
