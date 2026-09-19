@@ -18,6 +18,13 @@ test('current public fields map to the visit request contract', () => {
   }
 });
 
+test('phone is required in the form and sent to the RPC', () => {
+  assert.match(page, /Teléfono \/ WhatsApp \*/);
+  assert.match(page, /type="tel"[\s\S]*required/);
+  assert.match(page, /phone: form\.telefono\.trim\(\)/);
+  assert.match(api, /p_requester_phone: payload\.phone/);
+});
+
 test('group options send canonical backend values while displaying Spanish labels', () => {
   assert.match(page, /\["TOURISM", "Turístico"\]/);
   assert.match(page, /<option key=\{value\} value=\{value\}>\{label\}<\/option>/);

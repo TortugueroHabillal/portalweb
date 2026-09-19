@@ -24,6 +24,7 @@ function visitRequestError(message = '') {
   const normalized = message.toLowerCase();
   if (normalized.includes('fecha de visita')) return 'Selecciona una fecha válida dentro de los próximos 12 meses.';
   if (normalized.includes('correo')) return 'Escribe un correo electrónico válido.';
+  if (normalized.includes('telefono')) return 'Escribe un número de teléfono o WhatsApp válido.';
   if (normalized.includes('asistentes')) return 'El grupo debe tener entre 1 y 50 asistentes.';
   if (normalized.includes('nombre')) return 'Escribe tu nombre completo.';
   if (normalized.includes('tipo de grupo')) return 'Selecciona un tipo de grupo válido.';

@@ -48,6 +48,7 @@ export function PageVisita() {
   const [form, setForm] = useState({
     nombre: "",
     correo: "",
+    telefono: "",
     origen: "",
     fecha: "",
     asistentes: "",
@@ -69,6 +70,7 @@ export function PageVisita() {
         idempotencyKey: idempotencyKey.current,
         name: form.nombre.trim(),
         email: form.correo.trim().toLowerCase(),
+        phone: form.telefono.trim(),
         origin: form.origen.trim(),
         preferredDate: form.fecha,
         attendees: form.asistentes ? Number(form.asistentes) : 1,
@@ -84,7 +86,7 @@ export function PageVisita() {
   };
 
   const resetRequest = () => {
-    setForm({ nombre: "", correo: "", origen: "", fecha: "", asistentes: "", tipo: "" });
+    setForm({ nombre: "", correo: "", telefono: "", origen: "", fecha: "", asistentes: "", tipo: "" });
     setSent(false);
     setSubmitError("");
     setRequestNumber(null);
@@ -266,6 +268,21 @@ export function PageVisita() {
                         value={form.correo}
                         onChange={(e) => setForm({ ...form, correo: e.target.value })}
                         placeholder="tu@correo.com"
+                        style={inputStyle}
+                      />
+                    </div>
+
+                    <div>
+                      <FieldLabel>Teléfono / WhatsApp *</FieldLabel>
+                      <input
+                        type="tel"
+                        required
+                        minLength="7"
+                        maxLength="30"
+                        value={form.telefono}
+                        onChange={(e) => setForm({ ...form, telefono: e.target.value })}
+                        placeholder="Ej. 753 123 4567"
+                        autoComplete="tel"
                         style={inputStyle}
                       />
                     </div>
