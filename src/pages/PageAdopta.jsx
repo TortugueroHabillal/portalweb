@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TOKENS, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { PhotoFrame } from "../components/PhotoFrame";
 import { Button } from "../components/Button";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { CertificateTemplate } from "../components/CertificateTemplate";
+import { StripeEmbeddedCheckout } from "../components/StripeEmbeddedCheckout";
+import { createAdoptionCheckout, listAdoptableNests } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
 
 const KPIS = [
@@ -319,14 +321,41 @@ function Proceso() {
   );
 }
 
-/* 3. Módulo de Pago / Pasarela Digital (Costo $200 por Nido) */
+/* 3. Módulo de Pago / Pasarela Digital */
 function ModuloAdoptaPago() {
-  const [nidosQty, setNidosQty] = useState(1);
+  const checkoutComplete = new URLSearchParams(window.location.search).get("checkout") === "complete";
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
+  const [nests, setNests] = useState([]);
+  const [selectedNestId, setSelectedNestId] = useState("");
+  const [loadingNests, setLoadingNests] = useState(true);
+  const [checkoutPayload, setCheckoutPayload] = useState(null);
+  const [paymentError, setPaymentError] = useState("");
 
-  const precioPorNido = 200;
-  const totalCost = nidosQty * precioPorNido;
+  useEffect(() => {
+    let active = true;
+    listAdoptableNests()
+      .then((records) => {
+        if (!active) return;
+        setNests(records);
+        setSelectedNestId(records[0]?.id || "");
+      })
+      .catch((error) => active && setPaymentError(error.message))
+      .finally(() => active && setLoadingNests(false));
+    return () => { active = false; };
+  }, []);
+
+  const startAdoptionCheckout = () => {
+    setPaymentError("");
+    if (donorName.trim().length < 2) return setPaymentError("Escribe el nombre que aparecerá en el certificado.");
+    if (!/^\S+@\S+\.\S+$/.test(donorEmail.trim())) return setPaymentError("Escribe un correo electrónico válido.");
+    if (!selectedNestId) return setPaymentError("Selecciona un nido disponible.");
+    setCheckoutPayload({
+      requested_nest_id: selectedNestId,
+      sponsor_name: donorName.trim(),
+      sponsor_email: donorEmail.trim().toLowerCase(),
+    });
+  };
 
   const inputStyle = {
     width: "100%",
@@ -345,6 +374,7 @@ function ModuloAdoptaPago() {
   return (
     <section style={{ padding: "56px 24px 64px", background: TOKENS.espuma, position: "relative" }}>
       <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+        {checkoutComplete && <div role="status" style={{ marginBottom: "20px", border: `1px solid ${TOKENS.verde}`, borderRadius: "12px", padding: "16px", background: "#F0F8F2", color: TOKENS.verdeOscuro, fontWeight: 700, textAlign: "center" }}>Gracias. Stripe recibió tu pago y estamos confirmando la adopción.</div>}
         <Reveal>
           <div
             style={{
@@ -360,40 +390,20 @@ function ModuloAdoptaPago() {
                 Pasarela Digital de Apadrinamiento
               </span>
               <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(24px, 3.2vw, 36px)", fontWeight: 700, color: TOKENS.noche, margin: "0 0 8px" }}>
-                Selecciona la cantidad de nidos a apadrinar
+                Selecciona el nido que deseas apadrinar
               </h2>
               <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: 0 }}>
-                Cuota fija de recuperación: <strong>$200 MXN</strong> por nido completo protegido en vivero.
+                Aportación en línea: <strong>$220 MXN</strong> por una adopción virtual.
               </p>
             </div>
 
-            {/* Selector de Cantidad de Nidos */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "12px", marginBottom: "24px" }}>
-              {[1, 2, 3, 4].map((qty) => {
-                const isSelected = nidosQty === qty;
-                return (
-                  <button
-                    key={qty}
-                    type="button"
-                    onClick={() => setNidosQty(qty)}
-                    style={{
-                      background: isSelected ? TOKENS.verdeOscuro : "#f8f6f0",
-                      color: isSelected ? "#ffffff" : TOKENS.noche,
-                      border: isSelected ? `2px solid ${TOKENS.verde}` : `1px solid ${TOKENS.arenaOscura}`,
-                      borderRadius: "16px",
-                      padding: "14px 10px",
-                      fontFamily: "'Fraunces', serif",
-                      fontSize: "17px",
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      textAlign: "center",
-                    }}
-                  >
-                    {qty} {qty === 1 ? "Nido" : "Nidos"} (${qty * precioPorNido} MXN)
-                  </button>
-                );
-              })}
+            <div style={{ marginBottom: "24px" }}>
+              <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 700, color: TOKENS.noche, display: "block", marginBottom: "6px" }}>Nido disponible</label>
+              <select value={selectedNestId} disabled={loadingNests || !nests.length || Boolean(checkoutPayload)} onChange={(event) => setSelectedNestId(event.target.value)} style={inputStyle}>
+                {loadingNests && <option value="">Consultando disponibilidad...</option>}
+                {!loadingNests && !nests.length && <option value="">Sin nidos disponibles por el momento</option>}
+                {nests.map((nest) => <option key={nest.id} value={nest.id}>Nido {nest.nest_code} · {nest.species_name || "Tortuga marina"}{nest.estimated_hatching_date ? ` · eclosión estimada ${new Date(nest.estimated_hatching_date).toLocaleDateString("es-MX")}` : ""}</option>)}
+              </select>
             </div>
 
             {/* ÁREA CONTENEDORA DE PAGO EN LÍNEA STRIPE */}
@@ -408,7 +418,7 @@ function ModuloAdoptaPago() {
             >
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px", borderBottom: `1px solid ${TOKENS.arenaOscura}`, paddingBottom: "10px" }}>
                 <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.azulOlaOscuro }}>
-                  💳 Apadrinamiento Digital Seguro (Stripe Ready)
+                  Pago seguro de adopción virtual
                 </span>
                 <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11px", color: "#6B7280", background: "#E5E7EB", padding: "3px 8px", borderRadius: "6px" }}>
                   SSL 256-Bit
@@ -430,18 +440,18 @@ function ModuloAdoptaPago() {
                 </div>
               </div>
 
-              <div style={{ background: "#ffffff", border: `1px solid ${TOKENS.arenaOscura}`, borderRadius: "12px", padding: "14px 16px", marginBottom: "16px", display: "flex", alignItems: "center", justifyContent: "space-between", color: "#9CA3AF", fontSize: "13.5px" }}>
-                <span>Número de Tarjeta, MM/AA, CVC (Stripe Elements)</span>
-                <span>🔒</span>
-              </div>
-
-              <Button
-                tone="verde"
-                style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }}
-                onClick={() => alert(`Apadrinando ${nidosQty} nido(s) por $${totalCost} MXN. ¡Muchas gracias!`)}
-              >
-                Completar Apadrinamiento (${totalCost} MXN)
-              </Button>
+              {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
+              {checkoutPayload ? (
+                <StripeEmbeddedCheckout
+                  checkoutKey={`${checkoutPayload.requested_nest_id}-${checkoutPayload.sponsor_email}`}
+                  createClientSecret={() => createAdoptionCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
+                  onCancel={() => setCheckoutPayload(null)}
+                />
+              ) : (
+                <Button tone="verde" style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }} onClick={startAdoptionCheckout} disabled={loadingNests || !nests.length}>
+                  Continuar al pago seguro ($220 MXN)
+                </Button>
+              )}
             </div>
           </div>
         </Reveal>

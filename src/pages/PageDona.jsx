@@ -3,6 +3,8 @@ import { TOKENS, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { Button } from "../components/Button";
+import { StripeEmbeddedCheckout } from "../components/StripeEmbeddedCheckout";
+import { createDonationCheckout } from "../lib/payments";
 
 const DONATION_TIERS = [
   { amount: 150, title: "$150 MXN", impact: "Cubre 1 linterna de luz roja de patrullaje nocturno para proteger hembras anidadoras." },
@@ -12,15 +14,18 @@ const DONATION_TIERS = [
 ];
 
 export function PageDona() {
-  const [frequency, setFrequency] = useState("monthly"); // 'once' | 'monthly'
+  const checkoutComplete = new URLSearchParams(window.location.search).get("checkout") === "complete";
   const [selectedTier, setSelectedTier] = useState(DONATION_TIERS[1]);
   const [customAmount, setCustomAmount] = useState("");
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
   const [showBankModal, setShowBankModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [checkoutPayload, setCheckoutPayload] = useState(null);
+  const [paymentError, setPaymentError] = useState("");
 
   const activeAmount = customAmount ? `$${Number(customAmount).toLocaleString()} MXN` : selectedTier.title;
+  const amountMinor = Math.round(Number(customAmount || selectedTier.amount) * 100);
 
   const handleCopyCLABE = () => {
     navigator.clipboard?.writeText("012 180 0150 1234 5678");
@@ -30,9 +35,26 @@ export function PageDona() {
 
   const handleWhatsAppDonate = () => {
     const text = encodeURIComponent(
-      `Hola, quiero realizar un donativo (${frequency === "monthly" ? "Mensual" : "Único"}) de ${activeAmount} para apoyar la conservación del Campamento Tortuguero El Habillal.`
+      `Hola, quiero realizar un donativo único de ${activeAmount} para apoyar la conservación del Campamento Tortuguero El Habillal.`
     );
     window.open(`https://wa.me/527531631707?text=${text}`, "_blank");
+  };
+
+  const startDonationCheckout = () => {
+    setPaymentError("");
+    if (!donorEmail.trim() || !/^\S+@\S+\.\S+$/.test(donorEmail.trim())) {
+      setPaymentError("Escribe un correo electrónico válido para recibir tu comprobante.");
+      return;
+    }
+    if (!Number.isInteger(amountMinor) || amountMinor < 1000) {
+      setPaymentError("El donativo mínimo en línea es de $10 MXN.");
+      return;
+    }
+    setCheckoutPayload({
+      donor_name: donorName.trim() || "ANONIMO",
+      donor_email: donorEmail.trim().toLowerCase(),
+      amount_minor: amountMinor,
+    });
   };
 
   const inputStyle = {
@@ -157,6 +179,7 @@ export function PageDona() {
       {/* 2. Módulo de Donación (Con espacio para Pasarela Digital Stripe) */}
       <section style={{ padding: "56px 24px 72px", position: "relative", zIndex: 2 }}>
         <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+          {checkoutComplete && <div role="status" style={{ marginBottom: "20px", border: `1px solid ${TOKENS.verde}`, borderRadius: "12px", padding: "16px", background: "#F0F8F2", color: TOKENS.verdeOscuro, fontWeight: 700, textAlign: "center" }}>Gracias. Stripe recibió tu pago y estamos confirmando el donativo.</div>}
           <Reveal>
             <div
               style={{
@@ -191,63 +214,11 @@ export function PageDona() {
                     margin: "0 0 10px",
                   }}
                 >
-                  Elige la Frecuencia y el Monto
+                  Elige el monto de tu donativo
                 </h2>
                 <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: 0 }}>
-                  Apoya la conservación marina con una aportación periódica o única.
+                  Apoya la conservación marina con un donativo único y seguro.
                 </p>
-              </div>
-
-              {/* Conmutador de Frecuencia: Mensual vs Única */}
-              <div
-                style={{
-                  display: "flex",
-                  background: TOKENS.espuma,
-                  borderRadius: "999px",
-                  padding: "4px",
-                  maxWidth: "340px",
-                  margin: "0 auto 28px",
-                  border: `1px solid ${TOKENS.arenaOscura}`,
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setFrequency("monthly")}
-                  style={{
-                    flex: 1,
-                    padding: "10px 16px",
-                    borderRadius: "999px",
-                    border: "none",
-                    background: frequency === "monthly" ? TOKENS.noche : "transparent",
-                    color: frequency === "monthly" ? "#ffffff" : TOKENS.noche,
-                    fontFamily: "'Public Sans', sans-serif",
-                    fontSize: "13.5px",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    transition: "all 0.25s ease",
-                  }}
-                >
-                  💚 Mensual (Recomendado)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setFrequency("once")}
-                  style={{
-                    flex: 1,
-                    padding: "10px 16px",
-                    borderRadius: "999px",
-                    border: "none",
-                    background: frequency === "once" ? TOKENS.noche : "transparent",
-                    color: frequency === "once" ? "#ffffff" : TOKENS.noche,
-                    fontFamily: "'Public Sans', sans-serif",
-                    fontSize: "13.5px",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    transition: "all 0.25s ease",
-                  }}
-                >
-                  Donativo Único
-                </button>
               </div>
 
               {/* Botones de Montos Predefinidos */}
@@ -350,43 +321,22 @@ export function PageDona() {
                   </div>
                 </div>
 
-                {/* Container Placeholder para Stripe Card Element */}
-                <div
-                  style={{
-                    background: "#ffffff",
-                    border: `1px solid ${TOKENS.arenaOscura}`,
-                    borderRadius: "12px",
-                    padding: "14px 16px",
-                    marginBottom: "16px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    color: "#9CA3AF",
-                    fontSize: "13.5px",
-                    fontFamily: "'Public Sans', sans-serif",
-                  }}
-                >
-                  <span>Número de Tarjeta, MM/AA, CVC (Pasarela Stripe habilitada)</span>
-                  <div style={{ display: "flex", gap: "6px", fontSize: "16px" }}>
-                    <span>💳</span>
-                    <span>🔒</span>
-                  </div>
-                </div>
-
-                <Button
-                  tone="verde"
-                  style={{
-                    borderRadius: "999px",
-                    width: "100%",
-                    justifyContent: "center",
-                    padding: "15px 20px",
-                    fontSize: "15px",
-                    boxShadow: "0 10px 24px -8px rgba(76,107,79,0.4)",
-                  }}
-                  onClick={() => alert(`Procesando donativo ${frequency === "monthly" ? "mensual" : "único"} de ${activeAmount}. ¡Gracias por tu apoyo!`)}
-                >
-                  Completar Donativo en Línea ({activeAmount} {frequency === "monthly" ? "/ mes" : ""})
-                </Button>
+                {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
+                {checkoutPayload ? (
+                  <StripeEmbeddedCheckout
+                    checkoutKey={`${checkoutPayload.donor_email}-${checkoutPayload.amount_minor}`}
+                    createClientSecret={() => createDonationCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
+                    onCancel={() => setCheckoutPayload(null)}
+                  />
+                ) : (
+                  <Button
+                    tone="verde"
+                    style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px", boxShadow: "0 10px 24px -8px rgba(76,107,79,0.4)" }}
+                    onClick={startDonationCheckout}
+                  >
+                    Continuar al pago seguro ({activeAmount})
+                  </Button>
+                )}
               </div>
 
               {/* Opciones Alternativas (SPEI & WhatsApp) */}
