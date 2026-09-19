@@ -9,6 +9,7 @@ import { StripeEmbeddedCheckout } from "../components/StripeEmbeddedCheckout";
 import { StripeCheckoutHeader } from "../components/StripeCheckoutHeader";
 import { createAdoptionCheckout } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
+import { SectionHead } from "../components/Typography";
 
 const KPIS = [
   { value: 150, suffix: "+", label: "Nidos adoptados" },
@@ -363,30 +364,23 @@ function ModuloAdoptaPago() {
   };
 
   return (
-    <section id="modulo-adopcion-pago" style={{ padding: "56px 24px 64px", background: TOKENS.espuma, position: "relative", scrollMarginTop: "88px" }}>
-      <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+    <section id="modulo-adopcion-pago" style={{ padding: "64px 24px 64px", background: TOKENS.espuma, position: "relative", scrollMarginTop: "88px" }}>
+      <div style={{ maxWidth: "720px", margin: "0 auto" }}>
         <Reveal>
-          <div
-            style={{
-              background: "#ffffff",
-              borderRadius: "28px",
-              padding: "clamp(28px, 5vw, 44px)",
-              boxShadow: "0 20px 48px -18px rgba(16,38,43,0.14)",
-              border: `1px solid ${TOKENS.arenaOscura}`,
-            }}
+          <SectionHead
+            eyebrow="Temporada activa"
+            eyebrowColor={TOKENS.verdeOscuro}
+            title="Adopta un nido de la temporada activa"
+            titleMaxWidth="22ch"
           >
-            <div style={{ textAlign: "center", marginBottom: "24px" }}>
+            <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: "14px 0 0" }}>
+              Cuota fija de aportación: <strong>$220 MXN</strong> por una adopción virtual.
+            </p>
+          </SectionHead>
+        </Reveal>
 
-              <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(24px, 3.2vw, 36px)", fontWeight: 700, color: TOKENS.noche, margin: "0 0 8px" }}>
-                Adopta un nido de la temporada activa
-              </h2>
-              <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: 0 }}>
-                Cuota fija de aportación: <strong>$220 MXN</strong> por una adopción virtual.
-              </p>
-            </div>
-
-            <p style={{ margin: 0, padding: "14px 16px", borderLeft: `3px solid ${TOKENS.verde}`, background: "#F5F9F6", color: TOKENS.conchaSuave, fontSize: "13px", lineHeight: 1.6 }}>Después de confirmar el pago, el sistema asignará de forma aleatoria un nido activo disponible. Al finalizar verás inmediatamente el número de nido que acompañarás.</p>
-          </div>
+        <Reveal delay={80}>
+          <p style={{ margin: "28px 0 0", padding: "14px 16px", borderLeft: `3px solid ${TOKENS.verde}`, background: "#F5F9F6", color: TOKENS.conchaSuave, fontSize: "13px", lineHeight: 1.6 }}>Después de confirmar el pago, el sistema asignará de forma aleatoria un nido activo disponible. Al finalizar verás inmediatamente el número de nido que acompañarás.</p>
         </Reveal>
       </div>
 

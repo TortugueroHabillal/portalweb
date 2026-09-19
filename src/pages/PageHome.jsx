@@ -23,7 +23,7 @@ function Hero({ go }) {
               lineHeight: 1.1,
               letterSpacing: "-0.01em",
               color: "#ffffffff",
-              margin: "8px 0 60px",
+              margin: "8px 0 24px",
             }}
           >
             Cada nido que protegemos es una playa que{" "}
@@ -214,52 +214,52 @@ function TurtleSpecies() {
     <section className="tt-section-responsive" style={{ background: TOKENS.cieloClaro, padding: "64px 32px" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
         <SectionHead eyebrow="Especies del Habillal" eyebrowColor={TOKENS.azulOlaOscuro} title="Conoce a las tortugas del Habillal" titleMaxWidth="22ch" />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "36px", marginTop: "40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "36px", marginTop: "40px" }}>
           {species.map((s, i) => {
             const isOpen = !!openItems[i];
             const toneInfo = toneColors[s.tone] || toneColors.azul;
 
             return (
               <Reveal key={s.nombre} delay={i * 100} from="up">
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-                  <div style={{ width: "100%", overflow: "hidden" }}>
-                    <PhotoFrame shape="wide" tone={s.tone} src={s.src} video={s.video} style={{ aspectRatio: "16/10", width: "100%" }} />
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+                  <div style={{ width: "200px", maxWidth: "60%" }}>
+                    <PhotoFrame shape="circle" tone={s.tone} src={s.src} video={s.video} />
                   </div>
-                  <h3
-                    style={{
-                      fontFamily: "'Fraunces', serif",
-                      fontSize: "22px",
-                      fontWeight: 700,
-                      color: TOKENS.noche,
-                      margin: "16px 0 10px",
-                    }}
-                  >
-                    {s.nombre}
-                  </h3>
                   <button
                     onClick={() => toggleItem(i)}
+                    aria-expanded={isOpen}
+                    aria-label={isOpen ? `Ocultar información de ${s.nombre}` : `Más información sobre ${s.nombre}`}
                     style={{
                       background: "transparent",
                       border: "none",
                       padding: "4px 0",
+                      margin: "16px 0 0",
                       fontFamily: "'Public Sans', sans-serif",
-                      fontSize: "14px",
-                      fontWeight: 700,
-                      color: toneInfo.text,
                       cursor: "pointer",
                       display: "inline-flex",
                       alignItems: "center",
-                      gap: "6px",
+                      gap: "8px",
                       outline: "none",
                     }}
                   >
-                    <span>{isOpen ? "Menos información" : "Más información"}</span>
+                    <h3
+                      style={{
+                        fontFamily: "'Fraunces', serif",
+                        fontSize: "22px",
+                        fontWeight: 700,
+                        color: TOKENS.noche,
+                        margin: 0,
+                      }}
+                    >
+                      {s.nombre}
+                    </h3>
                     <span
                       style={{
                         display: "inline-block",
                         transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                         transition: "transform 0.25s ease",
                         fontSize: "12px",
+                        color: toneInfo.text,
                       }}
                     >
                       ▼
@@ -274,6 +274,7 @@ function TurtleSpecies() {
                         borderLeft: `3px solid ${toneInfo.border}`,
                         width: "100%",
                         boxSizing: "border-box",
+                        textAlign: "left",
                       }}
                     >
                       <p
@@ -329,21 +330,21 @@ function HelpNow({ go }) {
         />
         <div className="tt-cols-2" style={{ marginTop: "32px", alignItems: "stretch" }}>
           <Reveal from="left" distance={44} delay={80} style={{ height: "100%" }}>
-            <div style={{ background: "rgba(27,58,65,0.72)", backdropFilter: "blur(6px)", borderRadius: "16px", padding: "28px", display: "flex", flexDirection: "column", gap: "14px", height: "100%", boxSizing: "border-box" }}>
+            <div style={{ background: "rgba(27,58,65,0.72)", backdropFilter: "blur(6px)", borderRadius: "16px", padding: "28px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "14px", height: "100%", boxSizing: "border-box" }}>
               <h3 style={{ fontFamily: "'Fraunces', serif", color: "#fff", fontSize: "22px", margin: 0 }}>Adopta un nido</h3>
               <p style={{ fontFamily: "'Public Sans', sans-serif", color: "#CBD9D6", fontSize: "14px", lineHeight: 1.6, margin: 0, flexGrow: 1 }}>
                 Sigue a un nido real desde su siembra en vivero hasta el momento en que sus crías tocan el mar. Forma parte de su historia completa.
               </p>
-              <div style={{ display: "flex", justifyContent: "center" }}><Button tone="verde" onClick={() => go("adopta")}>Ir a adoptar nido</Button></div>
+              <Button tone="verde" onClick={() => go("adopta")}>Ir a adoptar nido</Button>
             </div>
           </Reveal>
           <Reveal from="right" distance={44} delay={180} style={{ height: "100%" }}>
-            <div style={{ background: "rgba(27,58,65,0.72)", backdropFilter: "blur(6px)", borderRadius: "16px", padding: "28px", display: "flex", flexDirection: "column", gap: "14px", height: "100%", boxSizing: "border-box" }}>
+            <div style={{ background: "rgba(27,58,65,0.72)", backdropFilter: "blur(6px)", borderRadius: "16px", padding: "28px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "14px", height: "100%", boxSizing: "border-box" }}>
               <h3 style={{ fontFamily: "'Fraunces', serif", color: "#fff", fontSize: "22px", margin: 0 }}>Dona al programa</h3>
               <p style={{ fontFamily: "'Public Sans', sans-serif", color: "#CBD9D6", fontSize: "14px", lineHeight: 1.6, margin: 0, flexGrow: 1 }}>
                 Cada peso se destina a fortalecer la conservación: tu apoyo sostiene los materiales e insumos para patrullajes y operativos que protegen las tortugas marinas en las playas de Michoacán.
               </p>
-              <div style={{ display: "flex", justifyContent: "center" }}><Button tone="azul" onClick={() => go("dona")}>Ir a donaciones</Button></div>
+              <Button tone="azul" onClick={() => go("dona")}>Ir a donaciones</Button>
             </div>
           </Reveal>
         </div>

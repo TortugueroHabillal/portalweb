@@ -3,6 +3,7 @@ import { TOKENS, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { Button } from "../components/Button";
+import { SectionHead } from "../components/Typography";
 import { StripeEmbeddedCheckout } from "../components/StripeEmbeddedCheckout";
 import { StripeCheckoutHeader } from "../components/StripeCheckoutHeader";
 import { createDonationCheckout } from "../lib/payments";
@@ -111,7 +112,7 @@ export function PageDona() {
                 margin: "0 0 16px",
               }}
             >
-              Tu Aporte se Convierte Directamente en Vida
+              Tu Aporte se Convierte en Vida
             </h1>
 
             <p
@@ -123,19 +124,7 @@ export function PageDona() {
                 margin: "0 0 24px",
                 maxWidth: "48ch",
               }}
-            >
-              Ya conociste nuestra labor: nos respaldan 13 años de experiencia y una comunidad unida por la conservación.
-            </p>
-            <p
-              style={{
-                fontFamily: "'Public Sans', sans-serif",
-                fontSize: "15.5px",
-                color: "#CBD9D6",
-                lineHeight: 1.6,
-                margin: "0 0 24px",
-                maxWidth: "48ch",
-              }}
-            >Tu contribución nos permite fortalecer nuestras playas y lograr el nacimiento seguro de miles de crías de tortugas marinas en cada temporada de anidación en El Habillal.
+            >Ya conociste nuestra labor: Tu contribución nos permite fortalecer nuestras playas y lograr el nacimiento seguro de miles de crías de tortugas marinas en cada temporada de anidación en El Habillal.
             </p>
 
             <div style={{ marginBottom: "24px" }}>
@@ -189,36 +178,23 @@ export function PageDona() {
       </section>
 
       {/* 2. Módulo de Donación (Con espacio para Pasarela Digital Stripe) */}
-      <section id="modulo-dona-pago" style={{ padding: "56px 24px 72px", position: "relative", zIndex: 2, scrollMarginTop: "88px" }}>
-        <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+      <section id="modulo-dona-pago" style={{ padding: "64px 24px 72px", position: "relative", zIndex: 2, scrollMarginTop: "88px" }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <Reveal>
-            <div
-              style={{
-                background: "#ffffff",
-                borderRadius: "28px",
-                padding: "clamp(28px, 5vw, 48px)",
-                boxShadow: "0 24px 54px -18px rgba(16,38,43,0.14)",
-                border: `1px solid ${TOKENS.arenaOscura}`,
-              }}
+            <SectionHead
+              eyebrow="Elige tu aportación"
+              eyebrowColor={TOKENS.verdeOscuro}
+              title="Elige el monto de tu donativo"
+              titleMaxWidth="20ch"
             >
-              <div style={{ textAlign: "center", marginBottom: "28px" }}>
+              <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: "14px 0 0" }}>
+                Apoya la conservación marina con un donativo único y seguro.
+              </p>
+            </SectionHead>
+          </Reveal>
 
-                <h2
-                  style={{
-                    fontFamily: "'Fraunces', serif",
-                    fontSize: "clamp(24px, 3.2vw, 36px)",
-                    fontWeight: 700,
-                    color: TOKENS.noche,
-                    margin: "0 0 10px",
-                  }}
-                >
-                  Elige el monto de tu donativo
-                </h2>
-                <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: 0 }}>
-                  Apoya la conservación marina con un donativo único y seguro.
-                </p>
-              </div>
-
+          <Reveal delay={80}>
+            <div style={{ marginTop: "32px" }}>
               {/* Botones de Montos Predefinidos */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "12px", marginBottom: "20px" }}>
                 {DONATION_TIERS.map((tier) => {
@@ -427,7 +403,7 @@ export function PageDona() {
 
             <div style={{ display: "flex", gap: "12px" }}>
               <Button tone="verde" style={{ borderRadius: "999px", flex: 1, justifyContent: "center" }} onClick={handleCopyCLABE}>
-                {copied ? "¡CLABE Copiada!" : "Copiar CLABE (1-Clic)"}
+                {copied ? "CLABE Copiada" : "Copiar CLABE"}
               </Button>
               <Button tone="azul" style={{ borderRadius: "999px" }} onClick={() => setShowBankModal(false)}>
                 Cerrar
