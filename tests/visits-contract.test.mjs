@@ -18,6 +18,11 @@ test('current public fields map to the visit request contract', () => {
   }
 });
 
+test('group options send canonical backend values while displaying Spanish labels', () => {
+  assert.match(page, /\["TOURISM", "Turístico"\]/);
+  assert.match(page, /<option key=\{value\} value=\{value\}>\{label\}<\/option>/);
+});
+
 test('success waits for the backend and displays the returned folio', () => {
   assert.match(page, /await createVisitRequest/);
   assert.match(page, /setRequestNumber\(result\.request_number\)/);

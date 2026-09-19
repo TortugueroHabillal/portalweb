@@ -17,12 +17,16 @@ export function Button({ children, tone = "coral", onClick, size = "md", style, 
       disabled={disabled}
       onClick={onClick}
       style={{
+        appearance: "none",
+        WebkitAppearance: "none",
+        MozAppearance: "none",
         fontFamily: "'Public Sans', sans-serif",
         fontWeight: 700,
         fontSize: size === "lg" ? "17px" : "14px",
         padding: size === "lg" ? "17px 32px" : "11px 20px",
         borderRadius: "999px",
         background: bgMap[tone],
+        backgroundImage: "none",
         border,
         color,
         cursor: disabled ? "not-allowed" : "pointer",

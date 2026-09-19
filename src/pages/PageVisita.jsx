@@ -12,7 +12,14 @@ function scrollToReserva() {
   document.getElementById("reserva-visita")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-const TIPOS_GRUPO = ["Académico", "Empresarial", "Gubernamental", "Comunitario", "Turístico", "Otro"];
+const TIPOS_GRUPO = [
+  ["ACADEMIC", "Académico"],
+  ["BUSINESS", "Empresarial"],
+  ["GOVERNMENT", "Gubernamental"],
+  ["COMMUNITY", "Comunitario"],
+  ["TOURISM", "Turístico"],
+  ["OTHER", "Otro"],
+];
 
 function FieldLabel({ children }) {
   return (
@@ -121,7 +128,7 @@ export function PageVisita() {
         <h1
           style={{
             fontFamily: "'Fraunces', serif",
-            fontSize: "clamp(28px, 3.8vw, 48px)",
+            fontSize: "clamp(26px, 3.4vw, 44px)",
             fontWeight: 700,
             color: "#ffffff",
             margin: "0 0 16px",
@@ -306,8 +313,8 @@ export function PageVisita() {
                         style={inputStyle}
                       >
                         <option value="" disabled>Selecciona una opción</option>
-                        {TIPOS_GRUPO.map((t) => (
-                          <option key={t} value={t}>{t}</option>
+                        {TIPOS_GRUPO.map(([value, label]) => (
+                          <option key={value} value={value}>{label}</option>
                         ))}
                       </select>
                     </div>

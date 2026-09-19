@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { TOKENS, IMAGES } from "../theme";
+import { TOKENS, SECTION_BG, SPACE, RADIUS, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { WaveDivider } from "../components/WaveDivider";
 import { PhotoFrame } from "../components/PhotoFrame";
+import { HeroShock } from "../components/HeroShock";
+import { Button } from "../components/Button";
 import { SectionHead } from "../components/Typography";
+import { CircleVectors } from "../components/CircleVectors";
 import { MapEmbed } from "../components/MapEmbed";
 
 const FACEBOOK_SVG_WHITE = (
@@ -18,50 +21,27 @@ const TIKTOK_SVG_WHITE = (
 
 function SiguenosDeCerca() {
   const socialItems = [
-    {
-      network: "Facebook",
-      handle: "Campamento Tortuguero El Habillal",
-      icon: FACEBOOK_SVG_WHITE,
-      btnBg: "#1877F2",
-      href: "#",
-    },
-    {
-      network: "Instagram",
-      handle: "@habillalcampamento",
-      icon: INSTAGRAM_SVG_WHITE,
-      btnBg: "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
-      href: "#",
-    },
-    {
-      network: "TikTok",
-      handle: "@tortuguero_habillal",
-      icon: TIKTOK_SVG_WHITE,
-      btnBg: "#111111",
-      href: "#",
-    },
+    { network: "Facebook", handle: "Campamento Tortuguero El Habillal", icon: FACEBOOK_SVG_WHITE, btnBg: "#1877F2", href: "#" },
+    { network: "Instagram", handle: "@habillalcampamento", icon: INSTAGRAM_SVG_WHITE, btnBg: "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)", href: "#" },
+    { network: "TikTok", handle: "@tortuguero_habillal", icon: TIKTOK_SVG_WHITE, btnBg: "#111111", href: "#" },
   ];
 
   return (
-    <section style={{ background: TOKENS.espuma, padding: "56px 24px" }}>
+    <section style={{ background: TOKENS.espuma, padding: `${SPACE.xl}px ${SPACE.lg}px` }}>
       <div style={{ maxWidth: "1150px", margin: "0 auto" }}>
         <SectionHead title="Síguenos de cerca" />
 
-        {/* Layout en 3 Pilares */}
-        <div style={{ marginTop: "36px" }}>
-          <div className="tt-cols-3" style={{ gap: "24px", alignItems: "stretch" }}>
-            {/* Pilar 1 (Izquierda): crias3.jpg */}
+        <div style={{ marginTop: SPACE.xl }}>
+          <div className="tt-cols-3" style={{ gap: SPACE.md, alignItems: "stretch" }}>
             <Reveal delay={0} style={{ height: "100%" }}>
               <PhotoFrame shape="portrait" tone="azul" src={IMAGES.hatchlingsMassSunset} style={{ height: "100%", minHeight: "320px", borderRadius: 0 }} />
             </Reveal>
 
-            {/* Pilar 2 (Centro): Contenedor Rectangular Sin Bordes, Fondo Verdecito con Botones Distribuidos */}
             <Reveal delay={100} style={{ height: "100%" }}>
               <div
                 style={{
                   position: "relative",
                   background: "#E8F4EE",
-                  border: "none",
-                  borderRadius: 0,
                   padding: "36px 24px",
                   display: "flex",
                   flexDirection: "column",
@@ -71,7 +51,7 @@ function SiguenosDeCerca() {
                 }}
               >
                 <h4 style={{ fontFamily: "'Fraunces', serif", fontSize: "22px", color: TOKENS.verdeOscuro, margin: "0 0 20px", textAlign: "center", fontWeight: 700 }}>
-                  Nuestras Redes
+                  Nuestras redes
                 </h4>
 
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", gap: "16px", flex: 1 }}>
@@ -91,32 +71,23 @@ function SiguenosDeCerca() {
                         padding: "14px 22px",
                         textDecoration: "none",
                         transition: "transform 0.2s ease",
-                        boxShadow: "none",
                         width: "100%",
                         boxSizing: "border-box",
                       }}
                       onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
                       onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
                     >
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        {item.icon}
-                      </div>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>{item.icon}</div>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13.5px", fontWeight: 700, color: "#ffffff" }}>
-                          {item.network}
-                        </div>
-                        <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "rgba(255,255,255,0.85)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                          {item.handle}
-                        </div>
+                        <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13.5px", fontWeight: 700, color: "#ffffff" }}>{item.network}</div>
+                        <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "rgba(255,255,255,0.85)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.handle}</div>
                       </div>
-
                     </a>
                   ))}
                 </div>
               </div>
             </Reveal>
 
-            {/* Pilar 3 (Derecha): liberacioncrias.jpeg */}
             <Reveal delay={200} style={{ height: "100%" }}>
               <PhotoFrame shape="portrait" tone="coral" src={IMAGES.liberacionCrowd} style={{ height: "100%", minHeight: "320px", borderRadius: 0 }} />
             </Reveal>
@@ -161,7 +132,7 @@ export function PageContacto() {
     width: "100%",
     height: "44px",
     border: `1px solid ${TOKENS.arenaOscura}`,
-    borderRadius: 0,
+    borderRadius: "12px",
     background: "#F8FAFC",
     color: TOKENS.noche,
     fontFamily: "'Public Sans', sans-serif",
@@ -172,76 +143,47 @@ export function PageContacto() {
   };
 
   return (
-    <div style={{ background: TOKENS.arena, minHeight: "100vh", position: "relative" }}>
-      {/* 1. Cabecera Estilizada Clara (Espuma) */}
-      <section
-        style={{
-          position: "relative",
-          background: TOKENS.espuma,
-          padding: "clamp(56px, 8vh, 80px) 24px clamp(64px, 9vh, 96px)",
-          overflow: "hidden",
-        }}
-      >
-        <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", lineHeight: 0, zIndex: 1 }}>
-          <WaveDivider fromColor={TOKENS.espuma} toColor={TOKENS.azulOlaOscuro} />
-        </div>
+    <div style={{ position: "relative" }}>
+      {/* 1. Hero — mismo patrón oscuro dividido que el resto del sitio */}
+      <HeroShock image={IMAGES.campAerial} imageAlt="Costa del Campamento Tortuguero El Habillal" align="center">
+        <span
+          style={{
+            display: "inline-block",
+            fontFamily: "'Public Sans', sans-serif",
+            fontSize: "13px",
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: TOKENS.cielo,
+            marginBottom: SPACE.sm,
+          }}
+        >
+          Contacto y ubicación
+        </span>
+        <h1
+          style={{
+            fontFamily: "'Fraunces', serif",
+            fontWeight: 700,
+            fontSize: "clamp(26px, 3.4vw, 44px)",
+            lineHeight: 1.2,
+            letterSpacing: "-0.01em",
+            color: "#ffffff",
+            margin: "0 0 18px",
+          }}
+        >
+          Estamos para
+          <br />
+          <span style={{ color: TOKENS.cieloOscuro }}>atenderte</span>.
+        </h1>
+        <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "15.5px", color: "#E7F0EC", lineHeight: 1.6, maxWidth: "48ch", margin: 0 }}>
+          ¿Dudas sobre recorridos, donaciones o el programa de adopción de nidos? Escríbenos por teléfono, correo o visítanos en la playa.
+        </p>
+      </HeroShock>
 
-        <div style={{ maxWidth: "860px", margin: "0 auto", textAlign: "center", position: "relative", zIndex: 2 }}>
-          <Reveal>
-            <h3
-              style={{
-                fontFamily: "'Public Sans', sans-serif",
-                fontSize: "14px",
-                fontWeight: 700,
-                color: TOKENS.coral,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                margin: "0 0 12px",
-              }}
-            >
-              Contacto y Ubicación
-            </h3>
+      <WaveDivider fromColor={TOKENS.noche} toColor={TOKENS.azulOlaOscuro} />
 
-            <h1
-              style={{
-                fontFamily: "'Fraunces', serif",
-                fontSize: "clamp(32px, 4.6vw, 52px)",
-                fontWeight: 700,
-                color: TOKENS.noche,
-                margin: "0 0 20px",
-                lineHeight: 1.15,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Estamos para atenderte
-            </h1>
-
-            <p
-              style={{
-                fontFamily: "'Public Sans', sans-serif",
-                fontSize: "17px",
-                color: TOKENS.conchaSuave,
-                lineHeight: 1.65,
-                maxWidth: "680px",
-                margin: "0 auto",
-              }}
-            >
-              ¿Tienes dudas sobre los recorridos, donaciones o el programa de adopción de nidos? Contáctanos directamente por teléfono, correo o visítanos en la playa.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 2. Sección de Formulario e Información con Fondo Azul Marino, criasmonton.jpeg Difuminada y Vector Wave Coral */}
-      <section
-        style={{
-          background: TOKENS.azulOlaOscuro,
-          padding: "60px 24px 84px",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* Imagen Transparente de Fondo con Difuminado Superior e Inferior */}
+      {/* 2. Formulario e información directa — fondo azul marino */}
+      <section style={{ background: TOKENS.azulOlaOscuro, padding: `${SPACE.xxl}px ${SPACE.lg}px`, position: "relative", overflow: "hidden" }}>
         <img
           src={IMAGES.hatchlingsBucket}
           alt=""
@@ -254,63 +196,31 @@ export function PageContacto() {
             opacity: 0.18,
             mixBlendMode: "luminosity",
             pointerEvents: "none",
-            zIndex: 1,
+            zIndex: 0,
             WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%)",
             maskImage: "linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%)",
           }}
         />
-
-        {/* Vector Wave Coral de Fondo */}
-        <div
-          style={{
-            position: "absolute",
-            top: "-10%",
-            right: "-10%",
-            width: "65%",
-            height: "120%",
-            pointerEvents: "none",
-            zIndex: 1,
-            opacity: 0.16,
-          }}
-        >
-          <svg viewBox="0 0 800 800" fill="none" width="100%" height="100%" preserveAspectRatio="none">
-            <path
-              d="M150,0 C320,140 480,-60 620,200 C760,440 520,680 800,800 L800,0 Z"
-              fill={TOKENS.coral}
-            />
-            <path
-              d="M0,300 C280,180 420,540 800,380 L800,800 L0,800 Z"
-              fill={TOKENS.coral}
-              opacity="0.6"
-            />
-          </svg>
-        </div>
+        <CircleVectors variant="dark" />
 
         <div style={{ maxWidth: "780px", margin: "0 auto", position: "relative", zIndex: 2 }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "28px", width: "100%" }}>
-
-            {/* Contenedor Superior: Información Directa (Compacto y Centrado) */}
+          <div style={{ display: "flex", flexDirection: "column", gap: SPACE.md + 4, width: "100%" }}>
             <Reveal style={{ width: "100%" }}>
               <div
                 style={{
                   background: "#ffffff",
-                  borderRadius: 0,
-                  padding: "32px 28px",
-                  boxShadow: "none",
-                  border: `1px solid ${TOKENS.arenaOscura}`,
+                  borderRadius: RADIUS.card + 4,
+                  padding: `${SPACE.lg}px ${SPACE.md + 4}px`,
                   width: "100%",
                   boxSizing: "border-box",
                   textAlign: "center",
                 }}
               >
-
-
                 <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: "24px", color: TOKENS.noche, margin: "0 0 24px", fontWeight: 700 }}>
-                  Información Directa
+                  Información directa
                 </h3>
 
-                <div className="tt-cols-2" style={{ gap: "24px", alignItems: "center" }}>
-                  {/* Correo */}
+                <div className="tt-cols-2" style={{ gap: SPACE.md, alignItems: "center" }}>
                   <div style={{ textAlign: "center" }}>
                     <span style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: TOKENS.azulOlaOscuro, display: "block", marginBottom: "4px" }}>
                       Correo electrónico
@@ -322,7 +232,6 @@ export function PageContacto() {
                     </p>
                   </div>
 
-                  {/* Teléfono & WhatsApp */}
                   <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <span style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: TOKENS.azulOlaOscuro, display: "block", marginBottom: "4px" }}>
                       Teléfono y WhatsApp
@@ -346,11 +255,9 @@ export function PageContacto() {
                           display: "inline-flex",
                           alignItems: "center",
                           gap: "6px",
-                          boxShadow: "none",
                         }}
                       >
                         <span>WhatsApp</span>
-
                       </a>
                     </div>
                   </div>
@@ -358,22 +265,17 @@ export function PageContacto() {
               </div>
             </Reveal>
 
-            {/* Contenedor Inferior: Formulario Interactivo (Compacto y Centrado) */}
             <Reveal delay={120} style={{ width: "100%" }}>
               <div
                 style={{
                   background: "#ffffff",
-                  borderRadius: 0,
-                  padding: "36px 28px",
-                  boxShadow: "none",
-                  border: `1px solid ${TOKENS.arenaOscura}`,
+                  borderRadius: RADIUS.card + 4,
+                  padding: `${SPACE.lg}px ${SPACE.md + 4}px`,
                   width: "100%",
                   boxSizing: "border-box",
                 }}
               >
                 <div style={{ textAlign: "center", marginBottom: "22px" }}>
-
-
                   <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: "24px", color: TOKENS.noche, margin: "0 0 6px", fontWeight: 700 }}>
                     Envíanos un mensaje
                   </h3>
@@ -383,7 +285,7 @@ export function PageContacto() {
                 </div>
 
                 {sent ? (
-                  <div style={{ background: `${TOKENS.verde}18`, border: `1.5px solid ${TOKENS.verde}`, borderRadius: 0, padding: "28px 20px", textAlign: "center" }}>
+                  <div style={{ background: `${TOKENS.verde}18`, border: `1.5px solid ${TOKENS.verde}`, borderRadius: RADIUS.card, padding: "28px 20px", textAlign: "center" }}>
                     <div style={{ fontSize: "36px", marginBottom: "8px" }}>🎉</div>
                     <h4 style={{ fontFamily: "'Fraunces', serif", color: TOKENS.verdeOscuro, fontSize: "19px", margin: "0 0 8px", fontWeight: 700 }}>¡Mensaje enviado con éxito!</h4>
                     <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14px", color: TOKENS.conchaSuave, margin: 0, lineHeight: 1.6 }}>
@@ -397,28 +299,14 @@ export function PageContacto() {
                         <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: TOKENS.concha, display: "block", marginBottom: "5px" }}>
                           Nombre completo *
                         </label>
-                        <input
-                          type="text"
-                          required
-                          value={form.nombre}
-                          onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-                          placeholder="Tu nombre"
-                          style={inputStyle}
-                        />
+                        <input type="text" required value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} placeholder="Tu nombre" style={inputStyle} />
                       </div>
 
                       <div>
                         <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: TOKENS.concha, display: "block", marginBottom: "5px" }}>
                           Correo electrónico *
                         </label>
-                        <input
-                          type="email"
-                          required
-                          value={form.correo}
-                          onChange={(e) => setForm({ ...form, correo: e.target.value })}
-                          placeholder="tu@correo.com"
-                          style={inputStyle}
-                        />
+                        <input type="email" required value={form.correo} onChange={(e) => setForm({ ...form, correo: e.target.value })} placeholder="tu@correo.com" style={inputStyle} />
                       </div>
                     </div>
 
@@ -426,13 +314,7 @@ export function PageContacto() {
                       <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: TOKENS.concha, display: "block", marginBottom: "5px" }}>
                         Teléfono / WhatsApp (opcional)
                       </label>
-                      <input
-                        type="tel"
-                        value={form.telefono}
-                        onChange={(e) => setForm({ ...form, telefono: e.target.value })}
-                        placeholder="753 123 4567"
-                        style={inputStyle}
-                      />
+                      <input type="tel" value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} placeholder="753 123 4567" style={inputStyle} />
                     </div>
 
                     <div>
@@ -445,60 +327,29 @@ export function PageContacto() {
                         value={form.mensaje}
                         onChange={(e) => setForm({ ...form, mensaje: e.target.value })}
                         placeholder="Escribe aquí tus comentarios, dudas o solicitudes..."
-                        style={{
-                          ...inputStyle,
-                          height: "96px",
-                          padding: "12px 14px",
-                          resize: "vertical",
-                        }}
+                        style={{ ...inputStyle, height: "96px", padding: "12px 14px", resize: "vertical" }}
                       />
                     </div>
 
-                    <button
-                      type="submit"
-                      disabled={sending}
-                      style={{
-                        marginTop: "8px",
-                        background: TOKENS.coral,
-                        color: "#ffffff",
-                        border: "none",
-                        borderRadius: "999px",
-                        padding: "14px 28px",
-                        fontSize: "15px",
-                        fontWeight: 700,
-                        fontFamily: "'Public Sans', sans-serif",
-                        cursor: sending ? "not-allowed" : "pointer",
-                        boxShadow: "none",
-                        width: "100%",
-                        textAlign: "center",
-                      }}
-                    >
+                    <Button tone="shock" size="lg" type="submit" style={{ marginTop: "8px", width: "100%", justifyContent: "center", opacity: sending ? 0.7 : 1 }}>
                       {sending ? "Enviando mensaje..." : "Enviar mensaje"}
-                    </button>
+                    </Button>
                   </form>
                 )}
               </div>
             </Reveal>
-
           </div>
         </div>
       </section>
 
-      {/* Separador Wave desde Formulario (Azul) hacia Síguenos de cerca (Espuma) */}
-      <div style={{ lineHeight: 0, background: TOKENS.azulOlaOscuro }}>
-        <WaveDivider fromColor={TOKENS.azulOlaOscuro} toColor={TOKENS.espuma} />
-      </div>
+      <WaveDivider fromColor={TOKENS.azulOlaOscuro} toColor={TOKENS.espuma} />
 
-      {/* Sección Síguenos de cerca con Layout de 3 Pilares */}
       <SiguenosDeCerca />
 
-      {/* Separador Wave desde Síguenos de cerca hacia Mapa */}
-      <div style={{ lineHeight: 0, background: TOKENS.espuma }}>
-        <WaveDivider fromColor={TOKENS.espuma} toColor={TOKENS.cieloClaro} />
-      </div>
+      <WaveDivider fromColor={TOKENS.espuma} toColor={SECTION_BG.claro} />
 
-      {/* Sección de Mapa Embebido */}
-      <section style={{ background: TOKENS.cieloClaro, padding: "52px 32px 64px" }}>
+      {/* 3. Mapa — cierre de página */}
+      <section style={{ background: SECTION_BG.claro, padding: `${SPACE.xl}px ${SPACE.lg}px ${SPACE.xxl}px` }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <Reveal delay={150} style={{ textAlign: "center" }}>
             <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: "22px", color: TOKENS.noche, marginBottom: "4px" }}>

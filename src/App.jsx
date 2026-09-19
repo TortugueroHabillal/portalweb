@@ -85,11 +85,11 @@ export default function App() {
     switch (page) {
       case "home": return TOKENS.espuma;
       case "about": return TOKENS.arena;
-      case "convocatorias": return TOKENS.arena;
-      case "eventos": return TOKENS.arena;
+      case "convocatorias": return TOKENS.cieloClaro;
+      case "eventos": return TOKENS.espuma;
       case "visita": return TOKENS.espuma;
-      case "adopta": return TOKENS.arena;
-      case "dona": return TOKENS.arena;
+      case "adopta": return TOKENS.noche;
+      case "dona": return TOKENS.espuma;
       case "contacto": return TOKENS.cieloClaro;
       default: return TOKENS.arena;
     }

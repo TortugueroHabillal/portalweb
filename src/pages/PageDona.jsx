@@ -1,28 +1,27 @@
 import { useState } from "react";
-import { TOKENS, IMAGES } from "../theme";
+import { TOKENS, SECTION_BG, SPACE, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { Button } from "../components/Button";
 import { SectionHead } from "../components/Typography";
+import { HeroShock } from "../components/HeroShock";
 import { StripeEmbeddedCheckout } from "../components/StripeEmbeddedCheckout";
 import { StripeCheckoutHeader } from "../components/StripeCheckoutHeader";
 import { createDonationCheckout } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
-import { FourPillars } from "../components/FourPillars";
-import { WaveVectorBackground } from "../components/WaveVectorBackground";
+import { FourFrentesBento } from "../components/FourFrentesBento";
+import { ThinWaveVector } from "../components/ThinWaveVector";
 
-/* Banner emocional entre la pasarela y el impacto del donativo */
+const DONA_KPIS = [
+  { value: 9000, suffix: "+", label: "Nidos resguardados" },
+  { value: 100000, suffix: "+", label: "Crías liberadas" },
+];
+
+/* Banner emocional entre la pasarela y el impacto del donativo — mismo lenguaje que el banner de Adopta */
 function DonaEmotionalBanner() {
   return (
-    <section style={{ position: "relative", background: TOKENS.cieloClaro, overflow: "hidden" }}>
-      <div style={{ position: "relative", minHeight: "320px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <WaveDivider
-          fromColor={TOKENS.arena}
-          toColor={TOKENS.arena}
-          flip={true}
-          style={{ position: "absolute", top: "-2px", left: 0, right: 0, zIndex: 3 }}
-        />
-
+    <section style={{ position: "relative", background: TOKENS.noche, overflow: "hidden" }}>
+      <div style={{ position: "relative", minHeight: "360px", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <img
           src={IMAGES.hatchlingsToWaves}
           alt="Crías de tortuga marina llegando al mar"
@@ -36,20 +35,28 @@ function DonaEmotionalBanner() {
           }}
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(16,38,43,0.68) 0%, rgba(16,38,43,0.52) 100%)", zIndex: 1 }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(180deg, ${TOKENS.noche} 0%, rgba(16,38,43,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(0deg, ${TOKENS.noche} 0%, rgba(16,38,43,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
 
-        <div style={{ position: "relative", maxWidth: "800px", margin: "0 auto", padding: "72px 24px", textAlign: "center", zIndex: 2 }}>
+        <div style={{ position: "relative", maxWidth: "800px", margin: "0 auto", padding: "80px 24px", textAlign: "center", zIndex: 2 }}>
           <Reveal>
-            <h3 style={{ fontFamily: "'Fraunces', serif", color: "#ffffff", fontSize: "clamp(24px, 3.4vw, 36px)", lineHeight: 1.25, margin: 0, fontWeight: 700, textShadow: "0 4px 16px rgba(0,0,0,0.5)" }}>
+            <h3 style={{ fontFamily: "'Fraunces', serif", color: "#ffffff", fontSize: "clamp(24px, 3.4vw, 36px)", lineHeight: 1.25, margin: "0 0 32px", fontWeight: 700, textShadow: "0 4px 16px rgba(0,0,0,0.5)" }}>
               Cada donativo se convierte en una tortuga más que llega viva al mar.
             </h3>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", maxWidth: "360px", margin: "0 auto" }}>
+              {DONA_KPIS.map((k) => (
+                <div key={k.label} style={{ textAlign: "center" }}>
+                  <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 30px)", color: "#FFFFFF" }}>
+                    <AnimatedCounter value={k.value} suffix={k.suffix} />
+                  </div>
+                  <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "#A8BCB8", marginTop: "2px" }}>
+                    {k.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </Reveal>
         </div>
-
-        <WaveDivider
-          fromColor="transparent"
-          toColor={TOKENS.cieloClaro}
-          style={{ position: "absolute", bottom: "-2px", left: 0, right: 0, zIndex: 3 }}
-        />
       </div>
     </section>
   );
@@ -58,8 +65,16 @@ function DonaEmotionalBanner() {
 /* Sección de conclusión: refuerza el llamado a donar antes del footer */
 function DonaConclusion({ scrollToPago }) {
   return (
-    <section style={{ position: "relative", background: TOKENS.espuma, padding: "64px 24px 72px", overflow: "hidden", textAlign: "center" }}>
-      <WaveVectorBackground />
+    <section
+      style={{
+        position: "relative",
+        padding: "64px 24px 72px",
+        overflow: "hidden",
+        textAlign: "center",
+        background: `linear-gradient(rgba(220,234,227,0.92), rgba(220,234,227,0.92)), url("${IMAGES.liberacionCrowd}") center/cover`,
+      }}
+    >
+      <ThinWaveVector />
       <div style={{ maxWidth: "700px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <Reveal>
           <SectionHead
@@ -155,114 +170,71 @@ export function PageDona() {
   };
 
   return (
-    <div style={{ background: TOKENS.arena, minHeight: "100vh", position: "relative" }}>
-      {/* 1. Hero Shock impactante propio para la sección Donaciones / Captación */}
-      <section className="tt-hero-shock">
-        <div className="tt-hero-shock-msg" style={{ textAlign: "center", alignItems: "center" }}>
-          <Reveal from="left" distance={45}>
-            <span
-              style={{
-                color: TOKENS.cielo,
-                fontSize: "12px",
-                fontWeight: 700,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                marginBottom: "10px",
-                display: "block",
-              }}
-            >
-              APOYA NUESTRA CAUSA
-            </span>
+    <div style={{ position: "relative" }}>
+      {/* 1. Hero — mismo patrón oscuro dividido que el resto del sitio */}
+      <HeroShock image={IMAGES.laudcria} imageAlt="Campamento Tortuguero El Habillal - Cría Laúd" align="center">
+        <span
+          style={{
+            color: TOKENS.cielo,
+            fontSize: "12.5px",
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            marginBottom: SPACE.sm,
+            display: "block",
+          }}
+        >
+          Apoya nuestra causa
+        </span>
 
-            <h1
-              style={{
-                fontFamily: "'Fraunces', serif",
-                fontSize: "clamp(28px, 3.8vw, 48px)",
-                fontWeight: 700,
-                lineHeight: 1.12,
-                letterSpacing: "-0.01em",
-                color: TOKENS.atardecer,
-                margin: "0 0 16px",
-              }}
-            >
-              Tu Aporte se Convierte en Vida
-            </h1>
+        <h1
+          style={{
+            fontFamily: "'Fraunces', serif",
+            fontSize: "clamp(26px, 3.4vw, 44px)",
+            fontWeight: 700,
+            lineHeight: 1.2,
+            letterSpacing: "-0.01em",
+            color: "#ffffff",
+            margin: "0 0 18px",
+          }}
+        >
+          Tu aporte se convierte en <span style={{ color: TOKENS.coral }}>vida</span>.
+        </h1>
 
-            <p
-              style={{
-                fontFamily: "'Public Sans', sans-serif",
-                fontSize: "15.5px",
-                color: "#CBD9D6",
-                lineHeight: 1.6,
-                margin: "0 auto 24px",
-                maxWidth: "48ch",
-              }}
-            >Tu contribución nos permite fortalecer nuestras playas y lograr el nacimiento seguro de miles de crías de tortugas marinas en cada temporada de anidación en El Habillal.
-            </p>
+        <p
+          style={{
+            fontFamily: "'Public Sans', sans-serif",
+            fontSize: "15.5px",
+            color: "#E7F0EC",
+            lineHeight: 1.6,
+            margin: "0 auto 34px",
+            maxWidth: "48ch",
+          }}
+        >
+          Tu contribución fortalece nuestras playas y hace posible el nacimiento seguro de miles de crías cada temporada en El Habillal.
+        </p>
 
-            <div style={{ marginBottom: "24px", display: "flex", justifyContent: "center" }}>
-              <Button tone="shock" size="lg" onClick={scrollToPago}>Donar ahora</Button>
-            </div>
-
-            {/* KPIs Clave */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                gap: "16px",
-                borderTop: "1px solid rgba(255,255,255,0.18)",
-                paddingTop: "16px",
-                maxWidth: "420px",
-                margin: "0 auto",
-              }}
-            >
-              <div>
-                <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 30px)", color: TOKENS.cielo }}>
-                  <AnimatedCounter value={9000} suffix="+" />
-                </div>
-                <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "#A8BCB8", marginTop: "2px" }}>
-                  Nidos Resguardados
-                </div>
-              </div>
-
-              <div>
-                <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 30px)", color: TOKENS.atardecer }}>
-                  <AnimatedCounter value={100000} suffix="+" />
-                </div>
-                <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "#A8BCB8", marginTop: "2px" }}>
-                  Crías Liberadas
-                </div>
-              </div>
-
-              <div>
-                <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 30px)", color: TOKENS.cielo }}>
-                  3
-                </div>
-                <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "#A8BCB8", marginTop: "2px" }}>
-                  Especies Protegidas
-                </div>
-              </div>
-            </div>
-          </Reveal>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button tone="shock" size="lg" onClick={scrollToPago}>Donar ahora</Button>
         </div>
+      </HeroShock>
 
-        <div className="tt-hero-shock-media">
-          <img src={IMAGES.laudcria} alt="Campamento Tortuguero El Habillal - Cría Laúd" />
-        </div>
-      </section>
+      <WaveDivider fromColor={TOKENS.noche} toColor={TOKENS.espuma} />
 
       {/* 2. Módulo de Donación (Con espacio para Pasarela Digital Stripe) */}
       <section
         id="modulo-dona-pago"
         style={{
-          padding: "64px 24px 72px",
+          padding: "64px clamp(8px, 3vw, 24px) 64px",
           position: "relative",
           zIndex: 2,
           scrollMarginTop: "88px",
-          background: `linear-gradient(rgba(237,230,214,0.94), rgba(237,230,214,0.94)), url("${IMAGES.corralNidos}") center/cover`,
+          background: `linear-gradient(rgba(220,234,227,0.94), rgba(220,234,227,0.94)), url("${IMAGES.corralNidos}") center/cover`,
         }}
       >
-        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "18%", background: `linear-gradient(180deg, ${TOKENS.espuma} 0%, rgba(220,234,227,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "18%", background: `linear-gradient(0deg, ${TOKENS.espuma} 0%, rgba(220,234,227,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+        <div style={{ maxWidth: "720px", margin: "0 auto", position: "relative", zIndex: 2 }}>
           <Reveal>
             <SectionHead
               title="Elige el monto de tu donativo"
@@ -341,7 +313,7 @@ export function PageDona() {
         </div>
 
         {/* PASARELA DIGITAL (STRIPE): fuera de la tarjeta blanca, a todo lo ancho disponible de la página */}
-        <div style={{ maxWidth: "1100px", margin: "32px auto 0", padding: "0 clamp(0px, 2vw, 12px)" }}>
+        <div style={{ maxWidth: "1100px", margin: "32px auto 0", padding: "0 clamp(0px, 1.5vw, 8px)", position: "relative", zIndex: 2 }}>
           <Reveal>
             {!checkoutPayload && (
               <>
@@ -377,7 +349,7 @@ export function PageDona() {
               </>
             )}
 
-            {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
+            {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px", textAlign: "center" }}>{paymentError}</p>}
             {checkoutPayload ? (
               <StripeEmbeddedCheckout
                 checkoutKey={checkoutPayload.request_id}
@@ -398,7 +370,7 @@ export function PageDona() {
           </Reveal>
         </div>
 
-        <div style={{ maxWidth: "860px", margin: "24px auto 0", display: "flex", justifyContent: "center" }}>
+        <div style={{ maxWidth: "860px", margin: "24px auto 0", display: "flex", justifyContent: "center", position: "relative", zIndex: 2 }}>
           <Button
             tone="azul"
             style={{ width: "100%", maxWidth: "380px", borderRadius: "8px", justifyContent: "center", padding: "12px 18px", boxShadow: "none" }}
@@ -409,10 +381,13 @@ export function PageDona() {
         </div>
       </section>
 
+      <WaveDivider fromColor={TOKENS.espuma} toColor={TOKENS.noche} />
       <DonaEmotionalBanner />
+      <WaveDivider fromColor={TOKENS.noche} toColor={SECTION_BG.claro} />
 
-      <FourPillars compact eyebrow="En qué se usa tu donativo" title="Cuatro frentes que tu apoyo sostiene" background={TOKENS.cieloClaro} />
+      <FourFrentesBento compact eyebrow="En qué se usa tu donativo" title="Cuatro frentes que tu apoyo sostiene" background={SECTION_BG.claro} />
 
+      <WaveDivider fromColor={SECTION_BG.claro} toColor={TOKENS.espuma} />
       <DonaConclusion scrollToPago={scrollToPago} />
 
       {/* Modal / Sección de Datos Bancarios SPEI */}

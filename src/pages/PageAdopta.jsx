@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TOKENS, IMAGES } from "../theme";
+import { TOKENS, SECTION_BG, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { PhotoFrame } from "../components/PhotoFrame";
 import { Button } from "../components/Button";
@@ -10,8 +10,9 @@ import { StripeCheckoutHeader } from "../components/StripeCheckoutHeader";
 import { createAdoptionCheckout } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
 import { SectionHead } from "../components/Typography";
-import { WaveVectorBackground } from "../components/WaveVectorBackground";
 import { HeroShock } from "../components/HeroShock";
+import { CircleVectors } from "../components/CircleVectors";
+import { ThinWaveVector } from "../components/ThinWaveVector";
 
 const KPIS = [
   { value: 150, suffix: "+", label: "Nidos adoptados" },
@@ -61,7 +62,7 @@ function HeroAdopta() {
     <HeroShock image={IMAGES.liberacionSunsetPeople} imageAlt="Adopta un nido en El Habillal" align="center">
       <span
         style={{
-          color: TOKENS.cieloClaro,
+          color: TOKENS.cielo,
           fontSize: "12.5px",
           fontWeight: 700,
           letterSpacing: "0.12em",
@@ -76,15 +77,15 @@ function HeroAdopta() {
       <h1
         style={{
           fontFamily: "'Fraunces', serif",
-          fontSize: "clamp(26px, 3.4vw, 42px)",
+          fontSize: "clamp(26px, 3.4vw, 44px)",
           fontWeight: 700,
           lineHeight: 1.14,
           letterSpacing: "-0.01em",
-          color: "#6cc6ef",
+          color: "#ffffff",
           margin: "0 0 12px",
         }}
       >
-        Adopta un Nido y Cambia El Futuro del Océano
+        Adopta un nido y cambia el <span style={{ color: TOKENS.atardecer }}>futuro del océano</span>.
       </h1>
 
       <p
@@ -93,11 +94,11 @@ function HeroAdopta() {
           fontSize: "15px",
           color: "#E7F0EC",
           lineHeight: 1.55,
-          margin: "0 auto 20px",
+          margin: "0 auto 34px",
           maxWidth: "48ch",
         }}
       >
-        Tu adopción financia el resguardo, la incubación segura en vivero y la liberación de un nido completo. Recibirás el seguimiento directo y tu certificado oficial.
+        Dale una oportunidad a la naturaleza: Tu aporte de adopción de nido puede marcar la diferencia en la supervivencia de cientos de crías.
       </p>
 
       {/* Botón Verde Sólido Centrado: baja directo a la pasarela de pago */}
@@ -107,7 +108,7 @@ function HeroAdopta() {
         </Button>
       </div>
 
-      <div style={{ marginBottom: "22px" }}>
+      <div>
         <a
           href="https://wa.me/527531631707?text=Hola,%20quiero%20apadrinar%20un%20nido%20de%20esta%20temporada."
           target="_blank"
@@ -117,46 +118,15 @@ function HeroAdopta() {
           ¿Prefieres coordinarlo por WhatsApp? Escríbenos
         </a>
       </div>
-
-      {/* KPIs Centrados Sin Línea Divisoria */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "20px",
-          maxWidth: "360px",
-          margin: "0 auto",
-        }}
-      >
-        {KPIS.map((k) => (
-          <div key={k.label} style={{ textAlign: "center" }}>
-            <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 30px)", color: "#FFFFFF" }}>
-              <AnimatedCounter value={k.value} suffix={k.suffix} />
-            </div>
-            <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "#A8BCB8", marginTop: "2px" }}>
-              {k.label}
-            </div>
-          </div>
-        ))}
-      </div>
     </HeroShock>
   );
 }
 
-/* 2. Banner de Crías con bordes ondulados superior e inferior recortados directamente */
+/* 2. Banner de Crías — foto con overlay oscuro, decorado con círculos vectoriales (sin ola gruesa de recorte) */
 function CriasBanner() {
   return (
-    <section style={{ position: "relative", background: TOKENS.cieloClaro, overflow: "hidden" }}>
+    <section style={{ position: "relative", background: TOKENS.noche, overflow: "hidden" }}>
       <div style={{ position: "relative", minHeight: "360px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {/* Ola superior recortando la foto desde arriba con curvatura de ola */}
-        <WaveDivider
-          fromColor={TOKENS.cieloClaro}
-          toColor={TOKENS.cieloClaro}
-          flip={true}
-          style={{ position: "absolute", top: "-2px", left: 0, right: 0, zIndex: 3 }}
-        />
-
-        {/* Fotografía de fondo */}
         <img
           src={IMAGES.hatchlingCoconut}
           alt="Cría de tortuga marina en coco"
@@ -170,22 +140,29 @@ function CriasBanner() {
           }}
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(16,38,43,0.68) 0%, rgba(16,38,43,0.52) 100%)", zIndex: 1 }} />
+        {/* Difuminado hacia el tono noche en ambos bordes, para que la foto se funda con las olas delgadas vecinas */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(180deg, ${TOKENS.noche} 0%, rgba(16,38,43,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(0deg, ${TOKENS.noche} 0%, rgba(16,38,43,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
 
-        {/* Mensaje principal */}
         <div style={{ position: "relative", maxWidth: "800px", margin: "0 auto", padding: "80px 24px", textAlign: "center", zIndex: 2 }}>
           <Reveal>
-            <h3 style={{ fontFamily: "'Fraunces', serif", color: "#ffffff", fontSize: "clamp(24px, 3.4vw, 36px)", lineHeight: 1.25, margin: 0, fontWeight: 700, textShadow: "0 4px 16px rgba(0,0,0,0.5)" }}>
+            <h3 style={{ fontFamily: "'Fraunces', serif", color: "#ffffff", fontSize: "clamp(24px, 3.4vw, 36px)", lineHeight: 1.25, margin: "0 0 32px", fontWeight: 700, textShadow: "0 4px 16px rgba(0,0,0,0.5)" }}>
               Cada nido salvaguardado es una nueva esperanza para nuestras playas.
             </h3>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", maxWidth: "360px", margin: "0 auto" }}>
+              {KPIS.map((k) => (
+                <div key={k.label} style={{ textAlign: "center" }}>
+                  <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 30px)", color: "#FFFFFF" }}>
+                    <AnimatedCounter value={k.value} suffix={k.suffix} />
+                  </div>
+                  <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "#A8BCB8", marginTop: "2px" }}>
+                    {k.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </Reveal>
         </div>
-
-        {/* Ola inferior recortando la foto desde abajo hacia la pasarela de pago */}
-        <WaveDivider
-          fromColor="transparent"
-          toColor={TOKENS.espuma}
-          style={{ position: "absolute", bottom: "-2px", left: 0, right: 0, zIndex: 3 }}
-        />
       </div>
     </section>
   );
@@ -197,12 +174,12 @@ function Proceso() {
       id="proceso-adopcion"
       style={{
         position: "relative",
-        background: TOKENS.cieloClaro,
+        background: SECTION_BG.claro,
         padding: "64px 24px 72px",
         overflow: "hidden",
       }}
     >
-      <WaveVectorBackground />
+      <ThinWaveVector />
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 36px" }}>
@@ -276,12 +253,16 @@ function ModuloAdoptaPago() {
     <section
       id="modulo-adopcion-pago"
       style={{
-        padding: "64px 24px 64px",
+        padding: "64px clamp(8px, 3vw, 24px) 64px",
         position: "relative",
         scrollMarginTop: "88px",
         background: `linear-gradient(rgba(220,234,227,0.94), rgba(220,234,227,0.94)), url("${IMAGES.nestEggsHole}") center/cover`,
       }}
     >
+      {/* Difuminado hacia espuma sólido en ambos bordes — la foto de fondo no debe competir con las olas delgadas vecinas */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "18%", background: `linear-gradient(180deg, ${TOKENS.espuma} 0%, rgba(220,234,227,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "18%", background: `linear-gradient(0deg, ${TOKENS.espuma} 0%, rgba(220,234,227,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+
       <div style={{ maxWidth: "720px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <Reveal>
           <SectionHead
@@ -300,7 +281,7 @@ function ModuloAdoptaPago() {
       </div>
 
       {/* PASARELA DIGITAL (STRIPE): fuera de la tarjeta blanca, a todo lo ancho disponible de la página */}
-      <div style={{ maxWidth: "1100px", margin: "32px auto 0", padding: "0 clamp(0px, 2vw, 12px)" }}>
+      <div style={{ maxWidth: "1100px", margin: "32px auto 0", padding: "0 clamp(0px, 1.5vw, 8px)", position: "relative", zIndex: 2 }}>
         <Reveal>
           {!checkoutPayload && (
             <>
@@ -323,7 +304,7 @@ function ModuloAdoptaPago() {
             </>
           )}
 
-          {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
+          {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px", textAlign: "center" }}>{paymentError}</p>}
           {checkoutPayload ? (
             <StripeEmbeddedCheckout
               checkoutKey={checkoutPayload.request_id}
@@ -345,21 +326,21 @@ function ModuloAdoptaPago() {
 
 function CertificadoPreviewSection() {
   return (
-    <section style={{ background: TOKENS.cieloClaro, padding: "60px 24px" }}>
+    <section style={{ background: SECTION_BG.claro, padding: "48px 24px" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 36px" }}>
-          <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.verdeOscuro, textTransform: "uppercase", letterSpacing: "0.1em" }}>
-            Reconocimiento Oficial
+        <div style={{ textAlign: "center", maxWidth: "620px", margin: "0 auto 28px" }}>
+          <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12.5px", fontWeight: 700, color: TOKENS.verdeOscuro, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+            Reconocimiento oficial
           </span>
-          <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(26px, 3.4vw, 38px)", color: TOKENS.noche, margin: "6px 0 10px", fontWeight: 700 }}>
-            Tu apoyo es reconocido con un Certificado Digital
+          <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(22px, 2.8vw, 30px)", color: TOKENS.noche, margin: "6px 0 8px", fontWeight: 700 }}>
+            Tu apoyo es reconocido con un certificado digital
           </h2>
-          <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "15px", color: TOKENS.conchaSuave, margin: 0 }}>
+          <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14px", color: TOKENS.conchaSuave, margin: 0 }}>
             Al apadrinar un nido recibes tu documento digital personalizado con la ficha de la postura y la temporada.
           </p>
         </div>
 
-        <div style={{ marginTop: "24px", width: "100%", overflowX: "auto" }}>
+        <div style={{ marginTop: "20px", width: "100%", maxWidth: "560px", margin: "20px auto 0", overflowX: "auto" }}>
           <CertificateTemplate donorName="María Mercedes Pérez" temporada="Temporada 2026 - 2027" fecha="14 de Septiembre, 2026" />
         </div>
       </div>
@@ -457,7 +438,7 @@ function FAQSection() {
           <Reveal from="right">
             <div>
               <div style={{ marginBottom: "24px" }}>
-                <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.coral, textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "4px" }}>
+                <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: TOKENS.azulOlaOscuro, textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "4px" }}>
                   Dudas Frecuentes
                 </span>
                 <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(26px, 3.4vw, 38px)", color: TOKENS.noche, margin: 0, fontWeight: 700, lineHeight: 1.2 }}>
@@ -518,20 +499,61 @@ function FAQSection() {
   );
 }
 
+/* 5. Último llamado — banner motivacional de cierre, mismo idioma visual que CriasBanner */
+function FinalCTABanner() {
+  return (
+    <section style={{ position: "relative", background: TOKENS.noche, overflow: "hidden" }}>
+      <div style={{ position: "relative", minHeight: "380px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <img
+          src={IMAGES.criasAtardecer}
+          alt="Crías de tortuga marina rumbo al mar al atardecer"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(16,38,43,0.72) 0%, rgba(16,38,43,0.58) 100%)", zIndex: 1 }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(180deg, ${TOKENS.noche} 0%, rgba(16,38,43,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(0deg, ${TOKENS.noche} 0%, rgba(16,38,43,0) 100%)`, zIndex: 1, pointerEvents: "none" }} />
+        <CircleVectors variant="dark" />
+
+        <div style={{ position: "relative", maxWidth: "680px", margin: "0 auto", padding: "88px 24px", textAlign: "center", zIndex: 2 }}>
+          <Reveal>
+            <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12.5px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: TOKENS.cielo, marginBottom: "10px", display: "block" }}>
+              Aún estás a tiempo
+            </span>
+            <h2 style={{ fontFamily: "'Fraunces', serif", color: "#ffffff", fontSize: "clamp(26px, 3.4vw, 38px)", lineHeight: 1.25, margin: "0 0 14px", fontWeight: 700 }}>
+              Súmate a salvar a nuestras tortugas
+            </h2>
+            <p style={{ fontFamily: "'Public Sans', sans-serif", color: "#CBD9D6", fontSize: "15.5px", lineHeight: 1.6, margin: "0 0 26px" }}>
+              Adopta un nido de esta temporada y sigue su historia hasta el mar. Tu apoyo directo es la diferencia entre un nido protegido y uno perdido.
+            </p>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button tone="verde" size="lg" onClick={scrollToAdopcionPago}>Adopta un Nido Ahora</Button>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function PageAdopta() {
   return (
     <div>
       <HeroAdopta />
+      <WaveDivider fromColor={TOKENS.noche} toColor={SECTION_BG.claro} />
       <Proceso />
+      <WaveDivider fromColor={SECTION_BG.claro} toColor={TOKENS.noche} />
       <CriasBanner />
+      <WaveDivider fromColor={TOKENS.noche} toColor={TOKENS.espuma} />
 
       <ModuloAdoptaPago />
-      <div style={{ lineHeight: 0 }}><WaveDivider fromColor={TOKENS.espuma} toColor={TOKENS.cieloClaro} /></div>
+      <div style={{ lineHeight: 0 }}><WaveDivider fromColor={TOKENS.espuma} toColor={SECTION_BG.claro} /></div>
 
       <CertificadoPreviewSection />
-      <div style={{ lineHeight: 0 }}><WaveDivider fromColor={TOKENS.cieloClaro} toColor={TOKENS.arena} /></div>
+      <div style={{ lineHeight: 0 }}><WaveDivider fromColor={SECTION_BG.claro} toColor={TOKENS.arena} /></div>
 
       <FAQSection />
+      <WaveDivider fromColor={TOKENS.arena} toColor={TOKENS.noche} />
+      <FinalCTABanner />
     </div>
   );
 }

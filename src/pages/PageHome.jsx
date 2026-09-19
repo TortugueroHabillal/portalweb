@@ -11,11 +11,12 @@ import { ContactInfo } from "../components/ContactInfo";
 import { SponsorsStrip } from "../components/SponsorsStrip";
 import { TurtleSilhouette } from "../components/TurtleSilhouette";
 import { CircleVectors } from "../components/CircleVectors";
+import { ThinWaveVector } from "../components/ThinWaveVector";
 
 /* 1. Hero — gancho emocional + identidad + doble CTA */
 function Hero({ go }) {
   return (
-    <HeroShock image={IMAGES.herohero} imageAlt="Campamento Tortuguero">
+    <HeroShock image={IMAGES.herohero} imageAlt="Campamento Tortuguero" align="center">
       <span
         style={{
           display: "inline-block",
@@ -34,7 +35,7 @@ function Hero({ go }) {
         style={{
           fontFamily: "'Fraunces', serif",
           fontWeight: 700,
-          fontSize: "clamp(26px,3.2vw,44px)",
+          fontSize: "clamp(26px, 3.4vw, 44px)",
           lineHeight: 1.2,
           letterSpacing: "-0.01em",
           color: "#ffffff",
@@ -43,8 +44,8 @@ function Hero({ go }) {
       >
         Tú puedes ser la diferencia
         <br />
-        para que una tortuga{" "}
-        <span style={{ color: TOKENS.atardecer, fontWeight: 700 }}>llegue viva</span>{" "}
+        para que una tortuga llegue{" "}
+        <span style={{ color: TOKENS.atardecer, fontWeight: 700 }}>viva</span>{" "}
         al mar.
       </h1>
       <p
@@ -109,29 +110,12 @@ function TrustBar() {
   );
 }
 
-/* Vector de ola descendente — una sola curva suave con doble trazo, igual estilo que el separador de Nosotros; dos mitades que empalman en la costura */
-function DescendingWaveVector({ part }) {
-  const d = part === "top" ? "M85,0 C55,35 95,65 50,100" : "M50,0 C20,30 70,60 35,100";
-  const d2 = part === "top" ? "M92,-2 C60,34 102,66 53,104" : "M53,-4 C23,28 76,58 38,104";
-  return (
-    <svg
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none" }}
-      aria-hidden="true"
-    >
-      <path d={d} fill="none" stroke={TOKENS.azulOla} strokeOpacity="0.22" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
-      <path d={d2} fill="none" stroke={TOKENS.verde} strokeOpacity="0.16" strokeWidth="0.7" vectorEffect="non-scaling-stroke" />
-    </svg>
-  );
-}
-
 /* 3. Conexión emocional — especies que protege el campamento, en collage asimétrico */
 function TurtleSpecies() {
   return (
     <section className="tt-section-responsive" style={{ background: SECTION_BG.claro, padding: `${SPACE.xxl}px ${SPACE.lg}px`, position: "relative", overflow: "hidden" }}>
       <CircleVectors variant="light" />
-      <DescendingWaveVector part="top" />
+      <ThinWaveVector part="top" />
       <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <SectionHead
           title="Tres especies, una urgencia compartida"
@@ -253,7 +237,7 @@ const PILLARS = [
 function FourFrentesBento() {
   return (
     <section className="tt-section-responsive" style={{ background: SECTION_BG.claro, padding: `${SPACE.xxl}px ${SPACE.lg}px`, position: "relative", overflow: "hidden" }}>
-      <DescendingWaveVector part="bottom" />
+      <ThinWaveVector part="bottom" />
       <div style={{ position: "absolute", top: "10%", right: "-30px", width: "70px", height: "70px", borderRadius: "50%", background: "rgba(62,124,147,0.1)", zIndex: 0 }} aria-hidden="true" />
       <div style={{ position: "absolute", bottom: "6%", left: "4%", width: "14px", height: "14px", borderRadius: "50%", background: "rgba(76,107,79,0.2)", zIndex: 0 }} aria-hidden="true" />
       <div style={{ maxWidth: "1260px", margin: "0 auto", position: "relative", zIndex: 1 }}>
