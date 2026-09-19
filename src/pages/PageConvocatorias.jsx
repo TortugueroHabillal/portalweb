@@ -91,45 +91,33 @@ export function PageConvocatorias({ go }) {
         }}
       >
         <div style={{ maxWidth: "1180px", margin: "0 auto", position: "relative", zIndex: 2 }}>
-          {/* Contenedor Blanco Centrado ("Contamos con...") con amplio margen inferior (100px - 140px) para dejar la visualización inicial limpia en web y móvil */}
+          {/* Subtítulo Centrado ("Contamos con...") con amplio margen inferior para dejar la visualización inicial limpia en web y móvil */}
           <Reveal>
             <div
               style={{
                 textAlign: "center",
-                maxWidth: "900px",
-                margin: "0 auto clamp(90px, 14vh, 140px)",
+                maxWidth: "780px",
+                margin: "0 auto clamp(64px, 10vh, 96px)",
                 position: "relative",
                 zIndex: 2,
               }}
             >
-              <div
+              <h2
                 style={{
-                  background: "#ffffff",
-                  borderRadius: "20px",
-                  padding: "26px 38px",
-                  border: `1px solid ${TOKENS.arenaOscura}`,
-                  boxShadow: "0 12px 32px -8px rgba(16,38,43,0.12)",
-                  display: "inline-block",
-                  position: "relative",
-                  zIndex: 2,
+                  fontFamily: "'Fraunces', serif",
+                  fontWeight: 700,
+                  fontSize: "clamp(22px, 3vw, 30px)",
+                  color: TOKENS.noche,
+                  lineHeight: 1.35,
+                  margin: 0,
                 }}
               >
-                <p
-                  style={{
-                    fontFamily: "'Public Sans', sans-serif",
-                    fontSize: "17px",
-                    color: TOKENS.concha,
-                    lineHeight: 1.65,
-                    margin: 0,
-                  }}
-                >
-                  Contamos con convocatorias abiertas para{" "}
-                  <strong style={{ color: TOKENS.verde, fontWeight: 700 }}>Servicio Social</strong>,{" "}
-                  <strong style={{ color: TOKENS.azulOlaOscuro, fontWeight: 700 }}>Prácticas Profesionales</strong>{" "}
-                  y{" "}
-                  <strong style={{ color: TOKENS.coral, fontWeight: 700 }}>Voluntariado de Temporada</strong>.
-                </p>
-              </div>
+                Contamos con convocatorias abiertas para{" "}
+                <span style={{ color: TOKENS.verde }}>Servicio Social</span>,{" "}
+                <span style={{ color: TOKENS.azulOlaOscuro }}>Prácticas Profesionales</span>{" "}
+                y{" "}
+                <span style={{ color: TOKENS.coral }}>Voluntariado de Temporada</span>.
+              </h2>
             </div>
           </Reveal>
 
@@ -222,7 +210,7 @@ export function PageConvocatorias({ go }) {
                     background: "#ffffff",
                     borderRadius: "18px",
                     padding: "26px 26px",
-                    border: `1.5px dashed ${TOKENS.coral}`,
+                    border: "1px solid rgba(16, 38, 43, 0.08)",
                     boxShadow: "0 10px 24px -10px rgba(16,38,43,0.06)",
                   }}
                 >

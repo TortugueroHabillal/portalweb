@@ -435,18 +435,25 @@ export const GLOBAL_STYLE = `
   /* Cuatro Frentes — Filas responsivas */
   .tt-pillar-row { display: flex; align-items: center; gap: 44px; padding: 36px 0; border-top: 1px solid ${TOKENS.arenaOscura}; }
   .tt-pillar-row:first-child { border-top: none; }
-  .tt-pillar-row.tt-pillar-reverse { flex-direction: row-reverse; }
   .tt-pillar-photo { flex: 0 0 420px; width: 420px; max-width: 100%; }
   .tt-pillar-body { flex: 1; min-width: 0; }
 
   @media (max-width: 860px) {
-    .tt-pillar-row, .tt-pillar-row.tt-pillar-reverse {
+    .tt-pillar-row {
       flex-direction: column !important;
-      align-items: stretch;
+      align-items: center;
       gap: 18px;
       padding: 24px 0;
+      text-align: center;
     }
     .tt-pillar-photo { flex: none; width: 100%; }
+  }
+
+  /* Variante compacta de Cuatro Frentes (reutilizada fuera de Home, ej. Dona) */
+  .tt-pillar-row.tt-pillar-compact { gap: 24px; padding: 20px 0; }
+  .tt-pillar-compact .tt-pillar-photo { flex: 0 0 200px; width: 200px; }
+  @media (max-width: 860px) {
+    .tt-pillar-compact .tt-pillar-photo { width: 100%; }
   }
 
   /* Especies del Habillal — Layout de Tarjetas Grid */

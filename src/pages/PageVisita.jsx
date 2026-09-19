@@ -172,7 +172,7 @@ export function PageVisita() {
       </section>
 
       {/* 3. Sección del Formulario de Reserva (Sin mención de 'hasta 12 personas') */}
-      <section style={{ padding: "48px 24px 72px", position: "relative", zIndex: 2 }}>
+      <section style={{ padding: "48px 24px 72px", position: "relative", zIndex: 2, background: TOKENS.arena }}>
         <div style={{ maxWidth: "860px", margin: "0 auto" }}>
           <Reveal>
             <div

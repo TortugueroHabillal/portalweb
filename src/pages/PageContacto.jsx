@@ -109,7 +109,7 @@ function SiguenosDeCerca() {
                           {item.handle}
                         </div>
                       </div>
-                      <span style={{ fontSize: "15px", color: "#ffffff", fontWeight: 700 }}>→</span>
+
                     </a>
                   ))}
                 </div>
@@ -350,7 +350,7 @@ export function PageContacto() {
                         }}
                       >
                         <span>WhatsApp</span>
-                        <span>→</span>
+
                       </a>
                     </div>
                   </div>
@@ -473,7 +473,7 @@ export function PageContacto() {
                         textAlign: "center",
                       }}
                     >
-                      {sending ? "Enviando mensaje..." : "Enviar mensaje →"}
+                      {sending ? "Enviando mensaje..." : "Enviar mensaje"}
                     </button>
                   </form>
                 )}

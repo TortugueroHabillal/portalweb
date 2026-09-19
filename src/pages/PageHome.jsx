@@ -9,6 +9,8 @@ import { WaveDivider } from "../components/WaveDivider";
 import { MapEmbed } from "../components/MapEmbed";
 import { ContactInfo } from "../components/ContactInfo";
 import { SponsorsStrip } from "../components/SponsorsStrip";
+import { FourPillars } from "../components/FourPillars";
+import { WaveVectorBackground } from "../components/WaveVectorBackground";
 
 function Hero({ go }) {
   return (
@@ -40,8 +42,7 @@ function Hero({ go }) {
               maxWidth: "48ch",
             }}
           >
-            El Campamento Tortuguero "El Habillal" A.C. protege nidos, libera crías y forma a la comunidad de Lázaro Cárdenas en torno a la conservación de tortugas marinas.
-          </p>
+            Somos el Campamento Tortuguero "El Habillal" A.C., una asociación civil sin fines de lucro dedicada a la protección de la anidación de tortugas marinas en Lázaro Cárdenas, Michoacán.          </p>
           <p
             style={{
               fontFamily: "'Public Sans', sans-serif",
@@ -52,7 +53,7 @@ function Hero({ go }) {
               fontWeight: 500,
               maxWidth: "48ch",
             }}
-          >Tu apoyo hoy decide si una tortuga llega viva al mar mañana.</p>
+          >Con tu apoyo podemos salvar a nuestras tortugas.</p>
 
           <div className="tt-hero-buttons">
             <Button tone="shock" size="lg" onClick={() => go("dona")}>Dona ahora</Button>
@@ -70,14 +71,8 @@ function Hero({ go }) {
 function ImpactBar() {
   return (
     <section style={{ background: TOKENS.cieloClaro, padding: "48px 0 56px" }}>
-      <div className="tt-cols-4" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 32px" }}>
-        <StatCard value={9000} suffix="+" label="Nidos protegidos" tone="azul" />
-        <StatCard value={100000} suffix="+" label="Crías liberadas" tone="verde" />
-        <StatCard value={3} label="Especies protegidas" tone="coral" />
-        <StatCard value={13} label="Temporadas consecutivas" tone="azul" />
-      </div>
-      <Reveal delay={150}>
-        <div style={{ textAlign: "center", marginTop: "40px", padding: "0 20px" }}>
+      <Reveal>
+        <div style={{ textAlign: "center", padding: "0 20px" }}>
           <img
             src={LOGO_URL}
             alt="Logo Campamento Tortuguero El Habillal A.C."
@@ -99,78 +94,18 @@ function ImpactBar() {
           </h3>
         </div>
       </Reveal>
+      <div className="tt-cols-4" style={{ maxWidth: "1200px", margin: "40px auto 0", padding: "0 32px" }}>
+        <StatCard value={9000} suffix="+" label="Nidos protegidos" tone="azul" />
+        <StatCard value={100000} suffix="+" label="Crías liberadas" tone="verde" />
+        <StatCard value={3} label="Especies protegidas" tone="coral" />
+        <StatCard value={13} label="Temporadas consecutivas" tone="azul" />
+      </div>
     </section>
   );
 }
 
 function ThreePillars() {
-  const pillars = [
-    { t: "Patrullajes nocturnos", d: "Monitoreo constante de las playas durante la noche para identificar y proteger nidos de tortuga: localización, identificación de la especie y registro de datos para la investigación.", tone: "azul", src: IMAGES.turtleInfrared },
-    { t: "Reubicación de huevos", d: "Traslado de nidos a corrales de incubación seguros dentro del campamento, protegiéndolos de depredadores, el clima y la actividad humana, y aumentando las tasas de eclosión.", tone: "verde", src: IMAGES.nestEggsHole },
-    { t: "Liberación de crías", d: "Al emerger de los huevos, las crías se aclimatan brevemente antes de ser liberadas al mar, en un proceso cuidadoso que asegura su transición segura al océano.", tone: "coral", src: IMAGES.hatchlingsToWaves },
-    { t: "Educación ambiental", d: "Talleres y programas educativos para concientizar a la comunidad sobre la importancia de las tortugas marinas y promover la participación ciudadana en su protección.", tone: "atardecer", src: IMAGES.tortufest1edPlatica },
-  ];
-
-  const tagMap = {
-    azul: { bg: TOKENS.azulOla, fg: "#fff", textColor: TOKENS.azulOlaOscuro },
-    verde: { bg: TOKENS.verde, fg: "#fff", textColor: TOKENS.verdeOscuro },
-    coral: { bg: TOKENS.coral, fg: "#fff", textColor: TOKENS.coralOscuro },
-    atardecer: { bg: TOKENS.atardecer, fg: "#fff", textColor: TOKENS.atardecerOscuro },
-  };
-
-  return (
-    <section className="tt-section-responsive" style={{ padding: "56px 32px", background: TOKENS.arena }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        <SectionHead eyebrow="Qué hacemos" title="Cuatro frentes, un mismo objetivo" titleMaxWidth="20ch" />
-        <div style={{ marginTop: "24px" }}>
-          {pillars.map((c, i) => {
-            const isEven = i % 2 === 0;
-            const styleInfo = tagMap[c.tone];
-            return (
-              <Reveal key={c.t} delay={i * 90} from={isEven ? "left" : "right"}>
-                <div className={`tt-pillar-row ${!isEven ? "tt-pillar-reverse" : ""}`}>
-                  <div className="tt-pillar-photo">
-                    <PhotoFrame shape="wide" tone={c.tone} src={c.src} video={c.video} style={{ aspectRatio: "16/10", borderRadius: 0 }} />
-                  </div>
-                  <div className="tt-pillar-body">
-                    <span
-                      className="tag"
-                      style={{
-                        background: styleInfo.bg,
-                        color: styleInfo.fg,
-                        fontSize: "12px",
-                        fontWeight: 700,
-                        letterSpacing: "0.06em",
-                        textTransform: "uppercase",
-                        padding: "6px 14px",
-                        borderRadius: 0,
-                        display: "inline-block",
-                      }}
-                    >
-                      {c.t}
-                    </span>
-                    <p
-                      style={{
-                        fontFamily: "'Public Sans', sans-serif",
-                        fontSize: "15px",
-                        color: styleInfo.textColor,
-                        fontWeight: 700,
-                        lineHeight: 1.6,
-                        margin: "12px 0 0",
-                        maxWidth: "62ch",
-                      }}
-                    >
-                      {c.d}
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
+  return <FourPillars compact />;
 }
 
 function TurtleSpecies() {
@@ -211,8 +146,9 @@ function TurtleSpecies() {
   };
 
   return (
-    <section className="tt-section-responsive" style={{ background: TOKENS.cieloClaro, padding: "64px 32px" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <section className="tt-section-responsive" style={{ background: TOKENS.cieloClaro, padding: "64px 32px", position: "relative", overflow: "hidden" }}>
+      <WaveVectorBackground style={{ transform: "translateY(60px)" }} />
+      <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <SectionHead eyebrow="Especies del Habillal" eyebrowColor={TOKENS.azulOlaOscuro} title="Conoce a las tortugas del Habillal" titleMaxWidth="22ch" />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "36px", marginTop: "40px" }}>
           {species.map((s, i) => {

@@ -10,6 +10,7 @@ import { StripeCheckoutHeader } from "../components/StripeCheckoutHeader";
 import { createAdoptionCheckout } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
 import { SectionHead } from "../components/Typography";
+import { WaveVectorBackground } from "../components/WaveVectorBackground";
 
 const KPIS = [
   { value: 150, suffix: "+", label: "Nidos adoptados" },
@@ -25,7 +26,7 @@ const PASOS = [
   {
     t: "¿Qué haremos?",
     color: TOKENS.verdeOscuro,
-    d: "Nos encargaremos de cuidar tu nido durante el periodo de incubación hasta su nacimiento, y estaremos en contacto contigo para que puedas estar presente a la hora de liberar sus crías. Además, recibes tu certificado digital de apadrinamiento.",
+    d: "Nos encargaremos de cuidar tu nido durante el periodo de incubación hasta su nacimiento, y estaremos en contacto contigo para que puedas estar presente a la hora de liberar sus crías.",
   },
   {
     t: "¿Y si no puedo asistir?",
@@ -261,39 +262,7 @@ function Proceso() {
         overflow: "hidden",
       }}
     >
-      {/* Vector de olas en el fondo (wave vector) */}
-      <svg
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-          zIndex: 1,
-        }}
-        viewBox="0 0 1000 600"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <path
-          d="M-50,80 C180,260 380,20 600,180 C800,320 1050,110 1050,110 C1050,110 820,380 600,250 C380,120 180,330 -50,150 Z"
-          fill={TOKENS.cielo}
-          opacity="0.28"
-        />
-        <path
-          d="M-20,160 C200,330 420,70 650,230 C850,340 1020,190 1020,190"
-          fill="none"
-          stroke={TOKENS.azulOla}
-          strokeWidth="3.5"
-          opacity="0.28"
-        />
-        <path
-          d="M-20,110 C240,280 440,30 700,190 C880,280 1020,160 1020,160"
-          fill="none"
-          stroke={TOKENS.coral}
-          strokeWidth="2.5"
-          opacity="0.38"
-        />
-      </svg>
+      <WaveVectorBackground />
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 36px" }}>
@@ -364,16 +333,22 @@ function ModuloAdoptaPago() {
   };
 
   return (
-    <section id="modulo-adopcion-pago" style={{ padding: "64px 24px 64px", background: TOKENS.espuma, position: "relative", scrollMarginTop: "88px" }}>
-      <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+    <section
+      id="modulo-adopcion-pago"
+      style={{
+        padding: "64px 24px 64px",
+        position: "relative",
+        scrollMarginTop: "88px",
+        background: `linear-gradient(rgba(220,234,227,0.94), rgba(220,234,227,0.94)), url("${IMAGES.nestEggsHole}") center/cover`,
+      }}
+    >
+      <div style={{ maxWidth: "720px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <Reveal>
           <SectionHead
-            eyebrow="Temporada activa"
-            eyebrowColor={TOKENS.verdeOscuro}
             title="Adopta un nido de la temporada activa"
             titleMaxWidth="22ch"
           >
-            <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", margin: "14px 0 0" }}>
+            <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "17.5px", margin: "14px 0 0" }}>
               Cuota fija de aportación: <strong>$220 MXN</strong> por una adopción virtual.
             </p>
           </SectionHead>
