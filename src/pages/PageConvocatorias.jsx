@@ -353,7 +353,7 @@ export function PageConvocatorias({ go }) {
                 fontWeight: 700,
                 fontFamily: "'Public Sans', sans-serif",
                 cursor: "pointer",
-                boxShadow: "0 6px 18px rgba(226,83,31,0.3)",
+                boxShadow: "none",
                 transition: "transform 0.2s, background 0.2s",
               }}
               onMouseOver={(e) => {

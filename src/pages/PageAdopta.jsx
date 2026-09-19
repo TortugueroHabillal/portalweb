@@ -48,6 +48,10 @@ const FAQS = [
   },
 ];
 
+function scrollToAdopcionPago() {
+  document.getElementById("modulo-adopcion-pago")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 /* 1. Hero de Adopta: Imagen abarcan toda la mitad derecha en Web y arriba sin padding en Móvil */
 function HeroAdopta() {
   return (
@@ -127,17 +131,21 @@ function HeroAdopta() {
               Tu adopción financia el resguardo, la incubación segura en vivero y la liberación de un nido completo. Recibirás el seguimiento directo y tu certificado oficial.
             </p>
 
-            {/* Botón Verde Sólido Centrado */}
-            <div style={{ marginBottom: "22px", textAlign: "center", display: "flex", justifyContent: "center" }}>
+            {/* Botón Verde Sólido Centrado: baja directo a la pasarela de pago */}
+            <div style={{ marginBottom: "14px", textAlign: "center", display: "flex", justifyContent: "center" }}>
+              <Button tone="verde" size="lg" style={{ borderRadius: "999px", padding: "12px 32px", fontSize: "14.5px" }} onClick={scrollToAdopcionPago}>
+                Adopta un Nido Ahora
+              </Button>
+            </div>
+
+            <div style={{ marginBottom: "22px", textAlign: "center" }}>
               <a
                 href="https://wa.me/527531631707?text=Hola,%20quiero%20apadrinar%20un%20nido%20de%20esta%20temporada."
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ textDecoration: "none", display: "inline-block" }}
+                style={{ color: "#CBD9D6", fontFamily: "'Public Sans', sans-serif", fontSize: "12.5px", textDecoration: "underline" }}
               >
-                <Button tone="verde" size="lg" style={{ borderRadius: "999px", padding: "12px 32px", fontSize: "14.5px" }}>
-                  Adopta un Nido Ahora
-                </Button>
+                ¿Prefieres coordinarlo por WhatsApp? Escríbenos
               </a>
             </div>
 
@@ -355,7 +363,7 @@ function ModuloAdoptaPago() {
   };
 
   return (
-    <section style={{ padding: "56px 24px 64px", background: TOKENS.espuma, position: "relative" }}>
+    <section id="modulo-adopcion-pago" style={{ padding: "56px 24px 64px", background: TOKENS.espuma, position: "relative", scrollMarginTop: "88px" }}>
       <div style={{ maxWidth: "860px", margin: "0 auto" }}>
         <Reveal>
           <div
@@ -390,22 +398,26 @@ function ModuloAdoptaPago() {
                 boxShadow: "0 16px 38px -30px rgba(15,23,42,.55)",
               }}
             >
-              <StripeCheckoutHeader />
+              {!checkoutPayload && (
+                <>
+                  <StripeCheckoutHeader />
 
-              <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
-                <div>
-                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
-                    Nombre del Adoptante
-                  </label>
-                  <input type="text" placeholder="Para tu certificado digital" value={donorName} onChange={(e) => setDonorName(e.target.value)} style={inputStyle} />
-                </div>
-                <div>
-                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
-                    Correo Electrónico
-                  </label>
-                  <input type="email" placeholder="Para enviarte la ficha del nido" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} style={inputStyle} />
-                </div>
-              </div>
+                  <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
+                    <div>
+                      <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                        Nombre del Adoptante
+                      </label>
+                      <input type="text" placeholder="Para tu certificado digital" value={donorName} onChange={(e) => setDonorName(e.target.value)} style={inputStyle} />
+                    </div>
+                    <div>
+                      <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                        Correo Electrónico
+                      </label>
+                      <input type="email" placeholder="Para enviarte la ficha del nido" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} style={inputStyle} />
+                    </div>
+                  </div>
+                </>
+              )}
 
               {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
               {checkoutPayload ? (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TOKENS } from "../theme";
+import { IMAGES, TOKENS } from "../theme";
 import { getAdoptionCheckoutStatus, getDonationCheckoutStatus } from "../lib/payments";
 
 function money(value, currency = "MXN") {
@@ -40,9 +40,18 @@ export function PaymentSuccessPage({ type }) {
   }, [isDonation, sessionId]);
 
   const confirmed = result?.payment_status === "PAID" && (isDonation || Boolean(result?.nest_code));
+  const backgroundPhoto = isDonation ? IMAGES.nightPatrolTeam : IMAGES.liberacionCrowd;
   return (
-    <main style={{ minHeight: "70vh", display: "grid", placeItems: "center", padding: "56px 20px", background: TOKENS.espuma }}>
-      <section style={{ width: "100%", maxWidth: "620px", padding: "clamp(26px, 5vw, 42px)", border: `1px solid ${confirmed ? TOKENS.verde : TOKENS.arenaOscura}`, borderRadius: "8px", background: "#fff", boxShadow: "0 24px 55px -35px rgba(16,38,43,.55)", textAlign: "center" }}>
+    <main
+      style={{
+        minHeight: "70vh",
+        display: "grid",
+        placeItems: "center",
+        padding: "56px 20px",
+        background: `linear-gradient(180deg, rgba(16,38,43,0.82), rgba(16,38,43,0.88)), url("${backgroundPhoto}") center/cover`,
+      }}
+    >
+      <section style={{ width: "100%", maxWidth: "620px", padding: "clamp(26px, 5vw, 42px)", border: `1px solid ${confirmed ? TOKENS.verde : TOKENS.arenaOscura}`, borderRadius: "8px", background: "rgba(255,255,255,0.97)", backdropFilter: "blur(6px)", boxShadow: "0 24px 55px -35px rgba(16,38,43,.55)", textAlign: "center" }}>
         {confirmed ? <>
           <div aria-hidden="true" style={{ width: "54px", height: "54px", display: "grid", placeItems: "center", margin: "0 auto 18px", borderRadius: "50%", background: "#EAF6ED", color: TOKENS.verdeOscuro, fontSize: "28px", fontWeight: 900 }}>✓</div>
           <h1 style={{ margin: "0 0 10px", color: TOKENS.noche, fontFamily: "'Fraunces', serif", fontSize: "clamp(28px, 5vw, 38px)" }}>{isDonation ? "Donativo confirmado" : "Adopción confirmada"}</h1>

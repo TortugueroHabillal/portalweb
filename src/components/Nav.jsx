@@ -90,7 +90,7 @@ export function Nav({ current, setCurrent }) {
 
         <div className="tt-nav2-logo-wrap">
           <button className="tt-nav2-logo" onClick={() => setCurrent("home")} aria-label="Ir a inicio">
-            <img src={LOGO_URL} alt="Campamento La Habillal" />
+            <img src={LOGO_URL} alt="Campamento Tortuguero El Habillal" />
           </button>
         </div>
 

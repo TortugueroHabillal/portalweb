@@ -37,6 +37,10 @@ export function PageDona() {
   const processingContributionMinor = Math.max(0, amountMinor - baseAmountMinor);
   const activeAmount = `$${(amountMinor / 100).toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
 
+  const scrollToPago = () => {
+    document.getElementById("modulo-dona-pago")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const handleCopyCLABE = () => {
     navigator.clipboard?.writeText("012 180 0150 1234 5678");
     setCopied(true);
@@ -134,6 +138,10 @@ export function PageDona() {
             >Tu contribución nos permite fortalecer nuestras playas y lograr el nacimiento seguro de miles de crías de tortugas marinas en cada temporada de anidación en El Habillal.
             </p>
 
+            <div style={{ marginBottom: "24px" }}>
+              <Button tone="shock" size="lg" onClick={scrollToPago}>Donar ahora</Button>
+            </div>
+
             {/* KPIs Clave */}
             <div
               style={{
@@ -181,7 +189,7 @@ export function PageDona() {
       </section>
 
       {/* 2. Módulo de Donación (Con espacio para Pasarela Digital Stripe) */}
-      <section style={{ padding: "56px 24px 72px", position: "relative", zIndex: 2 }}>
+      <section id="modulo-dona-pago" style={{ padding: "56px 24px 72px", position: "relative", zIndex: 2, scrollMarginTop: "88px" }}>
         <div style={{ maxWidth: "860px", margin: "0 auto" }}>
           <Reveal>
             <div
@@ -283,35 +291,39 @@ export function PageDona() {
                   boxShadow: "0 16px 38px -30px rgba(15,23,42,.55)",
                 }}
               >
-                <StripeCheckoutHeader />
+                {!checkoutPayload && (
+                  <>
+                    <StripeCheckoutHeader />
 
-                <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
-                  <div>
-                    <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
-                      Nombre del Donador
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Tu nombre completo"
-                      value={donorName}
-                      onChange={(e) => setDonorName(e.target.value)}
-                      style={inputStyle}
-                    />
-                  </div>
+                    <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
+                      <div>
+                        <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                          Nombre del Donador
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Tu nombre completo"
+                          value={donorName}
+                          onChange={(e) => setDonorName(e.target.value)}
+                          style={inputStyle}
+                        />
+                      </div>
 
-                  <div>
-                    <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
-                      Correo Electrónico
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="tu@correo.com"
-                      value={donorEmail}
-                      onChange={(e) => setDonorEmail(e.target.value)}
-                      style={inputStyle}
-                    />
-                  </div>
-                </div>
+                      <div>
+                        <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                          Correo Electrónico
+                        </label>
+                        <input
+                          type="email"
+                          placeholder="tu@correo.com"
+                          value={donorEmail}
+                          onChange={(e) => setDonorEmail(e.target.value)}
+                          style={inputStyle}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 {paymentError && <p role="alert" style={{ color: "#B42318", fontSize: "13px", fontWeight: 600, margin: "0 0 12px" }}>{paymentError}</p>}
                 {checkoutPayload ? (
@@ -323,7 +335,7 @@ export function PageDona() {
                 ) : (
                   <Button
                     tone="verde"
-                    style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px", boxShadow: "0 10px 24px -8px rgba(76,107,79,0.4)" }}
+                    style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }}
                     onClick={startDonationCheckout}
                   >
                     Continuar al pago seguro ({activeAmount})

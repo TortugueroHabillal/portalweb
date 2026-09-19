@@ -5,8 +5,8 @@ export function CertificateTemplate({
   donorName = "María Mercedes Pérez",
   temporada = "Temporada 2026",
   fecha = "14 de Septiembre de 2026",
-  responsableNombre = "Alonso Ramírez Galeana",
-  responsableCargo = "Responsable de Conservación y Dirección",
+  responsableNombre = "", // Se completa hasta que exista el envío del certificado real por correo
+  responsableCargo = "",
   signatureSrc = null, // Se puede pasar la ruta del PNG de la firma cuando esté disponible
 }) {
   return (
@@ -193,11 +193,11 @@ export function CertificateTemplate({
                       </div>
                     )}
                   </div>
-                  <div style={{ borderTop: `1px solid ${TOKENS.noche}`, paddingTop: "4px" }}>
-                    <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13.5px", fontWeight: 700, color: TOKENS.noche, display: "block" }}>
+                  <div style={{ borderTop: `1px solid ${TOKENS.noche}`, paddingTop: "4px", minHeight: "34px" }}>
+                    <span style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13.5px", fontWeight: 700, color: TOKENS.noche, display: "block", minHeight: "17px" }}>
                       {responsableNombre}
                     </span>
-                    <span style={{ fontSize: "11px", color: TOKENS.conchaSuave }}>{responsableCargo}</span>
+                    <span style={{ fontSize: "11px", color: TOKENS.conchaSuave, display: "block", minHeight: "14px" }}>{responsableCargo}</span>
                   </div>
                 </div>
               </div>

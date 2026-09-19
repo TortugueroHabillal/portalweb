@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FONT_IMPORT, GLOBAL_STYLE, TOKENS } from "./theme";
 import { Nav } from "./components/Nav";
 import { Footer } from "./components/Footer";
@@ -13,22 +13,46 @@ import { PageDona } from "./pages/PageDona";
 import { PageContacto } from "./pages/PageContacto";
 import { PaymentSuccessPage } from "./pages/PaymentSuccessPage";
 
-export default function App() {
-  const getInitialPage = () => {
-    const path = window.location.pathname.replace(/^\//, "").toLowerCase();
-    if (path === "dona/exito") return "donation-success";
-    if (path === "adopta/exito") return "adoption-success";
-    const valid = ["home", "about", "convocatorias", "eventos", "visita", "adopta", "dona", "contacto"];
-    return valid.includes(path) ? path : "home";
-  };
+function getInitialPage() {
+  const path = window.location.pathname.replace(/^\//, "").toLowerCase();
+  if (path === "dona/exito") return "donation-success";
+  if (path === "adopta/exito") return "adoption-success";
+  const valid = ["home", "about", "convocatorias", "eventos", "visita", "adopta", "dona", "contacto"];
+  return valid.includes(path) ? path : "home";
+}
 
+function pathForPage(page) {
+  switch (page) {
+    case "home": return "/";
+    case "donation-success": return "/dona/exito";
+    case "adoption-success": return "/adopta/exito";
+    default: return `/${page}`;
+  }
+}
+
+export default function App() {
   const [page, setPage] = useState(getInitialPage);
+
+  useEffect(() => {
+    const onPopState = () => setPage(getInitialPage());
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  const go = (nextPage) => {
+    setPage(nextPage);
+    const path = pathForPage(nextPage);
+    if (window.location.pathname !== path) {
+      window.history.pushState({ page: nextPage }, "", path);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const renderPage = () => {
     switch (page) {
-      case "home": return <PageHome go={setPage} />;
+      case "home": return <PageHome go={go} />;
       case "about": return <PageAbout />;
-      case "convocatorias": return <PageConvocatorias go={setPage} />;
+      case "convocatorias": return <PageConvocatorias go={go} />;
       case "eventos": return <PageEventos />;
       case "visita": return <PageVisita />;
       case "adopta": return <PageAdopta />;
@@ -58,10 +82,10 @@ export default function App() {
     <div style={{ fontFamily: "'Public Sans', sans-serif" }}>
       <style>{FONT_IMPORT}</style>
       <style>{GLOBAL_STYLE}</style>
-      <Nav current={page === "donation-success" ? "dona" : page === "adoption-success" ? "adopta" : page} setCurrent={setPage} />
+      <Nav current={page === "donation-success" ? "dona" : page === "adoption-success" ? "adopta" : page} setCurrent={go} />
       {renderPage()}
-      {page === "home" && <FinalCTA go={setPage} />}
-      <Footer go={setPage} fromColor={getFooterFromColor()} />
+      {page === "home" && <FinalCTA go={go} />}
+      <Footer go={go} fromColor={getFooterFromColor()} />
     </div>
   );
 }

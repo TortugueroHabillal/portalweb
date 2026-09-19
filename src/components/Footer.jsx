@@ -47,10 +47,7 @@ export function Footer({ go, fromColor = TOKENS.arena }) {
             {links.map((l) => (
               <button
                 key={l.route}
-                onClick={() => {
-                  if (go) go(l.route);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
+                onClick={() => go && go(l.route)}
                 style={{
                   background: "none",
                   border: "none",

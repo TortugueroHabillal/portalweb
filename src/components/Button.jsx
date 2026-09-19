@@ -24,8 +24,8 @@ export function Button({ children, tone = "coral", onClick, size = "md", style }
         border,
         color,
         cursor: "pointer",
-        boxShadow: tone === "coral" ? "0 8px 20px -8px rgba(190,106,74,0.55)" : tone === "shock" ? "0 10px 26px -8px rgba(226,83,31,0.65)" : "none",
-        transition: "transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease",
+        boxShadow: "none",
+        transition: "transform 0.18s ease, opacity 0.18s ease",
         ...style,
       }}
       onMouseEnter={(e) => {
