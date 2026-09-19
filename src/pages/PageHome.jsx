@@ -466,7 +466,8 @@ const TURTLE_PATH = [
   { top: "96.5%", left: "27%", size: 27, rotate: -9 },
   { top: "95%", left: "45%", size: 20, rotate: 10 },
   { top: "96%", left: "63%", size: 29, rotate: -12 },
-  { top: "98%", left: "80%", size: 16, rotate: 7 },
+  { top: "97.5%", left: "76%", size: 22, rotate: 5 },
+  { top: "98.5%", left: "88%", size: 16, rotate: 7 },
 ];
 
 function NextEvent({ go }) {
