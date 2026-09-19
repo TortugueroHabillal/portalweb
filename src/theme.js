@@ -27,9 +27,44 @@ export const TOKENS = {
   cieloOscuro: "#8FC2D1",
   azulOla: "#3E7C93",
   azulOlaOscuro: "#2C5C6D",
-  // acento de choque — solo para el CTA del hero, tomado del propio atardecer del video
+  // acento de choque — reservado para CTAs y remarcados importantes, nunca para vectores decorativos
   atardecer: "#E2531F",
   atardecerOscuro: "#A63C15",
+  // verde marino — variación de acento para vectores/acentos decorativos, sin recurrir al naranja
+  verdeMar: "#1F6F5C",
+  verdeMarOscuro: "#175747",
+};
+
+/* ---------- Escala de espaciado (padding/margin de secciones) ----------
+   Usar siempre uno de estos valores en vez de números sueltos.
+*/
+export const SPACE = {
+  xs: 8,
+  sm: 16,
+  md: 24,
+  lg: 32,
+  xl: 48,
+  xxl: 64,
+  xxxl: 96,
+};
+
+/* ---------- Escala de radios (solo 3 valores en todo el sitio) ----------
+   none  -> fotos/recortes editoriales (sin esquinas redondeadas)
+   card  -> tarjetas, contenedores, inputs
+   pill  -> botones y etiquetas tipo cápsula
+*/
+export const RADIUS = {
+  none: 0,
+  card: 16,
+  pill: 999,
+};
+
+/* ---------- Alternancia de fondo de sección (2 tonos casi-blancos, sin hex sueltos) ----------
+   Cada sección de página elige "claro" o "arena" y se alternan en el orden en que aparecen.
+*/
+export const SECTION_BG = {
+  claro: "#EAF5F8", // = cieloClaro
+  arena: "#EDE6D6", // = arena
 };
 
 /* ---------- Material real del campamento (fotos y video subidos a /public) ---------- */
@@ -149,6 +184,11 @@ export const GLOBAL_STYLE = `
   .tt-wave-scroll { animation: ttWaveScroll 18s linear infinite; }
   .tt-turtle-drift { animation: ttDriftX 14s ease-in-out infinite; }
   .tt-turtle-crawl { position: absolute; left: -18%; animation: ttCrawl 28s linear infinite; }
+
+  /* Brazada de aletas — pequeña rotación de vaivén alrededor del punto de apoyo de cada aleta */
+  @keyframes ttFlipperStroke { 0%, 100% { transform: rotate(-14deg); } 50% { transform: rotate(14deg); } }
+  .tt-flipper { transform-origin: 0 0; animation: ttFlipperStroke 0.9s ease-in-out infinite; }
+  .tt-flipper-back { animation-duration: 0.9s; }
 
   .tt-photo-zoom { cursor: pointer; }
   .tt-photo-zoom .tt-photo-media { transition: transform 0.6s cubic-bezier(0.22,1,0.36,1); }
@@ -284,6 +324,16 @@ export const GLOBAL_STYLE = `
     object-position: right center;
     display: block;
   }
+  /* Difumina el borde inferior de la foto hacia el tono del hero — evita el corte duro donde choca la ola divisora */
+  .tt-hero-shock-fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 38%;
+    background: linear-gradient(180deg, rgba(16,38,43,0) 0%, ${TOKENS.noche} 100%);
+    pointer-events: none;
+  }
   .tt-hero-buttons { display: flex; gap: 14px; flex-wrap: nowrap; align-items: center; }
 
   @media (max-width: 900px) {
@@ -411,6 +461,12 @@ export const GLOBAL_STYLE = `
     border: 1px solid ${TOKENS.arenaOscura};
     background: #fff;
   }
+  .tt-marquee-container.tt-marquee-full {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    max-width: 100vw;
+  }
   .tt-marquee-track {
     display: flex;
     width: max-content;
@@ -432,49 +488,181 @@ export const GLOBAL_STYLE = `
     100% { transform: translateX(-33.3333%); }
   }
 
-  /* Cuatro Frentes — Filas responsivas */
-  .tt-pillar-row { display: flex; align-items: center; gap: 44px; padding: 36px 0; border-top: 1px solid ${TOKENS.arenaOscura}; }
+  /* Cuatro Frentes — Filas responsivas: cada pareja foto+texto se mantiene unida y alterna de lado */
+  .tt-pillar-row { display: flex; align-items: center; justify-content: flex-start; gap: 44px; padding: 36px 0; border-top: 1px solid ${TOKENS.arenaOscura}; }
   .tt-pillar-row:first-child { border-top: none; }
+  .tt-pillar-row.tt-pillar-align-right { justify-content: flex-end; }
   .tt-pillar-photo { flex: 0 0 420px; width: 420px; max-width: 100%; }
-  .tt-pillar-body { flex: 1; min-width: 0; }
+  .tt-pillar-body { flex: 0 1 480px; min-width: 0; max-width: 480px; }
 
   @media (max-width: 860px) {
-    .tt-pillar-row {
+    .tt-pillar-row, .tt-pillar-row.tt-pillar-align-right {
       flex-direction: column !important;
       align-items: center;
+      justify-content: center !important;
       gap: 18px;
       padding: 24px 0;
       text-align: center;
     }
     .tt-pillar-photo { flex: none; width: 100%; }
+    .tt-pillar-body { max-width: 100%; }
   }
 
   /* Variante compacta de Cuatro Frentes (reutilizada fuera de Home, ej. Dona) */
   .tt-pillar-row.tt-pillar-compact { gap: 24px; padding: 20px 0; }
   .tt-pillar-compact .tt-pillar-photo { flex: 0 0 200px; width: 200px; }
+  .tt-pillar-compact .tt-pillar-body { max-width: 340px; }
   @media (max-width: 860px) {
     .tt-pillar-compact .tt-pillar-photo { width: 100%; }
+    .tt-pillar-compact .tt-pillar-body { max-width: 100%; }
   }
 
-  /* Especies del Habillal — Layout de Tarjetas Grid */
-  .tt-species-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .tt-species-card {
-    background: #ffffff;
-    border-radius: 18px;
-    box-shadow: 0 10px 30px -15px rgba(16,38,43,0.12);
-    border: 1px solid rgba(16,38,43,0.06);
-    overflow: hidden;
+  /* Especies del Habillal — Collage asimétrico de 4 secciones (golfina domina) */
+  .tt-species-collage {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-rows: 240px 240px;
+    gap: 16px;
+  }
+  .tt-species-collage .tt-species-tile-main { grid-column: 1; grid-row: 1 / span 2; }
+  .tt-species-collage .tt-species-tile-b { grid-column: 2; grid-row: 1; }
+  .tt-species-collage .tt-species-tile-c { grid-column: 3; grid-row: 1; }
+  .tt-species-collage .tt-species-tile-urgent { grid-column: 2 / span 2; grid-row: 2; }
+  @media (max-width: 860px) {
+    .tt-species-collage {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+    }
+    .tt-species-collage .tt-species-tile-main,
+    .tt-species-collage .tt-species-tile-b,
+    .tt-species-collage .tt-species-tile-c,
+    .tt-species-collage .tt-species-tile-urgent {
+      grid-column: 1;
+      grid-row: auto;
+      height: 260px;
+    }
+  }
+
+  .tt-species-tile {
+    position: relative;
+    width: 100%;
     height: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 14px 30px -18px rgba(16,38,43,0.35);
+  }
+  .tt-species-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .tt-species-tile:hover img { transform: scale(1.08); }
+  .tt-species-tile-overlay {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    justify-content: flex-end;
+    padding: 18px;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, rgba(16,38,43,0) 40%, rgba(16,38,43,0.55) 75%, rgba(16,38,43,0.88) 100%);
+    transition: background 0.35s ease;
   }
-  .tt-species-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 36px -16px rgba(16,38,43,0.18);
+  .tt-species-tile:hover .tt-species-tile-overlay {
+    background: linear-gradient(180deg, rgba(16,38,43,0.15) 0%, rgba(16,38,43,0.72) 55%, rgba(16,38,43,0.94) 100%);
   }
-  .tt-species-card-photo { width: 100%; }
-  .tt-species-card-body { padding: 22px 20px 24px; flex: 1; display: flex; flex-direction: column; }
+  .tt-species-tile-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    line-height: 1.15;
+  }
+  .tt-species-tile-sci {
+    font-family: 'Public Sans', sans-serif;
+    font-style: italic;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    margin: 3px 0 0;
+  }
+  .tt-species-tile-fact {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 500;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.5;
+    margin: 8px 0 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s ease;
+  }
+  .tt-species-tile:hover .tt-species-tile-fact,
+  .tt-species-tile:focus-within .tt-species-tile-fact {
+    max-height: 140px;
+    opacity: 1;
+  }
+
+  /* Cuatro Frentes — Grid Bento de 4 acciones con diseño asimétrico */
+  .tt-frentes-bento-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 200px 200px;
+    gap: 16px;
+  }
+  .tt-frentes-bento-grid .tt-frente-patrullajes {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+  }
+  .tt-frentes-bento-grid .tt-frente-reubicacion {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .tt-frentes-bento-grid .tt-frente-liberacion {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .tt-frentes-bento-grid .tt-frente-educacion {
+    grid-column: 3 / span 2;
+    grid-row: 1 / span 2;
+  }
+
+  @media (max-width: 900px) {
+    .tt-frentes-bento-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+    .tt-frentes-bento-grid .tt-frente-patrullajes {
+      grid-column: 1 / span 2;
+      height: 220px;
+    }
+    .tt-frentes-bento-grid .tt-frente-reubicacion {
+      grid-column: 1;
+      height: 240px;
+    }
+    .tt-frentes-bento-grid .tt-frente-liberacion {
+      grid-column: 2;
+      height: 240px;
+    }
+    .tt-frentes-bento-grid .tt-frente-educacion {
+      grid-column: 1 / span 2;
+      height: 220px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tt-frentes-bento-grid {
+      grid-template-columns: 1fr;
+    }
+    .tt-frentes-bento-grid .tt-frente-patrullajes,
+    .tt-frentes-bento-grid .tt-frente-reubicacion,
+    .tt-frentes-bento-grid .tt-frente-liberacion,
+    .tt-frentes-bento-grid .tt-frente-educacion {
+      grid-column: 1;
+      height: 220px;
+    }
+  }
 
   .tt-pillar-card:hover {
     transform: translateY(-6px);

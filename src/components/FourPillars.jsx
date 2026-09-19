@@ -1,4 +1,4 @@
-import { TOKENS, IMAGES } from "../theme";
+import { TOKENS, IMAGES, SPACE, RADIUS } from "../theme";
 import { Reveal } from "./Reveal";
 import { PhotoFrame } from "./PhotoFrame";
 import { SectionHead } from "./Typography";
@@ -20,17 +20,18 @@ const TAG_MAP = {
 /* ---------- Cuatro Frentes de Conservación — reutilizado en Home (completo) y Dona (compacto) ---------- */
 export function FourPillars({ compact = false, eyebrow = "Qué hacemos", title = "Cuatro frentes, un mismo objetivo", background = TOKENS.arena }) {
   return (
-    <section className="tt-section-responsive" style={{ padding: compact ? "48px 24px" : "56px 32px", background }}>
+    <section className="tt-section-responsive" style={{ padding: compact ? `${SPACE.xl}px ${SPACE.md}px` : `${SPACE.xl + 8}px ${SPACE.lg}px`, background }}>
       <div style={{ maxWidth: compact ? "900px" : "1100px", margin: "0 auto" }}>
         <SectionHead eyebrow={eyebrow} title={title} titleMaxWidth="20ch" />
-        <div style={{ marginTop: compact ? "16px" : "24px" }}>
+        <div style={{ marginTop: compact ? SPACE.sm : SPACE.md }}>
           {PILLARS.map((c, i) => {
+            const isEven = i % 2 === 0;
             const styleInfo = TAG_MAP[c.tone];
             return (
-              <Reveal key={c.t} delay={i * 90} from="left">
-                <div className={`tt-pillar-row ${compact ? "tt-pillar-compact" : ""}`}>
+              <Reveal key={c.t} delay={i * 90} from={isEven ? "left" : "right"}>
+                <div className={`tt-pillar-row ${!isEven ? "tt-pillar-align-right" : ""} ${compact ? "tt-pillar-compact" : ""}`}>
                   <div className="tt-pillar-photo">
-                    <PhotoFrame shape="wide" tone={c.tone} src={c.src} style={{ aspectRatio: compact ? "4/3" : "16/10", borderRadius: compact ? "14px" : 0 }} />
+                    <PhotoFrame shape="wide" tone={c.tone} src={c.src} style={{ aspectRatio: compact ? "4/3" : "16/10" }} />
                   </div>
                   <div className="tt-pillar-body">
                     <span
@@ -43,7 +44,7 @@ export function FourPillars({ compact = false, eyebrow = "Qué hacemos", title =
                         letterSpacing: "0.06em",
                         textTransform: "uppercase",
                         padding: compact ? "5px 12px" : "6px 14px",
-                        borderRadius: compact ? "999px" : 0,
+                        borderRadius: compact ? RADIUS.pill : RADIUS.none,
                         display: "inline-block",
                       }}
                     >

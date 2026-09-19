@@ -11,6 +11,7 @@ import { createAdoptionCheckout } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
 import { SectionHead } from "../components/Typography";
 import { WaveVectorBackground } from "../components/WaveVectorBackground";
+import { HeroShock } from "../components/HeroShock";
 
 const KPIS = [
   { value: 150, suffix: "+", label: "Nidos adoptados" },
@@ -54,152 +55,91 @@ function scrollToAdopcionPago() {
   document.getElementById("modulo-adopcion-pago")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-/* 1. Hero de Adopta: Imagen abarcan toda la mitad derecha en Web y arriba sin padding en Móvil */
+/* 1. Hero de Adopta — mismo patrón oscuro dividido que Home/Dona (HeroShock) */
 function HeroAdopta() {
   return (
-    <section
-      style={{
-        position: "relative",
-        background: TOKENS.noche,
-        overflow: "hidden",
-        width: "100%",
-      }}
-    >
+    <HeroShock image={IMAGES.liberacionSunsetPeople} imageAlt="Adopta un nido en El Habillal" align="center">
+      <span
+        style={{
+          color: TOKENS.cieloClaro,
+          fontSize: "12.5px",
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          marginBottom: "10px",
+          display: "block",
+        }}
+      >
+        Tú logras la conservación
+      </span>
+
+      <h1
+        style={{
+          fontFamily: "'Fraunces', serif",
+          fontSize: "clamp(26px, 3.4vw, 42px)",
+          fontWeight: 700,
+          lineHeight: 1.14,
+          letterSpacing: "-0.01em",
+          color: "#6cc6ef",
+          margin: "0 0 12px",
+        }}
+      >
+        Adopta un Nido y Cambia El Futuro del Océano
+      </h1>
+
+      <p
+        style={{
+          fontFamily: "'Public Sans', sans-serif",
+          fontSize: "15px",
+          color: "#E7F0EC",
+          lineHeight: 1.55,
+          margin: "0 auto 20px",
+          maxWidth: "48ch",
+        }}
+      >
+        Tu adopción financia el resguardo, la incubación segura en vivero y la liberación de un nido completo. Recibirás el seguimiento directo y tu certificado oficial.
+      </p>
+
+      {/* Botón Verde Sólido Centrado: baja directo a la pasarela de pago */}
+      <div style={{ marginBottom: "14px", display: "flex", justifyContent: "center" }}>
+        <Button tone="verde" size="lg" onClick={scrollToAdopcionPago}>
+          Adopta un Nido Ahora
+        </Button>
+      </div>
+
+      <div style={{ marginBottom: "22px" }}>
+        <a
+          href="https://wa.me/527531631707?text=Hola,%20quiero%20apadrinar%20un%20nido%20de%20esta%20temporada."
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#CBD9D6", fontFamily: "'Public Sans', sans-serif", fontSize: "12.5px", textDecoration: "underline" }}
+        >
+          ¿Prefieres coordinarlo por WhatsApp? Escríbenos
+        </a>
+      </div>
+
+      {/* KPIs Centrados Sin Línea Divisoria */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          alignItems: "stretch",
-          minHeight: "460px",
-          width: "100%",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "20px",
+          maxWidth: "360px",
+          margin: "0 auto",
         }}
       >
-        {/* Lado Izquierdo: Mensaje Principal */}
-        <div
-          style={{
-            padding: "clamp(28px, 4vw, 44px) clamp(24px, 4vw, 44px)",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          <Reveal from="up" distance={35}>
-            {/* Subtítulo Coherente en Naranja / Coral Centrado */}
-            <span
-              style={{
-                color: TOKENS.cieloClaro,
-                fontSize: "12.5px",
-                fontWeight: 700,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                marginBottom: "10px",
-                display: "block",
-                textAlign: "center",
-              }}
-            >
-              Tú logras la conservación
-            </span>
-
-            <h1
-              style={{
-                fontFamily: "'Fraunces', serif",
-                fontSize: "clamp(26px, 3.4vw, 42px)",
-                fontWeight: 700,
-                lineHeight: 1.14,
-                letterSpacing: "-0.01em",
-                color: "#6cc6ef",
-                margin: "0 0 12px",
-                textAlign: "center",
-              }}
-            >
-              Adopta un Nido y Cambia El Futuro del Océano
-            </h1>
-
-            <p
-              style={{
-                fontFamily: "'Public Sans', sans-serif",
-                fontSize: "15px",
-                color: "#E7F0EC",
-                lineHeight: 1.55,
-                margin: "0 auto 20px",
-                maxWidth: "48ch",
-                textAlign: "center",
-              }}
-            >
-              Tu adopción financia el resguardo, la incubación segura en vivero y la liberación de un nido completo. Recibirás el seguimiento directo y tu certificado oficial.
-            </p>
-
-            {/* Botón Verde Sólido Centrado: baja directo a la pasarela de pago */}
-            <div style={{ marginBottom: "14px", textAlign: "center", display: "flex", justifyContent: "center" }}>
-              <Button tone="verde" size="lg" style={{ borderRadius: "999px", padding: "12px 32px", fontSize: "14.5px" }} onClick={scrollToAdopcionPago}>
-                Adopta un Nido Ahora
-              </Button>
+        {KPIS.map((k) => (
+          <div key={k.label} style={{ textAlign: "center" }}>
+            <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 30px)", color: "#FFFFFF" }}>
+              <AnimatedCounter value={k.value} suffix={k.suffix} />
             </div>
-
-            <div style={{ marginBottom: "22px", textAlign: "center" }}>
-              <a
-                href="https://wa.me/527531631707?text=Hola,%20quiero%20apadrinar%20un%20nido%20de%20esta%20temporada."
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: "#CBD9D6", fontFamily: "'Public Sans', sans-serif", fontSize: "12.5px", textDecoration: "underline" }}
-              >
-                ¿Prefieres coordinarlo por WhatsApp? Escríbenos
-              </a>
+            <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "#A8BCB8", marginTop: "2px" }}>
+              {k.label}
             </div>
-
-            {/* KPIs Centrados Sin Línea Divisoria */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "20px",
-                maxWidth: "360px",
-                margin: "0 auto",
-                textAlign: "center",
-              }}
-            >
-              {KPIS.map((k) => (
-                <div key={k.label} style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 30px)", color: "#FFFFFF" }}>
-                    <AnimatedCounter value={k.value} suffix={k.suffix} />
-                  </div>
-                  <div style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "11.5px", color: "#A8BCB8", marginTop: "2px" }}>
-                    {k.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Lado Derecho: Imagen Completa pegada hasta arriba y abarcan toda la mitad */}
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            minHeight: "300px",
-            overflow: "hidden",
-          }}
-        >
-          <img
-            src={IMAGES.liberacionSunsetPeople}
-            alt="Adopta un nido en El Habillal"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center 35%",
-              display: "block",
-            }}
-          />
-        </div>
+          </div>
+        ))}
       </div>
-    </section>
+    </HeroShock>
   );
 }
 
@@ -366,18 +306,18 @@ function ModuloAdoptaPago() {
             <>
               <StripeCheckoutHeader />
 
-              <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "18px" }}>
+              <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "18px", maxWidth: "560px", margin: "0 auto 18px" }}>
                 <div>
-                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px", textAlign: "center" }}>
                     Nombre del Adoptante
                   </label>
-                  <input type="text" placeholder="Para tu certificado digital" value={donorName} onChange={(e) => setDonorName(e.target.value)} style={inputStyle} />
+                  <input type="text" placeholder="Para tu certificado digital" value={donorName} onChange={(e) => setDonorName(e.target.value)} style={{ ...inputStyle, textAlign: "center" }} />
                 </div>
                 <div>
-                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                  <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px", textAlign: "center" }}>
                     Correo Electrónico
                   </label>
-                  <input type="email" placeholder="Para enviarte la ficha del nido" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} style={inputStyle} />
+                  <input type="email" placeholder="Para enviarte la ficha del nido" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} style={{ ...inputStyle, textAlign: "center" }} />
                 </div>
               </div>
             </>
@@ -393,7 +333,7 @@ function ModuloAdoptaPago() {
           ) : (
             <div style={{ maxWidth: "520px", margin: "0 auto" }}>
               <Button tone="verde" style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }} onClick={startAdoptionCheckout}>
-                Continuar al pago seguro ($220 MXN)
+                Continuar al pago ($220 MXN)
               </Button>
             </div>
           )}

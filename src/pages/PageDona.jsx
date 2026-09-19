@@ -347,9 +347,9 @@ export function PageDona() {
               <>
                 <StripeCheckoutHeader />
 
-                <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "18px" }}>
+                <div className="stripe-customer-fields" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "18px", maxWidth: "560px", margin: "0 auto 18px" }}>
                   <div>
-                    <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                    <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px", textAlign: "center" }}>
                       Nombre del Donador
                     </label>
                     <input
@@ -357,12 +357,12 @@ export function PageDona() {
                       placeholder="Tu nombre completo"
                       value={donorName}
                       onChange={(e) => setDonorName(e.target.value)}
-                      style={inputStyle}
+                      style={{ ...inputStyle, textAlign: "center" }}
                     />
                   </div>
 
                   <div>
-                    <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px" }}>
+                    <label style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: TOKENS.noche, display: "block", marginBottom: "4px", textAlign: "center" }}>
                       Correo Electrónico
                     </label>
                     <input
@@ -370,7 +370,7 @@ export function PageDona() {
                       placeholder="tu@correo.com"
                       value={donorEmail}
                       onChange={(e) => setDonorEmail(e.target.value)}
-                      style={inputStyle}
+                      style={{ ...inputStyle, textAlign: "center" }}
                     />
                   </div>
                 </div>
@@ -391,7 +391,7 @@ export function PageDona() {
                   style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }}
                   onClick={startDonationCheckout}
                 >
-                  Continuar al pago seguro ({activeAmount})
+                  Continuar al pago ({activeAmount})
                 </Button>
               </div>
             )}

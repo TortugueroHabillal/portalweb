@@ -1,9 +1,14 @@
 import { useState } from "react";
-import { TOKENS, IMAGES } from "../theme";
+import { TOKENS, SECTION_BG, IMAGES } from "../theme";
 import { Reveal } from "../components/Reveal";
 import { WaveDivider } from "../components/WaveDivider";
 import { PhotoFrame } from "../components/PhotoFrame";
 import { Button } from "../components/Button";
+import { HeroShock } from "../components/HeroShock";
+
+function scrollToReserva() {
+  document.getElementById("reserva-visita")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 const TIPOS_GRUPO = ["Académico", "Empresarial", "Gubernamental", "Comunitario", "Turístico", "Otro"];
 
@@ -48,131 +53,61 @@ export function PageVisita() {
 
   return (
     <div style={{ minHeight: "100vh", position: "relative" }}>
-      {/* 1. Header con Estilo Elegante del Portal */}
-      <section
-        style={{
-          position: "relative",
-          background: TOKENS.espuma,
-          padding: "clamp(48px, 6vh, 64px) 24px clamp(36px, 5vh, 48px)",
-          overflow: "hidden",
-        }}
-      >
-        <div style={{ maxWidth: "860px", margin: "0 auto", textAlign: "center", position: "relative", zIndex: 2 }}>
-          <Reveal>
-            <h3
-              style={{
-                fontFamily: "'Public Sans', sans-serif",
-                fontSize: "14px",
-                fontWeight: 700,
-                color: TOKENS.coral,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                margin: "0 0 12px",
-              }}
-            >
-              Vive la experiencia en El Habillal
-            </h3>
-
-            <h1
-              style={{
-                fontFamily: "'Fraunces', serif",
-                fontSize: "clamp(32px, 4.6vw, 52px)",
-                fontWeight: 700,
-                color: TOKENS.noche,
-                margin: "0 0 16px",
-                lineHeight: 1.15,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Visítanos y Vive la Conservación
-            </h1>
-
-            <p
-              style={{
-                fontFamily: "'Public Sans', sans-serif",
-                fontSize: "17px",
-                color: TOKENS.conchaSuave,
-                lineHeight: 1.65,
-                maxWidth: "680px",
-                margin: "0 auto",
-              }}
-            >
-              Forma parte de nuestros recorridos guiados, pláticas ambientales y actividades de conservación de tortugas marinas junto a nuestro equipo especializado.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 2. Banner Panorámico Intermedio con Transición de Ola Fluida */}
-      <section style={{ position: "relative", width: "100%", background: TOKENS.arena, marginTop: "-20px" }}>
-        {/* Ola Superior en tono Espuma que encaja perfectamente con el Header */}
-        <div style={{ position: "relative", zIndex: 3, lineHeight: 0, marginTop: "-1px" }}>
-          <WaveDivider fromColor={TOKENS.espuma} toColor="transparent" />
-        </div>
-
-        <div
+      {/* 1. Hero — mismo patrón oscuro dividido que Home/Dona/Adopta (HeroShock) */}
+      <HeroShock image={IMAGES.campAerial2} imageAlt="Vista aérea del Campamento Tortuguero El Habillal" align="center">
+        <span
           style={{
-            position: "relative",
-            width: "100%",
-            height: "clamp(320px, 42vh, 460px)",
-            marginTop: "-44px",
-            marginBottom: "-44px",
-            zIndex: 1,
-            overflow: "hidden",
+            fontFamily: "'Public Sans', sans-serif",
+            fontSize: "12.5px",
+            fontWeight: 700,
+            color: TOKENS.cieloClaro,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            margin: "0 0 10px",
+            display: "block",
           }}
         >
-          <img
-            src={IMAGES.liberacionCrowd2}
-            alt="Liberación comunitaria en El Habillal"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center 45%",
-              display: "block",
-            }}
-          />
-          {/* Overlay oscuro para legibilidad del texto */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "linear-gradient(180deg, rgba(16,38,43,0.3) 0%, rgba(16,38,43,0.65) 100%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "24px",
-              textAlign: "center",
-              zIndex: 2,
-            }}
-          >
-            <Reveal>
-              <h2
-                style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontSize: "clamp(26px, 4vw, 44px)",
-                  color: "#ffffff",
-                  fontWeight: 700,
-                  maxWidth: "800px",
-                  margin: 0,
-                  lineHeight: 1.2,
-                  textShadow: "0 4px 20px rgba(0,0,0,0.45)",
-                }}
-              >
-                Una experiencia envolvente única
-              </h2>
-            </Reveal>
-          </div>
-        </div>
+          Vive la experiencia en El Habillal
+        </span>
 
-        {/* Ola Inferior que remata hacia la sección Arena del formulario */}
-        <div style={{ position: "relative", zIndex: 3, lineHeight: 0 }}>
-          <WaveDivider fromColor="transparent" toColor={TOKENS.arena} />
-        </div>
-      </section>
+        <h1
+          style={{
+            fontFamily: "'Fraunces', serif",
+            fontSize: "clamp(28px, 3.8vw, 48px)",
+            fontWeight: 700,
+            color: "#ffffff",
+            margin: "0 0 16px",
+            lineHeight: 1.15,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Visítanos y Vive la Conservación
+        </h1>
 
-      {/* 3. Sección del Formulario de Reserva (Sin mención de 'hasta 12 personas') */}
-      <section style={{ padding: "48px 24px 72px", position: "relative", zIndex: 2, background: TOKENS.arena }}>
+        <p
+          style={{
+            fontFamily: "'Public Sans', sans-serif",
+            fontSize: "15px",
+            color: "#E7F0EC",
+            lineHeight: 1.6,
+            maxWidth: "48ch",
+            margin: "0 auto 12px",
+          }}
+        >
+          Forma parte de nuestros recorridos guiados, pláticas ambientales y actividades de conservación de tortugas marinas junto a nuestro equipo especializado.
+        </p>
+
+        <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "16px", color: TOKENS.atardecer, fontWeight: 700, margin: "0 0 20px" }}>
+          Una experiencia envolvente única.
+        </p>
+
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button tone="verde" size="lg" onClick={scrollToReserva}>Agendar mi visita</Button>
+        </div>
+      </HeroShock>
+
+      {/* 2. Sección del Formulario de Reserva (Sin mención de 'hasta 12 personas') */}
+      <section id="reserva-visita" style={{ padding: "48px 24px 72px", position: "relative", zIndex: 2, background: TOKENS.arena, scrollMarginTop: "88px" }}>
         <div style={{ maxWidth: "860px", margin: "0 auto" }}>
           <Reveal>
             <div
@@ -343,10 +278,10 @@ export function PageVisita() {
 
       {/* 4. Sección de Galería de Fotos Elegante con PhotoFrames Integradas */}
       <div style={{ lineHeight: 0, margin: 0, padding: 0 }}>
-        <WaveDivider fromColor={TOKENS.arena} toColor="#D4E7D7" />
+        <WaveDivider fromColor={TOKENS.arena} toColor={SECTION_BG.claro} />
       </div>
 
-      <section style={{ background: "#D4E7D7", padding: "64px 24px 88px", position: "relative" }}>
+      <section style={{ background: SECTION_BG.claro, padding: "64px 24px 88px", position: "relative" }}>
         <div style={{ maxWidth: "1180px", margin: "0 auto", position: "relative", zIndex: 2 }}>
           <Reveal>
             <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 48px" }}>

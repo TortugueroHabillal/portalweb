@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { FONT_IMPORT, GLOBAL_STYLE, TOKENS } from "./theme";
 import { Nav } from "./components/Nav";
 import { Footer } from "./components/Footer";
-import { FinalCTA } from "./components/FinalCTA";
 import { PageHome } from "./pages/PageHome";
 import { PageAbout } from "./pages/PageAbout";
 import { PageConvocatorias } from "./pages/PageConvocatorias";
@@ -84,11 +83,11 @@ export default function App() {
 
   const getFooterFromColor = () => {
     switch (page) {
-      case "home": return TOKENS.cieloClaro;
+      case "home": return TOKENS.espuma;
       case "about": return TOKENS.arena;
       case "convocatorias": return TOKENS.arena;
       case "eventos": return TOKENS.arena;
-      case "visita": return "#D4E7D7";
+      case "visita": return TOKENS.cieloClaro;
       case "adopta": return TOKENS.arena;
       case "dona": return TOKENS.arena;
       case "contacto": return TOKENS.cieloClaro;
@@ -102,7 +101,6 @@ export default function App() {
       <style>{GLOBAL_STYLE}</style>
       <Nav current={page === "donation-success" ? "dona" : page === "adoption-success" ? "adopta" : page} setCurrent={go} />
       {renderPage()}
-      {page === "home" && <FinalCTA go={go} />}
       <Footer go={go} fromColor={getFooterFromColor()} />
     </div>
   );

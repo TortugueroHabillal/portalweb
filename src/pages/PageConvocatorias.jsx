@@ -353,7 +353,7 @@ export function PageConvocatorias({ go }) {
                 e.currentTarget.style.background = TOKENS.coral;
               }}
             >
-              Contáctanos →
+              Contáctanos
             </button>
           </Reveal>
         </div>

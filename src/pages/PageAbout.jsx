@@ -216,7 +216,7 @@ function Intro() {
                     margin: 0,
                   }}
                 >
-                  Desde El Habillal, en Lázaro Cárdenas, Michoacán, trabajamos junto a familias, pescadores locales, estudiantes y comunidad local para proteger cada temporada de anidación mediante protocolos ambientales certificados, eventos comunitarios y turismo responsable.
+                  Desde El Habillal, en Lázaro Cárdenas, Michoacán, trabajamos junto a empresas, familias, estudiantes y comunidad local para proteger cada temporada de anidación mediante protocolos ambientales certificados, eventos comunitarios y turismo responsable.
                 </p>
               </Reveal>
             </div>
