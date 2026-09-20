@@ -10,7 +10,7 @@ const PILLARS = [
 ];
 
 /* ---------- Cuatro Frentes — grid bento asimétrico compartido entre Home y Dona ---------- */
-export function FourFrentesBento({ eyebrow = "Cómo trabajamos", title = "De la arena al mar: así actuamos", background, compact = false }) {
+export function FourFrentesBento({ title = "De la arena al mar: así actuamos", background, compact = false }) {
   return (
     <section className="tt-section-responsive" style={{ background, padding: `${SPACE.xxl}px ${SPACE.lg}px`, position: "relative", overflow: "hidden" }}>
       <div style={{ maxWidth: compact ? "1000px" : "1260px", margin: "0 auto", position: "relative", zIndex: 1 }}>

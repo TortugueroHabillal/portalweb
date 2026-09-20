@@ -426,10 +426,10 @@ function NextEvent({ go }) {
           <PhotoFrame shape="portrait" tone="arena" src={IMAGES.tortufest2edGroup} />
         </Reveal>
         <Reveal delay={120}>
-          <Eyebrow>Te estamos esperando</Eyebrow>
-          <H2>Sé parte de la próxima liberación de crías</H2>
+          <Eyebrow>Temporada 2026-2027</Eyebrow>
+          <H2>Sé parte de la próxima liberación de crías.</H2>
           <p style={{ fontFamily: "'Public Sans', sans-serif", color: TOKENS.conchaSuave, fontSize: "15px", lineHeight: 1.6, maxWidth: "50ch", margin: "14px 0 20px" }}>
-            Temporada 2026-2027: acompáñanos en la liberación abierta al público en El Habillal. Y si quieres involucrarte más de cerca, súmate a nuestro equipo de voluntarios.
+            Acompáñanos en las liberaciones abiertas al público en El Habillal. Y si quieres involucrarte más de cerca, súmate a nuestro equipo de voluntarios.
           </p>
           <div style={{ display: "flex", gap: SPACE.sm - 4, flexWrap: "wrap" }} className="tt-nextevent-buttons">
             <Button tone="verde" onClick={() => go("visita")}>Agendar mi visita</Button>
