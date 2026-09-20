@@ -35,7 +35,7 @@ export function Footer({ go, fromColor = TOKENS.arena }) {
       >
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
-            <img src={LOGO_URL} alt="" style={{ height: "42px", width: "42px", objectFit: "contain" }} />
+            <img src={LOGO_URL} alt="" loading="lazy" style={{ height: "42px", width: "42px", objectFit: "contain" }} />
             <span style={{ fontFamily: "'Fraunces', serif", fontSize: "16.5px", fontWeight: 600, color: "#fff" }}>
               Campamento Tortuguero El Habillal Asociación Civil
             </span>

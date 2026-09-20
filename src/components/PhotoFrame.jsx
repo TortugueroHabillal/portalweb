@@ -57,6 +57,7 @@ export function PhotoFrame({ shape = "portrait", tone = "verde", note, crop, cap
         <img
           src={src}
           alt=""
+          loading="lazy"
           className="tt-photo-media"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />

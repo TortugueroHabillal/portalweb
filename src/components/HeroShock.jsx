@@ -10,7 +10,7 @@ export function HeroShock({ image, imageAlt, align = "left", children }) {
         </Reveal>
       </div>
       <div className="tt-hero-shock-media">
-        <img src={image} alt={imageAlt} />
+        <img src={image} alt={imageAlt} loading="eager" fetchPriority="high" />
         <div className="tt-hero-shock-fade" aria-hidden="true" />
       </div>
     </section>

@@ -130,6 +130,7 @@ function CriasBanner() {
         <img
           src={IMAGES.hatchlingCoconut}
           alt="Cría de tortuga marina en coco"
+          loading="lazy"
           style={{
             position: "absolute",
             inset: 0,
@@ -398,6 +399,7 @@ function VectorCircleArtworkAdopta() {
         <img
           src={IMAGES.hatchlingLeatherbackProfile}
           alt="Crías de tortuga marina rumbo al mar"
+          loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </div>
@@ -407,6 +409,7 @@ function VectorCircleArtworkAdopta() {
         <img
           src={IMAGES.hatchlingSilhouetteSingle}
           alt="Cría de tortuga marina"
+          loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </div>
@@ -416,6 +419,7 @@ function VectorCircleArtworkAdopta() {
         <img
           src={IMAGES.turtleDusk}
           alt="Tortuga en patrullaje"
+          loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </div>
@@ -507,6 +511,7 @@ function FinalCTABanner() {
         <img
           src={IMAGES.criasAtardecer}
           alt="Crías de tortuga marina rumbo al mar al atardecer"
+          loading="lazy"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(16,38,43,0.72) 0%, rgba(16,38,43,0.58) 100%)", zIndex: 1 }} />

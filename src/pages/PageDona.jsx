@@ -24,6 +24,7 @@ function DonaEmotionalBanner() {
         <img
           src={IMAGES.hatchlingsToWaves}
           alt="Crías de tortuga marina llegando al mar"
+          loading="lazy"
           style={{
             position: "absolute",
             inset: 0,

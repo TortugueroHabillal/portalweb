@@ -71,12 +71,12 @@ export function CertificateTemplate({
                   pointerEvents: "none",
                 }}
               >
-                <img src={LOGO_URL} alt="Marca de agua" style={{ width: "380px", height: "auto" }} />
+                <img src={LOGO_URL} alt="Marca de agua" loading="lazy" style={{ width: "380px", height: "auto" }} />
               </div>
 
               {/* ENCABEZADO */}
               <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <img src={LOGO_URL} alt="Logo Campamento" style={{ width: "90px", height: "auto" }} />
+                <img src={LOGO_URL} alt="Logo Campamento" loading="lazy" style={{ width: "90px", height: "auto" }} />
 
                 <div style={{ textAlign: "center" }}>
                   <span
@@ -179,7 +179,7 @@ export function CertificateTemplate({
                 <div style={{ textAlign: "center", width: "280px", margin: "0 auto" }}>
                   <div style={{ height: "50px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "4px" }}>
                     {signatureSrc ? (
-                      <img src={signatureSrc} alt="Firma Responsable" style={{ maxHeight: "50px", width: "auto" }} />
+                      <img src={signatureSrc} alt="Firma Responsable" loading="lazy" style={{ maxHeight: "50px", width: "auto" }} />
                     ) : (
                       <div
                         style={{

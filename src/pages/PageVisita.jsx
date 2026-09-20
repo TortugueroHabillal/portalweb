@@ -363,7 +363,7 @@ export function PageVisita() {
               {GALLERY.map((g, i) => (
                 <Reveal key={g.title} delay={100 + i * 100} className={`tt-visita-photo-${g.size}`} from={g.size === "main" ? "left" : "up"}>
                   <div className="tt-species-tile" style={{ width: "100%", height: "100%" }}>
-                    <img src={g.src} alt={g.title} />
+                    <img src={g.src} alt={g.title} loading="lazy" />
                   </div>
                 </Reveal>
               ))}

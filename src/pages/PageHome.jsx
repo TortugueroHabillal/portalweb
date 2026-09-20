@@ -9,7 +9,6 @@ import { WaveDivider } from "../components/WaveDivider";
 import { MapEmbed } from "../components/MapEmbed";
 import { ContactInfo } from "../components/ContactInfo";
 import { SponsorsStrip } from "../components/SponsorsStrip";
-import { TurtleSilhouette } from "../components/TurtleSilhouette";
 import { CircleVectors } from "../components/CircleVectors";
 import { ThinWaveVector } from "../components/ThinWaveVector";
 
@@ -79,6 +78,7 @@ function TrustBar() {
           <img
             src={LOGO_URL}
             alt="Logo Campamento Tortuguero El Habillal A.C."
+            loading="lazy"
             style={{ width: "240px", maxWidth: "60%", height: "auto", display: "inline-block" }}
           />
           <p
@@ -132,7 +132,7 @@ function TurtleSpecies() {
         <div className="tt-species-collage" style={{ marginTop: SPACE.xl }}>
           <Reveal from="left" delay={0} className="tt-species-tile-main">
             <div className="tt-species-tile" style={{ width: "100%", height: "100%" }}>
-              <img src={IMAGES.turtleCloseup} alt="Tortuga golfina" />
+              <img src={IMAGES.turtleCloseup} alt="Tortuga golfina" loading="lazy" />
               <div className="tt-species-tile-overlay">
                 <p className="tt-species-tile-name" style={{ fontSize: "26px" }}>Tortuga golfina</p>
                 <p className="tt-species-tile-sci" style={{ fontSize: "13px" }}>Lepidochelys olivacea</p>
@@ -144,7 +144,7 @@ function TurtleSpecies() {
           </Reveal>
           <Reveal from="up" delay={100} className="tt-species-tile-b">
             <div className="tt-species-tile" style={{ width: "100%", height: "100%" }}>
-              <img src={IMAGES.turtleOnBeach} alt="Tortuga negra" />
+              <img src={IMAGES.turtleOnBeach} alt="Tortuga negra" loading="lazy" />
               <div className="tt-species-tile-overlay">
                 <p className="tt-species-tile-name" style={{ fontSize: "19px" }}>Tortuga negra</p>
                 <p className="tt-species-tile-sci" style={{ fontSize: "11.5px" }}>Chelonia mydas agassizii</p>
@@ -156,7 +156,7 @@ function TurtleSpecies() {
           </Reveal>
           <Reveal from="up" delay={180} className="tt-species-tile-c">
             <div className="tt-species-tile" style={{ width: "100%", height: "100%" }}>
-              <img src={IMAGES.laud} alt="Tortuga laúd" />
+              <img src={IMAGES.laud} alt="Tortuga laúd" loading="lazy" />
               <div className="tt-species-tile-overlay">
                 <p className="tt-species-tile-name" style={{ fontSize: "19px" }}>Tortuga laúd</p>
                 <p className="tt-species-tile-sci" style={{ fontSize: "11.5px" }}>Dermochelys coriacea</p>
@@ -255,7 +255,7 @@ function FourFrentesBento() {
                   boxShadow: "0 16px 32px -18px rgba(16,38,43,0.35)",
                 }}
               >
-                <img src={p.src} alt={p.t} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                <img src={p.src} alt={p.t} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 <div
                   style={{
                     position: "absolute",
@@ -344,11 +344,6 @@ function CostEquivalence({ go }) {
                 overflow: "hidden",
               }}
             >
-              <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }} aria-hidden="true">
-                <TurtleSilhouette crawl size={34} color={c.featured ? "rgba(255,255,255,0.18)" : "rgba(16,38,43,0.14)"} style={{ top: "12%", animationDuration: "18s", animationDelay: "-3s" }} />
-                <TurtleSilhouette crawl size={26} color={c.featured ? "rgba(255,255,255,0.14)" : "rgba(16,38,43,0.1)"} style={{ top: "45%", animationDuration: "25s", animationDelay: "-11s" }} />
-                <TurtleSilhouette crawl size={30} color={c.featured ? "rgba(255,255,255,0.16)" : "rgba(16,38,43,0.12)"} style={{ top: "76%", animationDuration: "21s", animationDelay: "-17s" }} />
-              </div>
               <div style={{ position: "relative", zIndex: 1 }}>
                 {c.featured && (
                   <span style={{ display: "inline-block", marginBottom: SPACE.xs, fontSize: "10.5px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: TOKENS.cielo }}>

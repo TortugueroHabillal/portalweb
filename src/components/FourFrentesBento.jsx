@@ -28,7 +28,7 @@ export function FourFrentesBento({ eyebrow = "Cómo trabajamos", title = "De la 
                   boxShadow: "0 16px 32px -18px rgba(16,38,43,0.35)",
                 }}
               >
-                <img src={p.src} alt={p.t} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                <img src={p.src} alt={p.t} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 <div
                   style={{
                     position: "absolute",

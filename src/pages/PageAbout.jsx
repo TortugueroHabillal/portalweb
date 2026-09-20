@@ -206,6 +206,7 @@ function Intro() {
                   <img
                     src={IMAGES.teamFieldwork}
                     alt="Equipo de trabajo en campo"
+                    loading="lazy"
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
                 </div>
@@ -317,6 +318,7 @@ function VectorCircleArtwork() {
         <img
           src={IMAGES.teamNesting}
           alt="Protección y equipo"
+          loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </div>
@@ -338,6 +340,7 @@ function VectorCircleArtwork() {
         <img
           src={IMAGES.teamEntrance}
           alt="Divulgación ambiental"
+          loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </div>
@@ -359,6 +362,7 @@ function VectorCircleArtwork() {
         <img
           src={IMAGES.teamDigging}
           alt="Unión y voluntariado"
+          loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </div>

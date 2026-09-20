@@ -187,6 +187,7 @@ export function PageContacto() {
         <img
           src={IMAGES.hatchlingsBucket}
           alt=""
+          loading="lazy"
           style={{
             position: "absolute",
             inset: 0,

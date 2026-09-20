@@ -21,9 +21,9 @@ export function SponsorsStrip() {
         <Reveal delay={100} style={{ marginTop: "26px" }}>
           <div className="tt-marquee-container tt-marquee-full">
             <div className="tt-marquee-track">
-              <img src={IMAGES.sponsors} alt="Patrocinadores y aliados" />
-              <img src={IMAGES.sponsors} alt="Patrocinadores y aliados" />
-              <img src={IMAGES.sponsors} alt="Patrocinadores y aliados" />
+              <img src={IMAGES.sponsors} alt="Patrocinadores y aliados" loading="lazy" />
+              <img src={IMAGES.sponsors} alt="Patrocinadores y aliados" loading="lazy" />
+              <img src={IMAGES.sponsors} alt="Patrocinadores y aliados" loading="lazy" />
             </div>
           </div>
         </Reveal>

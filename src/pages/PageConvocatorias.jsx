@@ -99,6 +99,7 @@ export function PageConvocatorias({ go }) {
                 <img
                   src={IMAGES.practicasFlyer}
                   alt="Cartel oficial de Prácticas y Voluntariado"
+                  loading="lazy"
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
               </div>
