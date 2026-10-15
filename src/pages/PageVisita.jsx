@@ -7,6 +7,7 @@ import { HeroShock } from "../components/HeroShock";
 import { SectionHead } from "../components/Typography";
 import { CircleVectors } from "../components/CircleVectors";
 import { createVisitRequest } from "../lib/visits";
+import { PrivacyConsent } from "../components/PrivacyConsent";
 
 function scrollToReserva() {
   document.getElementById("reserva-visita")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -57,12 +58,14 @@ export function PageVisita() {
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [privacyOk, setPrivacyOk] = useState(false);
   const [requestNumber, setRequestNumber] = useState(null);
   const idempotencyKey = useRef(crypto.randomUUID());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (sending) return;
+    if (!privacyOk) { setSubmitError("Para enviar la solicitud acepta el aviso de privacidad."); return; }
     setSending(true);
     setSubmitError("");
     try {
@@ -338,6 +341,7 @@ export function PageVisita() {
                   </div>
 
                   <div style={{ marginTop: "28px" }}>
+                    <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-visita" />
                     {submitError && <p role="alert" style={{ margin: "0 0 14px", color: "#B42318", fontFamily: "'Public Sans', sans-serif", fontSize: "13px", lineHeight: 1.5 }}>{submitError}</p>}
                     <Button type="submit" tone="verde" disabled={sending} style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "14px 20px", opacity: sending ? 0.65 : 1 }}>
                       {sending ? "Enviando solicitud..." : "Enviar solicitud de reserva"}

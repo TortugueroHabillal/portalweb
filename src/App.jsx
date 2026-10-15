@@ -11,12 +11,13 @@ import { PageAdopta } from "./pages/PageAdopta";
 import { PageDona } from "./pages/PageDona";
 import { PageContacto } from "./pages/PageContacto";
 import { PaymentSuccessPage } from "./pages/PaymentSuccessPage";
+import { PagePrivacidad } from "./pages/PagePrivacidad";
 
 function getInitialPage() {
   const path = window.location.pathname.replace(/^\//, "").toLowerCase();
   if (path === "dona/exito") return "donation-success";
   if (path === "adopta/exito") return "adoption-success";
-  const valid = ["home", "about", "convocatorias", "eventos", "visita", "adopta", "dona", "contacto"];
+  const valid = ["home", "about", "convocatorias", "eventos", "visita", "adopta", "dona", "contacto", "privacidad"];
   return valid.includes(path) ? path : "home";
 }
 
@@ -39,6 +40,7 @@ const PAGE_TITLES = {
   adopta: `Adopta un Nido — ${SITE_TITLE}`,
   dona: `Dona — ${SITE_TITLE}`,
   contacto: `Contacto — ${SITE_TITLE}`,
+  privacidad: `Aviso de privacidad — ${SITE_TITLE}`,
   "donation-success": `Donativo Confirmado — ${SITE_TITLE}`,
   "adoption-success": `Adopción Confirmada — ${SITE_TITLE}`,
 };
@@ -75,6 +77,7 @@ export default function App() {
       case "adopta": return <PageAdopta />;
       case "dona": return <PageDona />;
       case "contacto": return <PageContacto />;
+      case "privacidad": return <PagePrivacidad />;
       case "donation-success": return <PaymentSuccessPage type="donation" />;
       case "adoption-success": return <PaymentSuccessPage type="adoption" />;
       default: return null;

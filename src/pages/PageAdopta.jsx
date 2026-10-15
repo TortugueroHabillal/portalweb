@@ -13,6 +13,7 @@ import { SectionHead } from "../components/Typography";
 import { HeroShock } from "../components/HeroShock";
 import { CircleVectors } from "../components/CircleVectors";
 import { ThinWaveVector } from "../components/ThinWaveVector";
+import { PrivacyConsent } from "../components/PrivacyConsent";
 
 const KPIS = [
   { value: 150, suffix: "+", label: "Nidos adoptados" },
@@ -224,11 +225,13 @@ function ModuloAdoptaPago() {
   const [donorEmail, setDonorEmail] = useState("");
   const [checkoutPayload, setCheckoutPayload] = useState(null);
   const [paymentError, setPaymentError] = useState("");
+  const [privacyOk, setPrivacyOk] = useState(false);
 
   const startAdoptionCheckout = () => {
     setPaymentError("");
     if (donorName.trim().length < 2) return setPaymentError("Escribe el nombre que aparecerá en el certificado.");
     if (!/^\S+@\S+\.\S+$/.test(donorEmail.trim())) return setPaymentError("Escribe un correo electrónico válido.");
+    if (!privacyOk) return setPaymentError("Para continuar acepta el aviso de privacidad.");
     setCheckoutPayload({
       request_id: crypto.randomUUID(),
       sponsor_name: donorName.trim(),
@@ -314,6 +317,7 @@ function ModuloAdoptaPago() {
             />
           ) : (
             <div style={{ maxWidth: "520px", margin: "0 auto" }}>
+              <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-adopta" />
               <Button tone="verde" style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }} onClick={startAdoptionCheckout}>
                 Continuar al pago ($220 MXN)
               </Button>

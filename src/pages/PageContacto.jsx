@@ -8,6 +8,7 @@ import { Button } from "../components/Button";
 import { SectionHead } from "../components/Typography";
 import { CircleVectors } from "../components/CircleVectors";
 import { MapEmbed } from "../components/MapEmbed";
+import { PrivacyConsent } from "../components/PrivacyConsent";
 
 const FACEBOOK_SVG_WHITE = (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12Z" /></svg>
@@ -102,10 +103,11 @@ export function PageContacto() {
   const [form, setForm] = useState({ nombre: "", correo: "", telefono: "", mensaje: "" });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [privacyOk, setPrivacyOk] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.nombre || !form.correo || !form.mensaje) return;
+    if (!form.nombre || !form.correo || !form.mensaje || !privacyOk) return;
     setSending(true);
 
     try {
@@ -332,6 +334,7 @@ export function PageContacto() {
                       </div>
                     </div>
 
+                    <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-contacto" />
                     <Button tone="coral" size="lg" type="submit" style={{ marginTop: "8px", width: "100%", justifyContent: "center", opacity: sending ? 0.7 : 1 }}>
                       {sending ? "Enviando mensaje..." : "Enviar mensaje"}
                     </Button>

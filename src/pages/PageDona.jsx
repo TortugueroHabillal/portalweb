@@ -10,6 +10,7 @@ import { StripeCheckoutHeader } from "../components/StripeCheckoutHeader";
 import { createDonationCheckout } from "../lib/payments";
 import { WaveDivider } from "../components/WaveDivider";
 import { FourFrentesBento } from "../components/FourFrentesBento";
+import { PrivacyConsent } from "../components/PrivacyConsent";
 
 const DONA_KPIS = [
   { value: 9000, suffix: "+", label: "Nidos resguardados" },
@@ -123,6 +124,7 @@ export function PageDona() {
   const [copied, setCopied] = useState(false);
   const [checkoutPayload, setCheckoutPayload] = useState(null);
   const [paymentError, setPaymentError] = useState("");
+  const [privacyOk, setPrivacyOk] = useState(false);
 
   useEffect(() => {
     const prefill = sessionStorage.getItem("donaMontoPersonalizado");
@@ -149,6 +151,10 @@ export function PageDona() {
 
   const startDonationCheckout = () => {
     setPaymentError("");
+    if (!privacyOk) {
+      setPaymentError("Para continuar acepta el aviso de privacidad.");
+      return;
+    }
     if (!donorEmail.trim() || !/^\S+@\S+\.\S+$/.test(donorEmail.trim())) {
       setPaymentError("Escribe un correo electrónico válido para recibir tu comprobante.");
       return;
@@ -367,6 +373,7 @@ export function PageDona() {
               />
             ) : (
               <div style={{ maxWidth: "520px", margin: "0 auto" }}>
+                <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-dona" />
                 <Button
                   tone="verde"
                   style={{ borderRadius: "999px", width: "100%", justifyContent: "center", padding: "15px 20px", fontSize: "15px" }}

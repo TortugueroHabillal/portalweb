@@ -11,6 +11,7 @@ export function Footer({ go, fromColor = TOKENS.arena }) {
     { label: "Dona al programa", route: "dona" },
     { label: "Convocatorias", route: "convocatorias" },
     { label: "Contacto", route: "contacto" },
+    { label: "Aviso de privacidad", route: "privacidad" },
   ];
 
   return (
