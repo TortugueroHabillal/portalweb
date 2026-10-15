@@ -7,7 +7,7 @@
 
 export const LOGO_URL = "/logo-el-habillal.png";
 
-export const FONT_IMPORT = `@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&display=swap');`;
+export const FONT_IMPORT = `@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap');`;
 
 export const TOKENS = {
   arena: "#EDE6D6",
@@ -33,6 +33,19 @@ export const TOKENS = {
   // verde marino — variación de acento para vectores/acentos decorativos, sin recurrir al naranja
   verdeMar: "#1F6F5C",
   verdeMarOscuro: "#175747",
+};
+
+/* ---------- Paleta «Marea viva» (rediseño 2026) ----------
+   6 colores, cada uno con un solo trabajo. Las variables CSS equivalentes
+   (--mv-*) viven en src/styles/marea.css.
+*/
+export const MAREA = {
+  abismo: "#0B2A33",     // fondos oscuros
+  ola: "#1E7A8C",        // olas, bordes, texto de acento sobre claro
+  turquesa: "#3FC1C9",   // lo «vivo»: palabra animada, enlaces, acentos
+  espuma: "#E6F4F1",     // fondos claros
+  arena: "#F3EDE1",      // texto sobre oscuro, franjas cálidas
+  atardecer: "#E2531F",  // solo CTAs (Dona)
 };
 
 /* ---------- Escala de espaciado (padding/margin de secciones) ----------
