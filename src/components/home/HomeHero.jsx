@@ -1,70 +1,32 @@
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { BackgroundPaths } from "./BackgroundPaths";
-import { RotatingWord } from "./RotatingWord";
+import { motion, useReducedMotion } from "motion/react";
 import { HOME_MEDIA } from "./media";
-import { useScrollProgress } from "./useScrollProgress";
 
 const ease = [0.22, 1, 0.36, 1];
 
-/* ---------- 1 · Hero: logo + frase con palabra animada + golfina sobre olas ----------
-   Todo cabe en una pantalla: texto a la izquierda, golfina a la derecha
-   dentro de su columna (nunca se corta contra el borde). */
+/* ---------- 1 · El nido ----------
+   Arena clara, titular grande y, a la derecha, decenas de crías caminando
+   hacia el mar: el visitante empieza el viaje que hará al bajar. */
 export function HomeHero({ go }) {
-  const ref = useRef(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress: raw } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const p = useScrollProgress(raw);
-  const turtleY = useTransform(p, [0, 1], ["0%", reduce ? "0%" : "-18%"]);
+  const enter = (delay) =>
+    reduce ? {} : { initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.9, delay, ease } };
+
+  const toJourney = () => document.getElementById("viaje")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
 
   return (
-    <section ref={ref} className="mv-hero" data-snap>
-      <BackgroundPaths />
-
-      <div className="mv-hero__inner">
-        <div className="mv-hero__text">
-          <motion.div
-            className="mv-hero__brand"
-            initial={reduce ? false : { opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease }}
-          >
-            <img src={HOME_MEDIA.logo} alt="Logo del Campamento Tortuguero El Habillal" width="600" height="386" />
-            <p>
-              Campamento tortuguero
-              <br />
-              <span>El Habillal A.C.</span>
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease }}
-          >
-            <h1 className="mv-display mv-hero__title">
-              El Habillal <RotatingWord words={["vigila", "cuida", "libera", "salva"]} />
-              <br />a las tortugas marinas
-            </h1>
-            <p className="mv-hero__lead">
-              Protegemos la anidación de tres especies de tortugas marinas en Lázaro Cárdenas, Michoacán, desde hace 13 temporadas.
-            </p>
-            <div className="mv-hero__ctas">
-              <button className="mv-btn mv-btn--dona" onClick={() => go("dona")}>Dona ahora</button>
-              <button className="mv-btn mv-btn--outline" onClick={() => go("visita")}>Agenda tu visita</button>
-            </div>
-          </motion.div>
-        </div>
-
-        <motion.div
-          className="mv-hero__turtle"
-          style={{ y: turtleY }}
-          initial={reduce ? false : { opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.25, ease }}
-        >
-          <img src={HOME_MEDIA.golfina} alt="Tortuga golfina nadando" width="1400" height="1196" fetchPriority="high" />
+    <section className="lt-hero" data-snap>
+      <div className="lt-hero__text">
+        <motion.h1 className="lt-display lt-hero__title" {...enter(0.1)}>
+          Antes de llegar al mar, tienen que sobrevivir a la arena.
+        </motion.h1>
+        <motion.p className="lt-hero__line" {...enter(0.28)}>Nosotros nos aseguramos de que lo logren.</motion.p>
+        <motion.div className="lt-hero__ctas" {...enter(0.42)}>
+          <button className="lt-btn lt-btn--hot" onClick={() => go("adopta")}>Adopta un nido</button>
+          <button className="lt-btn lt-btn--line" onClick={toJourney}>Conoce el viaje</button>
         </motion.div>
+      </div>
+      <div className="lt-hero__photo">
+        <img src={HOME_MEDIA.criasOrilla} alt="Decenas de crías de tortuga caminando por la arena hacia el mar" fetchPriority="high" />
       </div>
     </section>
   );

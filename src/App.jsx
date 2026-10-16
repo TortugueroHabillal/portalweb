@@ -12,7 +12,7 @@ import { PageDona } from "./pages/PageDona";
 import { PageContacto } from "./pages/PageContacto";
 import { PaymentSuccessPage } from "./pages/PaymentSuccessPage";
 import { PagePrivacidad } from "./pages/PagePrivacidad";
-import { startSmoothScroll, stopSmoothScroll, scrollToTop } from "./lib/smoothScroll";
+import { scrollToTop } from "./lib/smoothScroll";
 
 function getInitialPage() {
   const path = window.location.pathname.replace(/^\//, "").toLowerCase();
@@ -48,11 +48,6 @@ const PAGE_TITLES = {
 
 export default function App() {
   const [page, setPage] = useState(getInitialPage);
-
-  useEffect(() => {
-    startSmoothScroll();
-    return stopSmoothScroll;
-  }, []);
 
   useEffect(() => {
     const onPopState = () => setPage(getInitialPage());
@@ -92,7 +87,7 @@ export default function App() {
 
   const getFooterFromColor = () => {
     switch (page) {
-      case "home": return MAREA.arena;
+      case "home": return MAREA.profundo;
       case "about": return TOKENS.espuma;
       case "convocatorias": return TOKENS.cieloClaro;
       case "eventos": return TOKENS.espuma;
@@ -110,7 +105,7 @@ export default function App() {
       <style>{GLOBAL_STYLE}</style>
       <Nav current={page === "donation-success" ? "dona" : page === "adoption-success" ? "adopta" : page} setCurrent={go} />
       {/* El menú flota sobre el hero del Home; en las demás páginas reservamos su espacio */}
-      {page !== "home" && <div aria-hidden="true" style={{ height: 78, background: MAREA.abismo }} />}
+      {page !== "home" && <div aria-hidden="true" style={{ height: 78, background: MAREA.arena }} />}
       {renderPage()}
       <Footer go={go} fromColor={getFooterFromColor()} />
     </div>

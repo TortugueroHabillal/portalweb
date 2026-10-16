@@ -35,17 +35,20 @@ export const TOKENS = {
   verdeMarOscuro: "#175747",
 };
 
-/* ---------- Paleta «Marea viva» (rediseño 2026) ----------
-   6 colores, cada uno con un solo trabajo. Las variables CSS equivalentes
-   (--mv-*) viven en src/styles/marea.css.
+/* ---------- Paleta del tema claro (rediseño 2026) ----------
+   El Home va de arena a azul profundo, como el viaje del nido al mar.
+   Las variables CSS equivalentes (--lt-*) viven en src/styles/marea.css.
 */
 export const MAREA = {
-  abismo: "#0B2A33",     // fondos oscuros
-  ola: "#1E7A8C",        // olas, bordes, texto de acento sobre claro
-  turquesa: "#3FC1C9",   // lo «vivo»: palabra animada, enlaces, acentos
-  espuma: "#E6F4F1",     // fondos claros
-  arena: "#F3EDE1",      // texto sobre oscuro, franjas cálidas
-  atardecer: "#E2531F",  // solo CTAs (Dona)
+  arena: "#F5EEE0",     // inicio, fondos cálidos
+  espuma: "#EAF6F4",    // fondos claros
+  agua: "#D5EEF2",
+  celeste: "#BFE6EE",   // color principal claro
+  azul: "#2FB3C6",      // azul del logo: botones y acentos
+  mar: "#136C80",
+  profundo: "#0E4A5A",  // solo al final
+  tinta: "#0F2E36",     // texto
+  naranja: "#E2531F",   // solo Adopta / Dona
 };
 
 /* ---------- Escala de espaciado (padding/margin de secciones) ----------

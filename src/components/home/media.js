@@ -1,4 +1,4 @@
-/* Rutas de los medios del Home rediseñado.
+/* Rutas de los medios del Home.
    Las versiones optimizadas viven en public/home/; los originales pesados
    en originales/ (fuera de git). */
 const h = (name) => `/home/${name}`;
@@ -6,28 +6,23 @@ const f = (name) => `/home/fotos/${name}.webp`;
 
 export const HOME_MEDIA = {
   logo: h("logo-habillal.webp"),
-  golfina: h("golfina.webp"),
-  laud: h("laud.webp"),
-  negra: h("negra.webp"),
-  laudCria: h("laud-cria.webp"),
-  manoGolfina: h("mano-golfina.webp"),
+  aliados: h("aliados.webp"),
   video: h("video-liberacion.mp4"),
   videoPoster: h("video-liberacion-poster.jpg"),
 
-  campAerial: f("campamento-aereo"),
-  visitantes: f("visitantes"),
-  adoptaNido: f("adopta-nido"),
-  donaCria: f("dona-cria"),
+  // Especies (recortes sin fondo, vistos de lado)
+  golfina: h("golfina.webp"),
+  negra: h("negra-h.webp"),
+  laud: h("laud.webp"),
 
-  educamos: f("educamos"),
+  // Fotos
+  criasOrilla: f("crias-orilla"),
+  golfinaNoche: f("hero-golfina"),
   patrullamos: f("patrullamos"),
   reubicamos: f("reubicamos"),
   liberamos: f("liberamos"),
-
+  educamos: f("educamos"),
   criaLaud: f("cria-laud"),
-  corral: f("corral"),
-  golfinaArena: f("golfina-arena"),
-  liberacionEscuelas: f("liberacion-escuelas"),
-  tortugaNegra: f("tortuga-negra"),
-  primerosPasos: f("primeros-pasos"),
+  donaCria: f("dona-cria"),
+  visitantes: f("visitantes"),
 };
