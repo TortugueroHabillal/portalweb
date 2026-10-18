@@ -26,7 +26,7 @@ export function PageHome({ go }) {
       <Work />
       <Proof />
       <Allies />
-      <Species go={go} />
+      <Species />
       <Shore />
       <TakeAction go={go} />
     </main>

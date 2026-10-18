@@ -19,7 +19,7 @@ export function HomeHero({ go }) {
         <motion.h1 className="lt-display lt-hero__title" {...enter(0.1)}>
           Antes de llegar al mar, tienen que sobrevivir a la arena.
         </motion.h1>
-        <motion.p className="lt-hero__line" {...enter(0.28)}>Nosotros nos aseguramos de que lo logren.</motion.p>
+        <motion.p className="lt-hero__line" {...enter(0.28)}>En El Habillal nos aseguramos de que lo logren.</motion.p>
         <motion.div className="lt-hero__ctas" {...enter(0.42)}>
           <button className="lt-btn lt-btn--hot" onClick={() => go("adopta")}>Adopta un nido</button>
           <button className="lt-btn lt-btn--line" onClick={toJourney}>Conoce el viaje</button>

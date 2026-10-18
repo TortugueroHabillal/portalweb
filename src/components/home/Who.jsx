@@ -7,13 +7,13 @@ import { HOME_MEDIA } from "./media";
 export function Who() {
   return (
     <section className="lt-who" data-snap>
-      <Reveal as="h2" className="lt-display lt-who__title">Por eso, nosotros estamos cada noche en la playa.</Reveal>
+      <Reveal as="h2" from="left" className="lt-display lt-who__title">Por eso, nosotros estamos cada noche en la playa.</Reveal>
       <Reveal className="lt-who__logo" delay={0.1}>
         <img src={HOME_MEDIA.logo} alt="Logo del Campamento Tortuguero El Habillal" width="600" height="386" />
       </Reveal>
-      <Reveal as="p" className="lt-who__text" delay={0.2}>
+      <Reveal as="p" from="right" className="lt-who__text" delay={0.2}>
         Somos un campamento tortuguero constituido en El Habillal, Lázaro Cárdenas, Michoacán, desde 2013, con
-        autorización vigente de la SEMARNAT de <em>Aprovechamiento no extractivo para campamentos tortugueros</em>.
+        autorización vigente de la SEMARNAT de <em>Aprovechamiento no extractivo de especies silvestres</em>.
       </Reveal>
     </section>
   );

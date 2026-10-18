@@ -31,6 +31,9 @@ function pathForPage(page) {
   }
 }
 
+/* Azul con el que terminan las páginas del nuevo diseño (une con el footer) */
+const PAGE_END = "#96D2DF";
+
 const SITE_TITLE = 'Campamento Tortuguero "El Habillal" A.C.';
 const PAGE_TITLES = {
   home: SITE_TITLE,
@@ -71,12 +74,12 @@ export default function App() {
   const renderPage = () => {
     switch (page) {
       case "home": return <PageHome go={go} />;
-      case "about": return <PageAbout />;
+      case "about": return <PageAbout go={go} />;
       case "convocatorias": return <PageConvocatorias go={go} />;
-      case "eventos": return <PageEventos />;
+      case "eventos": return <PageEventos go={go} />;
       case "visita": return <PageVisita />;
       case "adopta": return <PageAdopta />;
-      case "dona": return <PageDona />;
+      case "dona": return <PageDona go={go} />;
       case "contacto": return <PageContacto />;
       case "privacidad": return <PagePrivacidad />;
       case "donation-success": return <PaymentSuccessPage type="donation" />;
@@ -87,14 +90,14 @@ export default function App() {
 
   const getFooterFromColor = () => {
     switch (page) {
-      case "home": return MAREA.profundo;
-      case "about": return TOKENS.espuma;
-      case "convocatorias": return TOKENS.cieloClaro;
-      case "eventos": return TOKENS.espuma;
-      case "visita": return TOKENS.espuma;
-      case "adopta": return TOKENS.noche;
-      case "dona": return TOKENS.espuma;
-      case "contacto": return TOKENS.cieloClaro;
+      case "home": return PAGE_END;
+      case "about": return PAGE_END;
+      case "convocatorias": return PAGE_END;
+      case "eventos": return PAGE_END;
+      case "visita": return PAGE_END;
+      case "adopta": return PAGE_END;
+      case "dona": return PAGE_END;
+      case "contacto": return PAGE_END;
       default: return TOKENS.arena;
     }
   };
@@ -105,7 +108,8 @@ export default function App() {
       <style>{GLOBAL_STYLE}</style>
       <Nav current={page === "donation-success" ? "dona" : page === "adoption-success" ? "adopta" : page} setCurrent={go} />
       {/* El menú flota sobre el hero del Home; en las demás páginas reservamos su espacio */}
-      {page !== "home" && <div aria-hidden="true" style={{ height: 78, background: MAREA.arena }} />}
+      {/* Las páginas del nuevo diseño reservan su propio espacio para el menú */}
+      {!["home", "about", "convocatorias", "contacto", "visita", "eventos", "adopta", "dona"].includes(page) && <div aria-hidden="true" style={{ height: 78, background: MAREA.arena }} />}
       {renderPage()}
       <Footer go={go} fromColor={getFooterFromColor()} />
     </div>

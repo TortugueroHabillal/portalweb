@@ -14,13 +14,13 @@ export function Problem() {
     <section id="viaje" className="lt-problem" data-snap>
       <div className="lt-problem__head">
         <div>
-          <Reveal as="h2" className="lt-display">Una tortuga pone su nido y regresa al mar.</Reveal>
-          <Reveal as="p" className="lt-problem__lead" delay={0.1}>
+          <Reveal as="h2" from="left" className="lt-display">Una tortuga pone su nido y regresa al mar.</Reveal>
+          <Reveal as="p" from="right" className="lt-problem__lead" delay={0.1}>
             Pero sus huevos quedan amenazados:
           </Reveal>
         </div>
         <Reveal className="lt-problem__photo" delay={0.1}>
-          <img src={HOME_MEDIA.golfinaNoche} alt="Tortuga golfina desovando de noche, iluminada con luz roja" loading="lazy" decoding="async" />
+          <img src={HOME_MEDIA.golfinaNoche} alt="Tortuga negra en la playa" loading="lazy" decoding="async" />
         </Reveal>
       </div>
       <div className="lt-problem__list">

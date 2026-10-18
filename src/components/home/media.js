@@ -10,14 +10,22 @@ export const HOME_MEDIA = {
   video: h("video-liberacion.mp4"),
   videoPoster: h("video-liberacion-poster.jpg"),
 
-  // Especies (recortes sin fondo, vistos de lado)
+  // Especies: fotos reales
+  especies: {
+    golfina: "/home/especies/golfina.webp",
+    negra: "/home/especies/negra.webp",
+    laud: "/home/especies/laud.webp",
+  },
+
+  // Recortes sin fondo (ya no se usan en el Home)
   golfina: h("golfina.webp"),
   negra: h("negra-h.webp"),
   laud: h("laud.webp"),
 
   // Fotos
   criasOrilla: f("crias-orilla"),
-  golfinaNoche: f("hero-golfina"),
+  golfinaNoche: f("negra-playa"),
+  donaCrias: f("dona-crias"),
   patrullamos: f("patrullamos"),
   reubicamos: f("reubicamos"),
   liberamos: f("liberamos"),

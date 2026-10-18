@@ -8,9 +8,9 @@ const PAGES = [
   { id: "about", label: "Nosotros" },
   { id: "visita", label: "Visítanos" },
   { id: "eventos", label: "Eventos" },
-  { id: "adopta", label: "Adopta" },
   { id: "convocatorias", label: "Convocatorias" },
   { id: "contacto", label: "Contacto" },
+  { id: "adopta", label: "Adopta", tone: "adopta" },
 ];
 
 const ease = [0.22, 1, 0.36, 1];
@@ -24,7 +24,7 @@ const ease = [0.22, 1, 0.36, 1];
 */
 export function Nav({ current, setCurrent }) {
   const reduce = useReducedMotion();
-  const wide = useMediaQuery("(min-width: 1081px)");
+  const wide = useMediaQuery("(min-width: 900px)");
   const [compact, setCompact] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const showLinks = wide ? !compact || expanded : expanded;
@@ -78,7 +78,7 @@ export function Nav({ current, setCurrent }) {
             {PAGES.map((p) => (
               <button
                 key={p.id}
-                className="mv-nav__link"
+                className={`mv-nav__link${p.tone ? ` mv-nav__link--${p.tone}` : ""}`}
                 aria-current={current === p.id ? "page" : undefined}
                 onClick={() => navigate(p.id)}
               >
@@ -91,7 +91,7 @@ export function Nav({ current, setCurrent }) {
       </AnimatePresence>
 
       <div className="mv-nav__actions">
-        <button className="mv-btn mv-btn--dona mv-nav__cta" onClick={() => navigate("dona")}>Dona</button>
+        <button className="mv-nav__dona" aria-current={current === "dona" ? "page" : undefined} onClick={() => navigate("dona")}>Dona</button>
         {showBurger && (
           <button
             className={`mv-nav__burger${expanded ? " mv-nav__burger--x" : ""}`}

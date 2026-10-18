@@ -1,214 +1,136 @@
-import { TOKENS, SECTION_BG, SPACE, RADIUS, IMAGES } from "../theme";
-import { Reveal } from "../components/Reveal";
-import { WaveDivider } from "../components/WaveDivider";
-import { HeroShock } from "../components/HeroShock";
-import { Button } from "../components/Button";
-import { SectionHead } from "../components/Typography";
-import { CircleVectors } from "../components/CircleVectors";
+import { useEffect } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { Reveal } from "../components/home/Reveal";
+import { snapToSections } from "../lib/smoothScroll";
+
+/* Fotos propias de esta página (ninguna se repite con Home ni Nosotros) */
+const PHOTOS = {
+  hero: "/convocatorias/equipo-stand.webp",
+  cartel: "/convocatorias/cartel.webp",
+};
+
+const ease = [0.22, 1, 0.36, 1];
+
+const MODALIDADES = [
+  { name: "Servicio social", text: "Para estudiantes que necesitan liberar sus horas haciendo conservación real." },
+  { name: "Prácticas profesionales", text: "Experiencia de campo en tu carrera, junto a nuestro equipo técnico." },
+  { name: "Voluntariado de temporada", text: "Para la comunidad y cualquier persona comprometida con las tortugas." },
+];
 
 const ACTIVIDADES = [
-  { t: "Patrullajes nocturnos en playa y registro de hembras anidadoras.", tone: TOKENS.azulOla },
-  { t: "Traslado y colecta segura de nidos al corral de incubación.", tone: TOKENS.verde },
-  { t: "Monitoreo de nidos, conteo de eclosión y liberación de crías.", tone: TOKENS.azulOla },
-  { t: "Mantenimiento de instalaciones del campamento y atención a visitantes.", tone: TOKENS.verde },
-  { t: "Participación en programas educativos y recepción de grupos escolares.", tone: TOKENS.azulOla },
+  "Patrullajes nocturnos en playa y registro de hembras anidadoras.",
+  "Traslado y colecta segura de nidos al corral de incubación.",
+  "Monitoreo de nidos, conteo de eclosión y liberación de crías.",
+  "Mantenimiento de instalaciones del campamento y atención a visitantes.",
+  "Participación en programas educativos y recepción de grupos escolares.",
 ];
 
 const PASOS = [
-  { n: "01", t: "Elige tu modalidad", d: "Revisa las opciones (Servicio Social, Voluntariado o Prácticas) según tu disponibilidad.", tone: TOKENS.azulOla },
-  { n: "02", t: "Contáctanos", d: "Envíanos un mensaje manifestando tu interés y anexando tus datos básicos de contacto.", tone: TOKENS.verde },
-  { n: "03", t: "Entrevista y registro", d: "Evaluaremos tu perfil y te referiremos a una entrevista virtual o presencial previo a tu aceptación al equipo.", tone: TOKENS.coralOscuro },
+  { n: "1", t: "Elige tu modalidad", d: "Servicio social, prácticas o voluntariado, según tu disponibilidad." },
+  { n: "2", t: "Contáctanos", d: "Envíanos un mensaje con tu interés y tus datos de contacto." },
+  { n: "3", t: "Entrevista y registro", d: "Revisamos tu perfil y te citamos a una entrevista virtual o presencial antes de tu ingreso." },
 ];
 
-export function PageConvocatorias({ go }) {
-  const handleGoContacto = () => {
-    if (go) go("contacto");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
+function Hero({ go }) {
+  const reduce = useReducedMotion();
+  const enter = (delay) =>
+    reduce ? {} : { initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.9, delay, ease } };
   return (
-    <div style={{ position: "relative" }}>
-      {/* 1. Hero — mismo patrón oscuro dividido que el resto del sitio */}
-      <HeroShock image={IMAGES.teamDigging} imageAlt="Equipo de voluntarios trabajando en El Habillal" align="center">
-        <span
-          style={{
-            display: "inline-block",
-            fontFamily: "'Public Sans', sans-serif",
-            fontSize: "13px",
-            fontWeight: 700,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: TOKENS.cielo,
-            marginBottom: SPACE.sm,
-          }}
-        >
-          Súmate al equipo
-        </span>
-        <h1
-          style={{
-            fontFamily: "'Fraunces', serif",
-            fontWeight: 700,
-            fontSize: "clamp(26px, 3.4vw, 44px)",
-            lineHeight: 1.2,
-            letterSpacing: "-0.01em",
-            color: "#ffffff",
-            margin: "0 0 18px",
-          }}
-        >
-          Convocatorias y
-          <br />
-          <span style={{ color: TOKENS.cieloOscuro }}>participación</span> activa.
-        </h1>
-        <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "15.5px", color: "#E7F0EC", lineHeight: 1.6, maxWidth: "48ch", margin: 0 }}>
-          Integra tus conocimientos y vocación a las actividades del campamento. Elige una modalidad y contáctanos para iniciar tu proceso.
-        </p>
-      </HeroShock>
+    <section className="lt-hero ab-hero" data-snap>
+      <div className="lt-hero__text">
+        <motion.h1 className="lt-display lt-hero__title ab-hero__title" {...enter(0.1)}>
+          Únete al equipo que cuida la playa cada noche.
+        </motion.h1>
+        <motion.p className="lt-hero__line" {...enter(0.28)}>Servicio social, prácticas profesionales y voluntariado de temporada.</motion.p>
+        <motion.div className="lt-hero__ctas" {...enter(0.42)}>
+          <button className="lt-btn lt-btn--hot" onClick={() => go("contacto")}>Quiero participar</button>
+          <button className="lt-btn lt-btn--line" onClick={() => document.getElementById("modalidades")?.scrollIntoView({ behavior: "smooth" })}>
+            Ver modalidades
+          </button>
+        </motion.div>
+      </div>
+      <div className="lt-hero__photo">
+        <img src={PHOTOS.hero} alt="Equipo del campamento en un módulo informativo" fetchPriority="high" />
+      </div>
+    </section>
+  );
+}
 
-      <WaveDivider fromColor={TOKENS.noche} toColor={SECTION_BG.claro} />
-
-      {/* 2. Modalidades abiertas + cartel oficial */}
-      <section style={{ position: "relative", padding: `${SPACE.xxl}px ${SPACE.lg}px`, background: SECTION_BG.claro, overflow: "hidden" }}>
-        <CircleVectors variant="light" />
-        <div style={{ maxWidth: "1180px", margin: "0 auto", position: "relative", zIndex: 1 }}>
-          <Reveal>
-            <div style={{ textAlign: "center", maxWidth: "780px", margin: `0 auto ${SPACE.xxl}px` }}>
-              <h2 style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "clamp(22px, 3vw, 30px)", color: TOKENS.noche, lineHeight: 1.35, margin: 0 }}>
-                Contamos con convocatorias abiertas para{" "}
-                <span style={{ color: TOKENS.verde }}>Servicio Social</span>,{" "}
-                <span style={{ color: TOKENS.azulOlaOscuro }}>Prácticas Profesionales</span>{" "}
-                y{" "}
-                <span style={{ color: TOKENS.coralOscuro }}>Voluntariado de Temporada</span>.
-              </h2>
-            </div>
+/* Modalidades + a quién buscamos */
+function Modalidades() {
+  return (
+    <section id="modalidades" className="pg-sec pg-sec--espuma" data-snap>
+      <Reveal as="h2" className="lt-display ab-title">Tres formas de sumarte.</Reveal>
+      <div className="pg-cards">
+        {MODALIDADES.map((m, i) => (
+          <Reveal key={m.name} as="article" className="pg-card" delay={i * 0.12}>
+            <h3 className="lt-display">{m.name}</h3>
+            <p>{m.text}</p>
           </Reveal>
+        ))}
+      </div>
+      <Reveal as="p" className="pg-sub" delay={0.3}>
+        Buscamos estudiantes de Biología, Medicina Veterinaria, Ingeniería Ambiental y carreras afines, y a cualquier persona
+        comprometida con la conservación.
+      </Reveal>
+    </section>
+  );
+}
 
-          <div className="tt-cols-2" style={{ gap: SPACE.xl, alignItems: "stretch" }}>
-            <Reveal from="left" style={{ height: "100%" }}>
-              <div
-                style={{
-                  position: "relative",
-                  borderRadius: RADIUS.card + 4,
-                  overflow: "hidden",
-                  boxShadow: "0 20px 44px -14px rgba(16,38,43,0.18)",
-                  border: "1px solid rgba(16, 38, 43, 0.1)",
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  src={IMAGES.practicasFlyer}
-                  alt="Cartel oficial de Prácticas y Voluntariado"
-                  loading="lazy"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                />
-              </div>
-            </Reveal>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: SPACE.md, justifyContent: "space-between", height: "100%" }}>
-              <Reveal delay={100} from="right" style={{ flex: 1 }}>
-                <div
-                  style={{
-                    background: "#ffffff",
-                    borderRadius: RADIUS.card + 4,
-                    padding: `${SPACE.md + 4}px ${SPACE.md + 2}px`,
-                    border: "1px solid rgba(16, 38, 43, 0.08)",
-                    boxShadow: "0 12px 30px -10px rgba(16,38,43,0.08)",
-                    height: "100%",
-                    boxSizing: "border-box",
-                  }}
-                >
-                  <h4 style={{ fontFamily: "'Fraunces', serif", fontSize: "20px", fontWeight: 700, color: TOKENS.noche, margin: "0 0 16px" }}>
-                    Actividades a realizar
-                  </h4>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: SPACE.sm - 4 }}>
-                    {ACTIVIDADES.map((act, idx) => (
-                      <li key={idx} style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14.5px", color: TOKENS.conchaSuave, lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                        <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: act.tone, marginTop: "6px", flexShrink: 0 }} />
-                        <span>{act.t}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-
-              <Reveal delay={200} from="right">
-                <div
-                  style={{
-                    background: "#ffffff",
-                    borderRadius: RADIUS.card + 2,
-                    padding: `${SPACE.md}px`,
-                    border: "1px solid rgba(16, 38, 43, 0.08)",
-                    boxShadow: "0 10px 24px -10px rgba(16,38,43,0.06)",
-                  }}
-                >
-                  <h4 style={{ fontFamily: "'Fraunces', serif", fontSize: "19px", fontWeight: 700, color: TOKENS.noche, margin: "0 0 10px" }}>
-                    Perfiles que buscamos
-                  </h4>
-                  <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14.5px", color: TOKENS.conchaSuave, lineHeight: 1.65, margin: 0 }}>
-                    Buscamos estudiantes de <strong style={{ color: TOKENS.noche }}>Biología, Medicina Veterinaria, Ingeniería Ambiental y carreras afines</strong>, así como a la <strong style={{ color: TOKENS.noche }}>comunidad en general</strong>, y entusiastas comprometidos con la conservación de las especies marinas.
-                  </p>
-                </div>
-              </Reveal>
-            </div>
-          </div>
+/* Actividades con el cartel oficial */
+function Actividades() {
+  const reduce = useReducedMotion();
+  const view = reduce ? {} : { initial: "hidden", whileInView: "shown", viewport: { once: false, amount: 0.35 } };
+  const item = {
+    hidden: { opacity: 0, x: -24 },
+    shown: (i) => ({ opacity: 1, x: 0, transition: { duration: 0.6, delay: 0.15 + i * 0.1, ease } }),
+  };
+  return (
+    <section className="pg-sec pg-sec--agua" data-snap>
+      <Reveal as="h2" className="lt-display ab-title">Esto harás en el campamento.</Reveal>
+      <div className="pg-split">
+        <div className="pg-split__img pg-split__img--contain">
+          <img src={PHOTOS.cartel} alt="Cartel oficial de prácticas y voluntariado" loading="lazy" decoding="async" />
         </div>
-      </section>
+        <motion.ol className="pg-list" {...view}>
+          {ACTIVIDADES.map((a, i) => (
+            <motion.li key={a} custom={i} variants={item}>{a}</motion.li>
+          ))}
+        </motion.ol>
+      </div>
+    </section>
+  );
+}
 
-      <WaveDivider fromColor={SECTION_BG.claro} toColor={TOKENS.espuma} />
-
-      {/* 3. Pasos de postulación */}
-      <section style={{ background: TOKENS.espuma, padding: `${SPACE.xl}px ${SPACE.lg}px` }}>
-        <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
-          <SectionHead title="¿Cómo realizar tu registro?" titleMaxWidth="26ch" />
-          <div className="tt-cols-3" style={{ gap: SPACE.md, marginTop: SPACE.xl }}>
-            {PASOS.map((p, i) => (
-              <Reveal key={p.n} delay={80 + i * 70}>
-                <div
-                  style={{
-                    background: "#ffffff",
-                    padding: `${SPACE.md + 4}px ${SPACE.md}px`,
-                    borderRadius: RADIUS.card,
-                    borderTop: `3px solid ${p.tone}`,
-                    boxShadow: "0 10px 24px -10px rgba(16,38,43,0.06)",
-                    height: "100%",
-                    boxSizing: "border-box",
-                  }}
-                >
-                  <span style={{ fontFamily: "'Fraunces', serif", fontSize: "36px", fontWeight: 700, color: p.tone, display: "block", lineHeight: 1, marginBottom: SPACE.sm - 4 }}>
-                    {p.n}
-                  </span>
-                  <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: "18.5px", color: TOKENS.noche, margin: "0 0 8px" }}>
-                    {p.t}
-                  </h3>
-                  <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "14px", color: TOKENS.conchaSuave, margin: 0, lineHeight: 1.55 }}>
-                    {p.d}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <WaveDivider fromColor={TOKENS.espuma} toColor={SECTION_BG.claro} />
-
-      {/* 4. Llamado final a contacto */}
-      <section style={{ padding: `${SPACE.xl}px ${SPACE.lg}px ${SPACE.xxl}px`, textAlign: "center", background: SECTION_BG.claro }}>
-        <div style={{ maxWidth: "700px", margin: "0 auto" }}>
-          <Reveal>
-            <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(26px, 3.2vw, 34px)", fontWeight: 700, color: TOKENS.noche, margin: "0 0 14px", letterSpacing: "-0.01em" }}>
-              ¿Listo para enviar tu solicitud?
-            </h2>
-            <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "16px", color: TOKENS.conchaSuave, margin: "0 auto 28px", lineHeight: 1.6 }}>
-              Haz clic abajo para ir al formulario directo de contacto, indicando la modalidad que te interesa.
-            </p>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Button tone="shock" size="lg" onClick={handleGoContacto}>Contáctanos</Button>
-            </div>
+/* Pasos + llamado final, en el azul del cierre */
+function Registro({ go }) {
+  return (
+    <section className="lt-action pg-end" data-snap>
+      <Reveal as="h2" className="lt-display lt-action__title">Así te registras.</Reveal>
+      <div className="pg-steps">
+        {PASOS.map((p, i) => (
+          <Reveal key={p.n} as="article" className="pg-step" delay={i * 0.12}>
+            <span className="lt-display pg-step__n">{p.n}</span>
+            <h3 className="lt-display">{p.t}</h3>
+            <p>{p.d}</p>
           </Reveal>
-        </div>
-      </section>
-    </div>
+        ))}
+      </div>
+      <Reveal className="pg-end__cta" delay={0.4}>
+        <button className="lt-btn lt-btn--hot" onClick={() => go("contacto")}>Contáctanos</button>
+      </Reveal>
+    </section>
+  );
+}
+
+export function PageConvocatorias({ go }) {
+  useEffect(() => snapToSections(), []);
+  return (
+    <main className="lt-home pg-page">
+      <Hero go={go} />
+      <Modalidades />
+      <Actividades />
+      <Registro go={go} />
+    </main>
   );
 }

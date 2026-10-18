@@ -29,9 +29,9 @@ export function Shore() {
   return (
     <section ref={ref} className="lt-shore" data-snap>
       <div className="lt-shore__text">
-        <Reveal as="h2" className="lt-display">Cada cría que llega al mar es la esperanza de su especie.</Reveal>
-        <Reveal as="p" delay={0.1}>Se estima que solo 1 de cada 1,000 crías llegará a adulta. </Reveal>
-        <Reveal as="p" delay={0.1}>Por ello, ninguna puede perderse.</Reveal>
+        <Reveal as="h2" from="left" className="lt-display">Cada cría que llega al mar es la esperanza de su especie.</Reveal>
+        <Reveal as="p" from="right" delay={0.1}>Se estima que solo 1 de cada 1,000 crías llegará a adulta. </Reveal>
+        <Reveal as="p" from="right" delay={0.1}>Por ello, ninguna puede perderse.</Reveal>
       </div>
       <div className="lt-shore__art">
         <motion.div className="lt-shore__block" style={{ y: blockY }} />

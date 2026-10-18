@@ -7,7 +7,7 @@ import { HOME_MEDIA } from "./media";
 export function Allies() {
   return (
     <section className="lt-allies-section" data-snap>
-      <Reveal as="h2" className="lt-display lt-allies-section__title">
+      <Reveal as="h2" from="left" className="lt-display lt-allies-section__title">
         Más de 35 empresas, instituciones y comercios de Lázaro Cárdenas creen en nuestra labor y la hacen posible.
       </Reveal>
       <div className="lt-allies" role="img" aria-label="Logos de empresas, instituciones y comercios aliados">

@@ -38,7 +38,7 @@ export function Work() {
 
   return (
     <section className="lt-work" data-snap>
-      <Reveal as="h2" className="lt-display lt-work__title">Esto hacemos para protegerlas.</Reveal>
+      <Reveal as="h2" from="left" className="lt-display lt-work__title">Esto hacemos para protegerlas.</Reveal>
       <div className="lt-work__grid">
         {TASKS.map((t, i) => (
           <motion.article key={t.verb} className="lt-task" variants={card} {...anim(i)}>
