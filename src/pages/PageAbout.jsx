@@ -50,7 +50,7 @@ const MILESTONES = [
     text: "Día Mundial de los Océanos.",
     link: "https://news.un.org/es/story/2021/06/1493152",
   },
-  { when: "Tortufest", img: PHOTOS.tortufest, alt: "Baile en el escenario del TortuFest", text: "Dos ediciones del festival que acerca la conservación a la comunidad." },
+  { when: "Tortufest", img: PHOTOS.tortufest, alt: "Crías de tortuga durante el TortuFest", text: "Dos ediciones del festival que acerca la conservación a la comunidad." },
   { when: "Hoy", img: PHOTOS.corral, alt: "Corral de incubación con nidos", text: "+1,000 nidos esta temporada y +100,000 crías liberadas en total.", hot: true },
 ];
 

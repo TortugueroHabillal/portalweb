@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, animate, motion, useInView, useReducedMotion } from "motion/react";
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Reveal } from "./Reveal";
 import { HOME_MEDIA } from "./media";
 
@@ -13,21 +13,6 @@ const TIERS = [
 
 const ease = [0.22, 1, 0.36, 1];
 const money = (n) => `$${n.toLocaleString("es-MX")}`;
-
-/* El precio cuenta de 0 a 220 cada vez que el bloque entra en pantalla */
-function CountUp({ to }) {
-  const reduce = useReducedMotion();
-  const ref = useRef(null);
-  const inView = useInView(ref, { amount: 0.6 });
-  const [value, setValue] = useState(reduce ? to : 0);
-  useEffect(() => {
-    if (reduce) return;
-    if (!inView) { setValue(0); return; }
-    const c = animate(0, to, { duration: 1.4, ease, onUpdate: (v) => setValue(Math.round(v)) });
-    return () => c.stop();
-  }, [inView, to, reduce]);
-  return <span ref={ref} className="lt-display">${value}<small className="lt-cta__cur">MXN</small></span>;
-}
 
 /* ---------- 9 · El mar ----------
    El final del viaje: aquí, por fin, se pide. Adopta es el protagonista
@@ -56,9 +41,9 @@ export function TakeAction({ go }) {
           </div>
           <div className="lt-cta__body">
             <h3 className="lt-display">Adopta un nido</h3>
-            <p className="lt-cta__price">
-              <CountUp to={220} />
-            </p>
+            <Reveal as="p" from="left" delay={0.2} className="lt-cta__price">
+              <span className="lt-display">$220<small className="lt-cta__cur">MXN</small></span>
+            </Reveal>
             <p>Lo cuidamos en el corral hasta que nace y te invitamos a ver a sus crías llegar al mar.</p>
             <button className="lt-btn lt-btn--hot lt-cta__btn" onClick={() => go("adopta")}>Adoptar mi nido</button>
           </div>

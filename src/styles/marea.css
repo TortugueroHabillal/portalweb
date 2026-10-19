@@ -1096,10 +1096,10 @@ html.snap-home footer { scroll-snap-align: end; }
 #reserva .pg-submit { padding: 11px 20px; }
 
 /* Menú: Adopta (azul) y Dona (naranja) al final, como texto */
-.mv-nav__link--adopta { color: var(--lt-mar); font-weight: 700; }
-.mv-nav__link--adopta[aria-current="page"] { color: var(--lt-azul); }
-.mv-nav__dona { background: none; border: 0; cursor: pointer; font-family: var(--lt-sans); font-size: 14px; font-weight: 700; color: var(--lt-naranja); padding: 9px 12px; border-radius: 999px; transition: background 0.2s; }
-.mv-nav__dona:hover { background: rgba(226, 83, 31, 0.1); }
+.mv-nav__link--adopta { color: var(--lt-naranja); font-weight: 700; }
+.mv-nav__link--adopta[aria-current="page"] { color: var(--lt-naranja); text-decoration: underline; text-underline-offset: 4px; }
+.mv-nav__dona { background: none; border: 0; cursor: pointer; font-family: var(--lt-sans); font-size: 14px; font-weight: 700; color: var(--lt-mar); padding: 9px 12px; border-radius: 999px; transition: background 0.2s; }
+.mv-nav__dona:hover { background: rgba(47, 179, 198, 0.12); }
 .mv-nav__dona[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; }
 
 @media (max-width: 767px) {
@@ -1130,3 +1130,8 @@ html.snap-home footer { scroll-snap-align: end; }
   .lt-logos__card:nth-child(3n + 2) { height: 66px; }
   .lt-logos__card img { height: 44px; max-width: 150px; }
 }
+
+/* Dona siempre en azul (Adopta en naranja) */
+.pay-checkout--dona .pay-card { border-top-color: var(--lt-azul); }
+.pay-checkout--dona .pay-card__total strong { color: var(--lt-mar); }
+.lt-btn--sea:hover { background: #2AA3B5; }

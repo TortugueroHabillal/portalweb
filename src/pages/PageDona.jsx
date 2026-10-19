@@ -41,7 +41,7 @@ function Hero() {
       <div className="lt-hero__text">
         <SplitTitle as="h1" className="lt-display lt-hero__title ab-hero__title" text="Tu donativo se convierte en noches de patrullaje." delay={0.1} animateOnMount />
         <motion.div className="lt-hero__ctas pay-hero__ctas" {...enter(0.3)}>
-          <button className="lt-btn lt-btn--hot pay-btn-lg" onClick={goPago}>Donar ahora</button>
+          <button className="lt-btn lt-btn--sea pay-btn-lg" onClick={goPago}>Donar ahora</button>
           <button className="lt-btn lt-btn--line" onClick={() => document.getElementById("transferencia")?.scrollIntoView({ behavior: "smooth" })}>
             Donar por transferencia
           </button>
@@ -102,7 +102,7 @@ function Pago() {
   };
 
   return (
-    <section id="pago" className="pay-sec pay-checkout" data-snap>
+    <section id="pago" className="pay-sec pay-checkout pay-checkout--dona" data-snap>
       <SplitTitle className="lt-display ab-title" text="Elige cuánto quieres donar." />
       <div className="pay-grid">
         <Reveal className="pay-amounts">
@@ -195,7 +195,7 @@ function Pago() {
               </label>
               <div className="pg-field--full">
                 <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-dona" />
-                <button className="lt-btn lt-btn--hot pg-submit pay-btn-lg" type="submit">Ir a pagar</button>
+                <button className="lt-btn lt-btn--sea pg-submit pay-btn-lg" type="submit">Ir a pagar</button>
                 <p className="pay-secure">Pago seguro con tarjeta, procesado por <strong>Stripe</strong>.</p>
               </div>
             </form>
@@ -262,7 +262,7 @@ function Cierre({ go }) {
           <SplitTitle className="lt-display pay-split__title" text="Cada noche en la playa empieza con alguien como tú." />
           <Reveal as="p" className="pg-sub pay-split__text" from="right" delay={0.1}>Tu donativo paga la gasolina del patrullaje, el corral de incubación y las manos que cuidan cada nido.</Reveal>
           <Reveal className="pay-endgrid__ctas" delay={0.2}>
-            <button className="lt-btn lt-btn--hot pay-btn-lg" onClick={goPago}>Donar ahora</button>
+            <button className="lt-btn lt-btn--sea pay-btn-lg" onClick={goPago}>Donar ahora</button>
             <button className="lt-btn lt-btn--line" onClick={() => go("adopta")}>O adopta un nido</button>
           </Reveal>
         </div>

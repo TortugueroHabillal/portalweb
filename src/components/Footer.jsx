@@ -15,12 +15,14 @@ export function Footer({ go, fromColor = TOKENS.arena }) {
   ];
 
   return (
-    <footer style={{ background: TOKENS.noche, color: TOKENS.espuma }}>
+    // La ola es transparente arriba y se monta sobre el final de la página:
+    // así se ve el color real de la página y no queda ninguna línea de corte
+    <footer style={{ background: `linear-gradient(transparent 47px, ${TOKENS.noche} 47px)`, color: TOKENS.espuma, position: "relative" }}>
       <WaveDivider
-        fromColor={fromColor}
+        fromColor="transparent"
         toColor={TOKENS.noche}
         style={{
-          marginTop: "-4px",
+          marginTop: "-47px",
           position: "relative",
           zIndex: 5,
           marginBottom: "-1px",
