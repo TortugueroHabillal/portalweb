@@ -1110,3 +1110,23 @@ html.snap-home footer { scroll-snap-align: end; }
 }
 
 @media (max-height: 760px) and (min-width: 768px) { .pay-check--mini { display: none; } }
+
+/* ---------- Aliados: dos filas irregulares en sentidos opuestos ---------- */
+.lt-logos { display: flex; flex-direction: column; gap: min(2.6svh, 22px); width: 100%; overflow: hidden; padding: 14px 0; }
+.lt-logos__row { overflow: hidden; }
+.lt-logos__track { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: clamp(12px, 1.4vw, 20px); width: max-content; animation: lt-logos 70s linear infinite; }
+.lt-logos__row--rev .lt-logos__track { animation-direction: reverse; animation-duration: 80s; }
+.lt-logos:hover .lt-logos__track { animation-play-state: paused; }
+.lt-logos__card { flex: none; display: grid; place-items: center; background: #fff; height: min(15svh, 128px); padding: 0 clamp(18px, 2vw, 30px); transition: transform 0.4s var(--lt-ease); }
+.lt-logos__card:nth-child(3n + 1) { translate: 0 -10px; }
+.lt-logos__card:nth-child(3n + 2) { translate: 0 8px; height: min(13svh, 112px); }
+.lt-logos__card:nth-child(4n) { padding: 0 clamp(26px, 3vw, 48px); }
+.lt-logos__card:hover { transform: scale(1.06); }
+.lt-logos__card img { display: block; height: min(8.5svh, 72px); width: auto; max-width: 240px; object-fit: contain; }
+@keyframes lt-logos { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .lt-logos__track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } .lt-logos__row--rev { display: none; } }
+@media (max-width: 767px) {
+  .lt-logos__card { height: 76px; padding: 0 16px; }
+  .lt-logos__card:nth-child(3n + 2) { height: 66px; }
+  .lt-logos__card img { height: 44px; max-width: 150px; }
+}

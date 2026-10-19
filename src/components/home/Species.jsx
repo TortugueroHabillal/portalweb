@@ -9,7 +9,7 @@ import { Reveal } from "./Reveal";
 const SPECIES = [
   { name: "Golfina", img: HOME_MEDIA.especies.golfina, grow: 11, alt: "Tortuga golfina en la playa", text: "Deja entre 1,000 y 1,400 nidos por temporada en nuestra playa." },
   { name: "Negra", img: HOME_MEDIA.especies.negra, grow: 16, alt: "Tortuga negra en la playa", text: "Menos de diez nidos por temporada: cada uno cuenta." },
-  { name: "Laúd", img: HOME_MEDIA.especies.laud, grow: 34, alt: "Tortuga laúd anidando de noche", text: "La tortuga más grande del mundo. Aquí deja menos de diez nidos por temporada." },
+  { name: "Laúd", img: HOME_MEDIA.especies.laud, pos: "50% 85%", grow: 34, alt: "Tortuga laúd anidando de noche", text: "La tortuga más grande del mundo. Aquí deja menos de diez nidos por temporada." },
 ];
 
 const ease = [0.22, 1, 0.36, 1];
@@ -45,7 +45,7 @@ export function Species() {
         {SPECIES.map((s, i) => (
           <motion.article key={s.name} className="lt-species__card" style={{ "--grow": s.grow }} custom={i} variants={card}>
             <motion.div className="lt-species__photo" variants={photo}>
-              <motion.img src={s.img} alt={s.alt} loading="lazy" decoding="async" variants={photoImg} />
+              <motion.img src={s.img} alt={s.alt} loading="lazy" decoding="async" variants={photoImg} style={s.pos ? { objectPosition: s.pos } : undefined} />
             </motion.div>
             <motion.h3 className="lt-display" variants={line}>{s.name}</motion.h3>
             <motion.p variants={line}>{s.text}</motion.p>

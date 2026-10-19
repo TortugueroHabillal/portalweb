@@ -17,6 +17,19 @@ export function Shore() {
   const blockY = useTransform(p, [0, 1], reduce ? [0, 0] : [40, -40]);
   const lineY = useTransform(p, [0, 1], reduce ? [0, 0] : [-30, 30]);
 
+  // El video, el bloque azul y el marco entran desde fuera, por los lados,
+  // cada vez que la sección vuelve a la pantalla
+  // (El video no se desvanece: Chrome pausa los videos silenciados invisibles)
+  const slide = (x, delay, fade = true) =>
+    reduce
+      ? {}
+      : {
+          initial: fade ? { x, opacity: 0 } : { x },
+          whileInView: fade ? { x: 0, opacity: 1 } : { x: 0 },
+          viewport: { once: false, amount: 0.3 },
+          transition: { duration: 1.1, delay, ease: [0.22, 1, 0.36, 1] },
+        };
+
   useEffect(() => {
     const section = ref.current;
     const video = videoRef.current;
@@ -34,11 +47,11 @@ export function Shore() {
         <Reveal as="p" from="right" delay={0.1}>Por ello, ninguna puede perderse.</Reveal>
       </div>
       <div className="lt-shore__art">
-        <motion.div className="lt-shore__block" style={{ y: blockY }} />
-        <motion.div className="lt-shore__frame" style={{ y: lineY }} />
-        <div className="lt-shore__video">
+        <motion.div className="lt-shore__block" style={{ y: blockY }} {...slide(160, 0.15)} />
+        <motion.div className="lt-shore__frame" style={{ y: lineY }} {...slide(-160, 0.3)} />
+        <motion.div className="lt-shore__video" {...slide(220, 0, false)} onAnimationComplete={() => videoRef.current?.play().catch(() => {})}>
           <video ref={videoRef} src={HOME_MEDIA.video} poster={HOME_MEDIA.videoPoster} muted loop playsInline preload="metadata" aria-label="Crías de tortuga caminando hacia el mar" />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -6,7 +6,6 @@ const f = (name) => `/home/fotos/${name}.webp`;
 
 export const HOME_MEDIA = {
   logo: h("logo-habillal.webp"),
-  aliados: h("aliados.webp"),
   video: h("video-liberacion.mp4"),
   videoPoster: h("video-liberacion-poster.jpg"),
 

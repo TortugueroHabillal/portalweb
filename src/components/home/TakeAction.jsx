@@ -5,10 +5,10 @@ import { HOME_MEDIA } from "./media";
 
 /* Montos e impacto: los mismos de la página Dona */
 const TIERS = [
-  { amount: 100, impact: "Insumos para la protección y vigilancia de nidos." },
-  { amount: 250, impact: "El resguardo y seguimiento de los nidos durante la temporada." },
-  { amount: 500, impact: "Equipamiento y materiales para el cuidado de crías." },
-  { amount: 1000, impact: "Los recorridos de vigilancia y la operación del campamento." },
+  { amount: 100, impact: "Permite reabastecer insumos para la protección y vigilancia de nidos." },
+  { amount: 250, impact: "Apoyas el resguardo y seguimiento de los nidos durante la temporada." },
+  { amount: 500, impact: "Apoyas con equipamiento y materiales para el cuidado de crías." },
+  { amount: 1000, impact: "Sustentas los recorridos de vigilancia y la operación del campamento." },
 ];
 
 const ease = [0.22, 1, 0.36, 1];
