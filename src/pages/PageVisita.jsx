@@ -175,13 +175,13 @@ function Reserva() {
                 </label>
                 <label className="field">
                   <span>Tipo de grupo</span>
-                  <select value={form.tipo} onChange={set("tipo")}>
+                  <select className={form.tipo ? "" : "empty"} value={form.tipo} onChange={set("tipo")}>
                     <option value="" disabled>Selecciona</option>
                     {TIPOS_GRUPO.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                   </select>
                 </label>
                 <div className="foot">
-                  <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-visita" dark />
+                  <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-visita" />
                   {submitError && <p role="alert" className="err">{submitError}</p>}
                   <button className="btn btn-t" type="submit" disabled={sending}>
                     {sending ? "Enviando solicitud..." : "Enviar solicitud"}

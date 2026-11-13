@@ -28,6 +28,9 @@ export function Footer({ go }) {
             <button onClick={to("contacto")}>Contacto</button>
             <a href="mailto:camp.tortuguero.elhabillal@gmail.com">Correo</a>
             <a href="https://wa.me/527531631707" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href="https://www.instagram.com/habillalcampamento/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.facebook.com/campamentortuguerohabillal/" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a href="https://www.tiktok.com/@tortuguerohabillal" target="_blank" rel="noopener noreferrer">TikTok</a>
           </nav>
         </div>
         <div className="sfoot-b">

@@ -10,9 +10,9 @@ const WHATSAPP = "https://wa.me/527531631707";
 const MAPS_SRC = "https://www.google.com/maps?q=Campamento+Tortuguero+El+Habillal,+Lazaro+Cardenas,+Michoacan&output=embed";
 
 const SOCIAL = [
-  { network: "Facebook", handle: "Campamento Tortuguero El Habillal", href: "#" },
-  { network: "Instagram", handle: "@habillalcampamento", href: "#" },
-  { network: "TikTok", handle: "@tortuguero_habillal", href: "#" },
+  { network: "Facebook", handle: "campamentortuguerohabillal", href: "https://www.facebook.com/campamentortuguerohabillal/" },
+  { network: "Instagram", handle: "@habillalcampamento", href: "https://www.instagram.com/habillalcampamento/" },
+  { network: "TikTok", handle: "@tortuguerohabillal", href: "https://www.tiktok.com/@tortuguerohabillal" },
 ];
 
 function Mensaje() {
