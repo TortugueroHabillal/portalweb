@@ -1,18 +1,23 @@
-import { useEffect, useState } from "react";
-import { FONT_IMPORT, GLOBAL_STYLE, TOKENS, MAREA } from "./theme";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Nav } from "./components/Nav";
 import { Footer } from "./components/Footer";
 import { PageHome } from "./pages/PageHome";
-import { PageAbout } from "./pages/PageAbout";
-import { PageConvocatorias } from "./pages/PageConvocatorias";
-import { PageEventos } from "./pages/PageEventos";
-import { PageVisita } from "./pages/PageVisita";
-import { PageAdopta } from "./pages/PageAdopta";
-import { PageDona } from "./pages/PageDona";
-import { PageContacto } from "./pages/PageContacto";
-import { PaymentSuccessPage } from "./pages/PaymentSuccessPage";
-import { PagePrivacidad } from "./pages/PagePrivacidad";
 import { scrollToTop } from "./lib/smoothScroll";
+
+/* El Home carga de inmediato; el resto de páginas se descarga solo cuando se visita. */
+const lazyPage = (load, name) => lazy(() => load().then((m) => ({ default: m[name] })));
+const PageAbout = lazyPage(() => import("./pages/PageAbout"), "PageAbout");
+const PageConvocatorias = lazyPage(() => import("./pages/PageConvocatorias"), "PageConvocatorias");
+const PageEventos = lazyPage(() => import("./pages/PageEventos"), "PageEventos");
+const PageVisita = lazyPage(() => import("./pages/PageVisita"), "PageVisita");
+const PageAdopta = lazyPage(() => import("./pages/PageAdopta"), "PageAdopta");
+const PageDona = lazyPage(() => import("./pages/PageDona"), "PageDona");
+const PageContacto = lazyPage(() => import("./pages/PageContacto"), "PageContacto");
+const PaymentSuccessPage = lazyPage(() => import("./pages/PaymentSuccessPage"), "PaymentSuccessPage");
+const PagePrivacidad = lazyPage(() => import("./pages/PagePrivacidad"), "PagePrivacidad");
+
+/* Páginas que todavía no tienen su propio hero bajo el menú fijo */
+const NEEDS_NAV_SPACE = ["privacidad", "donation-success", "adoption-success"];
 
 function getInitialPage() {
   const path = window.location.pathname.replace(/^\//, "").toLowerCase();
@@ -30,9 +35,6 @@ function pathForPage(page) {
     default: return `/${page}`;
   }
 }
-
-/* Azul con el que terminan las páginas del nuevo diseño (une con el footer) */
-const PAGE_END = "#96D2DF";
 
 const SITE_TITLE = 'Campamento Tortuguero "El Habillal" A.C.';
 const PAGE_TITLES = {
@@ -88,30 +90,13 @@ export default function App() {
     }
   };
 
-  const getFooterFromColor = () => {
-    switch (page) {
-      case "home": return PAGE_END;
-      case "about": return PAGE_END;
-      case "convocatorias": return PAGE_END;
-      case "eventos": return PAGE_END;
-      case "visita": return PAGE_END;
-      case "adopta": return PAGE_END;
-      case "dona": return PAGE_END;
-      case "contacto": return PAGE_END;
-      default: return TOKENS.arena;
-    }
-  };
 
   return (
-    <div style={{ fontFamily: "'Public Sans', sans-serif" }}>
-      <style>{FONT_IMPORT}</style>
-      <style>{GLOBAL_STYLE}</style>
+    <>
       <Nav current={page === "donation-success" ? "dona" : page === "adoption-success" ? "adopta" : page} setCurrent={go} />
-      {/* El menú flota sobre el hero del Home; en las demás páginas reservamos su espacio */}
-      {/* Las páginas del nuevo diseño reservan su propio espacio para el menú */}
-      {!["home", "about", "convocatorias", "contacto", "visita", "eventos", "adopta", "dona"].includes(page) && <div aria-hidden="true" style={{ height: 78, background: MAREA.arena }} />}
-      {renderPage()}
-      <Footer go={go} fromColor={getFooterFromColor()} />
-    </div>
+      {NEEDS_NAV_SPACE.includes(page) && <div className="nav-space" aria-hidden="true" />}
+      <Suspense fallback={<div className="page-loading" aria-hidden="true" />}>{renderPage()}</Suspense>
+      <Footer go={go} />
+    </>
   );
 }
