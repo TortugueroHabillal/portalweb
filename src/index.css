@@ -1,58 +1,17 @@
+/* Base global mínima. Cada página trae su propio estilo (home-v8.css, pages-v8.css);
+   el menú y el footer viven en chrome-v8.css. */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
+  font: 17px/1.6 "Public Sans", system-ui, sans-serif;
+  color: #3C2F27;
+  background: #d8ccb8;
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html, body {
   margin: 0;
@@ -62,142 +21,13 @@ html, body {
   overflow-x: clip; /* clip (no hidden): hidden rompe position: sticky */
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+img { max-width: 100%; }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
-
-/* Composición vectorial de 3 fotos — Adopta (Responsivo) */
-.tt-vector-adopta-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 480px;
-  height: 410px;
-  margin: 0 auto;
-}
-
-.tt-vector-adopta-main {
-  position: absolute;
-  top: 16px;
-  right: 15px;
-  width: 285px;
-  height: 285px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 20px 42px -10px rgba(44,92,109,0.32);
-  z-index: 2;
-}
-
-.tt-vector-adopta-sec {
-  position: absolute;
-  top: 28px;
-  left: 28px;
-  width: 155px;
-  height: 155px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 16px 32px -10px rgba(16,38,43,0.25);
-  z-index: 3;
-}
-
-.tt-vector-adopta-tert {
-  position: absolute;
-  bottom: 10px;
-  left: 45px;
-  width: 190px;
-  height: 190px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 18px 36px -10px rgba(16,38,43,0.28);
-  z-index: 3;
-}
-
-.tt-vector-adopta-bgcircle {
-  position: absolute;
-  bottom: 0px;
-  right: 10px;
-  width: 205px;
-  height: 205px;
-  border-radius: 50%;
-  z-index: 1;
-}
-
-@media (max-width: 640px) {
-  .stripe-checkout-heading {
-    flex-direction: column;
-    justify-content: center !important;
-    text-align: center;
-  }
-
-  .stripe-customer-fields {
-    grid-template-columns: minmax(0, 1fr) !important;
-  }
-
-  .tt-vector-adopta-wrap {
-    max-width: 350px;
-    height: 320px;
-  }
-  .tt-vector-adopta-main {
-    top: 10px;
-    right: 10px;
-    width: 220px;
-    height: 220px;
-  }
-  .tt-vector-adopta-sec {
-    top: 20px;
-    left: 18px;
-    width: 125px;
-    height: 125px;
-  }
-  .tt-vector-adopta-tert {
-    bottom: 12px;
-    left: 32px;
-    width: 150px;
-    height: 150px;
-  }
-  .tt-vector-adopta-bgcircle {
-    bottom: 5px;
-    right: 8px;
-    width: 155px;
-    height: 155px;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
   }
 }
