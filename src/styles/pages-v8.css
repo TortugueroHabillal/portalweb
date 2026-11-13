@@ -283,8 +283,8 @@
   .p8 .paygrid .poster.bleed{margin-bottom:-6svh}
 }
 /* Eventos: el año se repite en contorno, un poco más arriba */
-.p8 .year{position:relative;isolation:isolate;padding-top:.3em}
-.p8 .year::before{content:attr(data-y);position:absolute;left:.07em;top:0;z-index:-1;color:transparent;-webkit-text-stroke:1.5px var(--azul);opacity:.75}
+.p8 .year{position:relative;width:max-content}
+.p8 .year::before{content:attr(data-y);position:absolute;left:.06em;top:-.05em;z-index:1;color:transparent;-webkit-text-stroke:1.5px var(--oceano);pointer-events:none}
 /* mazo de fotos (PhotoDeck): cada carta se coloca según su profundidad */
 .p8 .deck-card{--r:0deg;--s:1;--y:0px;--dx:0px;transform:translateX(var(--dx)) translateY(var(--y)) rotate(var(--r)) scale(var(--s));transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .5s}
 .p8 .deck-card[data-depth="1"]{--r:-3deg;--s:.965;--y:-8px}
