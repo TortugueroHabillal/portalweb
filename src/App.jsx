@@ -3,6 +3,7 @@ import { Nav } from "./components/Nav";
 import { Footer } from "./components/Footer";
 import { PageHome } from "./pages/PageHome";
 import { scrollToTop } from "./lib/smoothScroll";
+import { applySeo } from "./lib/seo";
 
 /* El Home carga de inmediato; el resto de páginas se descarga solo cuando se visita. */
 const lazyPage = (load, name) => lazy(() => load().then((m) => ({ default: m[name] })));
@@ -36,21 +37,6 @@ function pathForPage(page) {
   }
 }
 
-const SITE_TITLE = 'Campamento Tortuguero "El Habillal" A.C.';
-const PAGE_TITLES = {
-  home: SITE_TITLE,
-  about: `Nosotros — ${SITE_TITLE}`,
-  convocatorias: `Convocatorias — ${SITE_TITLE}`,
-  eventos: `Eventos y Memoria — ${SITE_TITLE}`,
-  visita: `Visítanos — ${SITE_TITLE}`,
-  adopta: `Adopta un Nido — ${SITE_TITLE}`,
-  dona: `Dona — ${SITE_TITLE}`,
-  contacto: `Contacto — ${SITE_TITLE}`,
-  privacidad: `Aviso de privacidad — ${SITE_TITLE}`,
-  "donation-success": `Donativo Confirmado — ${SITE_TITLE}`,
-  "adoption-success": `Adopción Confirmada — ${SITE_TITLE}`,
-};
-
 export default function App() {
   const [page, setPage] = useState(getInitialPage);
 
@@ -61,7 +47,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    document.title = PAGE_TITLES[page] || SITE_TITLE;
+    applySeo(page);
   }, [page]);
 
   const go = (nextPage) => {

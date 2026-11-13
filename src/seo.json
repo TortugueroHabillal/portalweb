@@ -1,0 +1,56 @@
+{
+  "site": "https://tortuguerohabillal.org",
+  "name": "Campamento Tortuguero El Habillal A.C.",
+  "image": "/og.jpg",
+  "pages": {
+    "home": {
+      "path": "/",
+      "title": "Campamento Tortuguero El Habillal · Adopta un nido o dona",
+      "description": "Desde 2013 protegemos nidos y liberamos crías de tortuga en El Habillal, Lázaro Cárdenas, Michoacán. Adopta un nido por $220 MXN o haz un donativo."
+    },
+    "about": {
+      "path": "/about",
+      "title": "Nosotros · Campamento Tortuguero El Habillal",
+      "description": "Asociación civil de Lázaro Cárdenas, Michoacán, con autorización de la SEMARNAT. Pescadores, familias y voluntarios cuidando la playa desde 2013."
+    },
+    "visita": {
+      "path": "/visita",
+      "title": "Visítanos · Liberación de tortugas en Michoacán",
+      "description": "Recorridos guiados de martes a domingo para escuelas, familias y turistas: liberaciones, corral de incubación y recorridos nocturnos. Agenda tu visita."
+    },
+    "eventos": {
+      "path": "/eventos",
+      "title": "Eventos · TortuFest y encuentros · El Habillal",
+      "description": "TortuFest, rodadas y encuentros por la conservación de las tortugas en El Habillal, Lázaro Cárdenas. Reconocimiento de la SEMARNAT."
+    },
+    "convocatorias": {
+      "path": "/convocatorias",
+      "title": "Voluntariado, servicio social y prácticas · El Habillal",
+      "description": "Súmate al campamento tortuguero: servicio social, prácticas profesionales y voluntariado de temporada en Lázaro Cárdenas, Michoacán."
+    },
+    "adopta": {
+      "path": "/adopta",
+      "title": "Adopta un nido de tortuga por $220 MXN · El Habillal",
+      "description": "Adopta un nido de la temporada activa: recibe tu certificado a tu nombre y una invitación a la liberación de sus crías. Ideal para regalar."
+    },
+    "dona": {
+      "path": "/dona",
+      "title": "Dona a la conservación de tortugas marinas · El Habillal",
+      "description": "Tu donativo sostiene los patrullajes nocturnos, el corral de incubación y la liberación de crías. Dona en línea con tarjeta o por transferencia."
+    },
+    "contacto": {
+      "path": "/contacto",
+      "title": "Contacto · Campamento Tortuguero El Habillal",
+      "description": "Escríbenos por WhatsApp o correo para visitas, donativos, adopción de nidos o voluntariado. La Caroa, El Habillal, Lázaro Cárdenas, Michoacán."
+    },
+    "privacidad": {
+      "path": "/privacidad",
+      "title": "Aviso de privacidad · Campamento Tortuguero El Habillal",
+      "description": "Cómo tratamos y protegemos los datos personales que nos compartes en el sitio del Campamento Tortuguero El Habillal A.C."
+    }
+  },
+  "noindex": {
+    "donation-success": { "title": "Donativo confirmado · El Habillal" },
+    "adoption-success": { "title": "Adopción confirmada · El Habillal" }
+  }
+}

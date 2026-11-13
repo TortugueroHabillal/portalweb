@@ -2,23 +2,63 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" />
     <link rel="preload" as="image" href="/home/v8/hero-laud.webp" fetchpriority="high" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Campamento Tortuguero "El Habillal" A.C.</title>
-    <meta name="description" content="El Campamento Tortuguero El Habillal A.C. protege nidos, libera crías y conserva a las tortugas marinas en las playas de Lázaro Cárdenas, Michoacán. Dona o adopta un nido." />
+
+    <!-- SEO: scripts/seo-build.mjs reemplaza estos valores por página al compilar (datos en src/seo.json) -->
+    <title>%SEO_TITLE%</title>
+    <meta name="description" content="%SEO_DESCRIPTION%" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="%SEO_URL%" />
+    <meta name="theme-color" content="#0E4A5A" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
     <meta property="og:site_name" content="Campamento Tortuguero El Habillal A.C." />
-    <meta property="og:title" content="Campamento Tortuguero El Habillal A.C." />
-    <meta property="og:description" content="Protegemos nidos, liberamos crías y conservamos a las tortugas marinas en Lázaro Cárdenas, Michoacán. Dona o adopta un nido y forma parte de la conservación." />
-    <meta property="og:image" content="/logo-el-habillal.png" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Campamento Tortuguero El Habillal A.C." />
-    <meta name="twitter:description" content="Protegemos nidos, liberamos crías y conservamos a las tortugas marinas en Lázaro Cárdenas, Michoacán." />
-    <meta name="twitter:image" content="/logo-el-habillal.png" />
+    <meta property="og:title" content="%SEO_TITLE%" />
+    <meta property="og:description" content="%SEO_DESCRIPTION%" />
+    <meta property="og:url" content="%SEO_URL%" />
+    <meta property="og:image" content="%SEO_IMAGE%" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cría de tortuga laúd en la arena de El Habillal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="%SEO_TITLE%" />
+    <meta name="twitter:description" content="%SEO_DESCRIPTION%" />
+    <meta name="twitter:image" content="%SEO_IMAGE%" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "NGO",
+        "name": "Campamento Tortuguero El Habillal A.C.",
+        "alternateName": "Campamento Tortuguero El Habillal",
+        "url": "%SEO_SITE%/",
+        "logo": "%SEO_SITE%/logo-el-habillal.png",
+        "image": "%SEO_IMAGE%",
+        "description": "Asociación civil que desde 2013 protege nidos y libera crías de tortuga marina en El Habillal, Lázaro Cárdenas, Michoacán, con autorización de la SEMARNAT.",
+        "foundingDate": "2013",
+        "email": "camp.tortuguero.elhabillal@gmail.com",
+        "telephone": "+52 753 163 1707",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "La Caroa, Tenencia",
+          "postalCode": "60981",
+          "addressLocality": "El Habillal, Lázaro Cárdenas",
+          "addressRegion": "Michoacán",
+          "addressCountry": "MX"
+        },
+        "sameAs": [
+          "https://www.facebook.com/campamentortuguerohabillal/",
+          "https://www.instagram.com/habillalcampamento/",
+          "https://www.tiktok.com/@tortuguerohabillal"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
