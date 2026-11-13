@@ -1,23 +1,21 @@
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Reveal } from "../components/home/Reveal";
-import { SplitTitle } from "../components/home/SplitTitle";
-import { snapToSections } from "../lib/smoothScroll";
+import { useState } from "react";
+import { uuid } from "../lib/uuid";
 import { CertificateTemplate } from "../components/CertificateTemplate";
 import { StripeEmbeddedCheckout } from "../components/StripeEmbeddedCheckout";
 import { PrivacyConsent } from "../components/PrivacyConsent";
 import { createAdoptionCheckout } from "../lib/payments";
+import { PageHero } from "../components/PageHero";
+import "../styles/pages-v8.css";
 
-/* Fotos propias de esta página (ninguna se repite en el sitio) */
+/* Adopta — mismo estilo que el Home 2026: arena → mar profundo.
+   Fotos propias de esta página (ninguna se repite en el sitio) */
 const a = (name) => `/adopta/${name}.webp`;
-const ease = [0.22, 1, 0.36, 1];
 const WHATSAPP = "https://wa.me/527531631707?text=Hola,%20quiero%20apadrinar%20un%20nido%20de%20esta%20temporada.";
 
 const INCLUYE = [
   "Un nido activo de esta temporada, asignado al confirmar tu pago.",
   "Certificado digital a tu nombre (o al de quien se lo regales).",
   "Invitación a la liberación de sus crías.",
-  "Si no puedes asistir: video, fotos y transmisión en vivo.",
 ];
 
 const PASOS = [
@@ -34,34 +32,6 @@ const FAQS = [
   { q: "¿Qué nido me toca?", a: "Al confirmar el pago, el sistema asigna de forma aleatoria un nido activo disponible y verás de inmediato su número." },
 ];
 
-const goPago = () => document.getElementById("pago")?.scrollIntoView({ behavior: "smooth", block: "start" });
-
-/* ---------- 1 · Hero ---------- */
-function Hero() {
-  const reduce = useReducedMotion();
-  const enter = (delay) =>
-    reduce ? {} : { initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.9, delay, ease } };
-  return (
-    <section className="lt-hero ab-hero pay-hero" data-snap>
-      <div className="lt-hero__text">
-        <SplitTitle as="h1" className="lt-display lt-hero__title ab-hero__title" text="Adopta un nido y acompáñalo hasta el mar." delay={0.1} animateOnMount />
-        <motion.p className="pay-hero__price" {...enter(0.25)}>
-          <span className="lt-display">$220</span>
-          <small>MXN</small>
-        </motion.p>
-        <motion.div className="lt-hero__ctas" {...enter(0.4)}>
-          <button className="lt-btn lt-btn--hot pay-btn-lg" onClick={goPago}>Adoptar mi nido</button>
-          <a className="lt-btn lt-btn--line" href={WHATSAPP} target="_blank" rel="noopener noreferrer">Coordinar por WhatsApp</a>
-        </motion.div>
-      </div>
-      <div className="lt-hero__photo">
-        <img src={a("hero")} alt="Cientos de crías de tortuga avanzando hacia el mar" fetchPriority="high" />
-      </div>
-    </section>
-  );
-}
-
-/* ---------- 2 · Pasarela desplegada ---------- */
 function Pago() {
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
@@ -76,126 +46,52 @@ function Pago() {
     if (!/^\S+@\S+\.\S+$/.test(donorEmail.trim())) return setPaymentError("Escribe un correo electrónico válido.");
     if (!privacyOk) return setPaymentError("Para continuar acepta el aviso de privacidad.");
     setCheckoutPayload({
-      request_id: crypto.randomUUID(),
+      request_id: uuid(),
       sponsor_name: donorName.trim(),
       sponsor_email: donorEmail.trim().toLowerCase(),
     });
   };
 
   return (
-    <section id="pago" className="pay-sec pay-checkout" data-snap>
-      <SplitTitle className="lt-display ab-title" text="Adopta un nido de la temporada activa." />
-      <div className="pay-grid">
-        <Reveal className="pay-summary">
-          <div className="pay-summary__photo"><img src={a("crias")} alt="Crías de tortuga recién nacidas en la arena" loading="lazy" decoding="async" /></div>
-        </Reveal>
-
-        <Reveal className="pay-card" delay={0.12}>
-          {paymentError && <p role="alert" className="pay-error">{paymentError}</p>}
-          {checkoutPayload ? (
-            <StripeEmbeddedCheckout
-              checkoutKey={checkoutPayload.request_id}
-              createClientSecret={() => createAdoptionCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
-              onCancel={() => setCheckoutPayload(null)}
-            />
-          ) : (
-            <form className="pg-form pay-form" onSubmit={start} noValidate>
-              <div className="pay-card__total pg-field--full">
-                <span>Adopción de un nido</span>
-                <strong className="lt-display">$220 <small>MXN</small></strong>
-              </div>
-              <ul className="pay-check pay-check--mini pg-field--full">
-                {INCLUYE.slice(0, 3).map((t) => <li key={t}>{t}</li>)}
-              </ul>
-              <label className="pg-field pg-field--full">
-                <span>Nombre del adoptante</span>
-                <input type="text" value={donorName} onChange={(e) => setDonorName(e.target.value)} placeholder="Como aparecerá en el certificado" autoComplete="name" />
-              </label>
-              <label className="pg-field pg-field--full">
-                <span>Correo electrónico</span>
-                <input type="email" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} placeholder="Para enviarte la ficha del nido" autoComplete="email" />
-              </label>
-              <div className="pg-field--full">
-                <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-adopta" />
-                <button className="lt-btn lt-btn--hot pg-submit pay-btn-lg" type="submit">Ir a pagar</button>
-                <p className="pay-secure">Pago seguro con tarjeta, procesado por <strong>Stripe</strong>.</p>
-              </div>
-            </form>
-          )}
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- 3 · Cómo funciona ---------- */
-function ComoFunciona() {
-  return (
-    <section className="pay-sec" data-snap>
-      <SplitTitle className="lt-display ab-title" text="Así acompañas a tu nido." />
-      <div className="pay-steps">
-        {PASOS.map((p, i) => (
-          <Reveal key={p.t} as="article" className="pay-step" delay={i * 0.1}>
-            <span className="lt-display">{i + 1}</span>
-            <h3 className="lt-display">{p.t}</h3>
-            <p>{p.d}</p>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ---------- 4 · Certificado ---------- */
-function Certificado() {
-  return (
-    <section className="pay-sec" data-snap>
-      <div className="pay-split">
-        <div>
-          <SplitTitle className="lt-display pay-split__title" text="Recibes un certificado a tu nombre." />
-          <Reveal as="p" className="pg-sub pay-split__text" delay={0.1}>
-            Un documento digital personalizado con la ficha del nido y la temporada. Ideal también para regalar.
-          </Reveal>
-        </div>
-        <Reveal className="pay-cert" delay={0.15}>
-          <CertificateTemplate donorName="Tu nombre aquí" temporada="Temporada 2026 - 2027" fecha="14 de septiembre, 2026" />
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- 5 · Preguntas ---------- */
-function Preguntas() {
-  const [open, setOpen] = useState(0);
-  const reduce = useReducedMotion();
-  return (
-    <section className="pay-sec" data-snap>
-      <div className="pay-split pay-split--faq">
-        <Reveal className="pay-faq__photo"><img src={a("mar")} alt="Crías de tortuga avanzando hacia el mar" loading="lazy" decoding="async" /></Reveal>
-        <div>
-          <SplitTitle className="lt-display pay-split__title" text="Preguntas frecuentes." />
-          <div className="pay-faq">
-            {FAQS.map((f, i) => (
-              <div key={f.q} className={`pay-faq__item${open === i ? " is-open" : ""}`}>
-                <button type="button" aria-expanded={open === i} onClick={() => setOpen(open === i ? null : i)}>
-                  <span>{f.q}</span>
-                  <span aria-hidden="true" className="pay-faq__sign">{open === i ? "−" : "+"}</span>
-                </button>
-                <AnimatePresence initial={false}>
-                  {open === i && (
-                    <motion.p
-                      initial={reduce ? false : { height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={reduce ? undefined : { height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease }}
-                    >
-                      {f.a}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+    <section id="pago" className="sec">
+      <div className="wrap">
+        <h2>Adopta un nido de la temporada activa.</h2>
+        <div className="paygrid">
+          <figure className="poster bleed">
+            <img src={a("crias-orilla")} alt="Crías de tortuga avanzando hacia la orilla en El Habillal" loading="lazy" decoding="async" />
+          </figure>
+          <div className="paycard">
+            {paymentError && <p role="alert" className="err">{paymentError}</p>}
+            {checkoutPayload ? (
+              <StripeEmbeddedCheckout
+                checkoutKey={checkoutPayload.request_id}
+                createClientSecret={() => createAdoptionCheckout(checkoutPayload).catch((error) => { setPaymentError(error.message); throw error; })}
+                onCancel={() => setCheckoutPayload(null)}
+              />
+            ) : (
+              <form className="form" onSubmit={start} noValidate>
+                <div className="total field full">
+                  <span>Adopción de un nido</span>
+                  <strong>$220 MXN</strong>
+                </div>
+                <ul className="incl">
+                  {INCLUYE.map((t) => <li key={t}>{t}</li>)}
+                </ul>
+                <label className="field full">
+                  <span>Nombre del adoptante</span>
+                  <input type="text" value={donorName} onChange={(e) => setDonorName(e.target.value)} placeholder="Como aparecerá en el certificado" autoComplete="name" />
+                </label>
+                <label className="field full">
+                  <span>Correo electrónico</span>
+                  <input type="email" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} placeholder="Para enviarte la ficha del nido" autoComplete="email" />
+                </label>
+                <div className="foot">
+                  <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-adopta" />
+                  <button className="btn btn-t" type="submit">Ir a pagar</button>
+                  <p className="secure">Pago seguro con tarjeta, procesado por <strong>Stripe</strong>.</p>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </div>
@@ -203,19 +99,24 @@ function Preguntas() {
   );
 }
 
-/* ---------- 6 · Cierre ---------- */
-function Cierre() {
+function Preguntas() {
+  const [open, setOpen] = useState(0);
   return (
-    <section className="pay-sec pay-end" data-snap>
-      <div className="pay-endgrid">
-        <Reveal className="pay-endgrid__photo"><img src={a("atardecer")} alt="Tortuga en la orilla al atardecer" loading="lazy" decoding="async" /></Reveal>
+    <section className="sec">
+      <div className="wrap split2">
+        <figure className="poster bleed"><img src={a("mar")} alt="Crías de tortuga avanzando hacia el mar" loading="lazy" decoding="async" /></figure>
         <div>
-          <SplitTitle className="lt-display pay-split__title" text="Esta temporada, uno de esos nidos puede ser tuyo." />
-          <Reveal as="p" className="pg-sub pay-split__text" delay={0.1}>Lo cuidamos noche tras noche y te avisamos cuando sus crías estén listas para llegar al mar.</Reveal>
-          <Reveal className="pay-endgrid__ctas" delay={0.2}>
-            <button className="lt-btn lt-btn--hot pay-btn-lg" onClick={goPago}>Adoptar mi nido</button>
-            <a className="lt-btn lt-btn--line" href={WHATSAPP} target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp</a>
-          </Reveal>
+          <h2>Preguntas frecuentes.</h2>
+          <ul className="faq">
+            {FAQS.map((f, i) => (
+              <li key={f.q}>
+                <button type="button" aria-expanded={open === i} onClick={() => setOpen(open === i ? null : i)}>
+                  <span>{f.q}</span>
+                </button>
+                {open === i && <p>{f.a}</p>}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
@@ -223,15 +124,64 @@ function Cierre() {
 }
 
 export function PageAdopta() {
-  useEffect(() => snapToSections(), []);
   return (
-    <main className="lt-home pay-page">
-      <Hero />
+    <main className="p8">
+      <PageHero
+        title={<>Adopta un nido y <em>acompáñalo hasta el mar.</em></>}
+        lede={<><b className="price">$220</b> MXN por nido. Recibes tu certificado y una invitación a su liberación.</>}
+        img={a("hero-mar")}
+        alt="Cría de tortuga llegando al agua en la orilla"
+      >
+        <a className="btn btn-t" href="#pago">Adoptar mi nido</a>
+        <a className="tl" href={WHATSAPP} target="_blank" rel="noopener noreferrer">o coordina por WhatsApp</a>
+      </PageHero>
+
       <Pago />
-      <ComoFunciona />
-      <Certificado />
+
+      <section className="sec">
+        <div className="wrap">
+          <h2>Así acompañas a tu nido.</h2>
+          <ol className="trio four">
+            {PASOS.map((p, i) => (
+              <li key={p.t}>
+                <b>{i + 1}</b>
+                <h3>{p.t}</h3>
+                <p>{p.d}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap cert">
+          <div>
+            <h2>Recibes un certificado a tu nombre.</h2>
+            <p className="body intro">
+              Un documento digital personalizado con la ficha del nido y la temporada. Ideal también para regalar.
+            </p>
+          </div>
+          <div className="certbox">
+            <CertificateTemplate donorName="Tu nombre aquí" temporada="Temporada 2026 - 2027" fecha="14 de septiembre, 2026" />
+          </div>
+        </div>
+      </section>
+
       <Preguntas />
-      <Cierre />
+
+      <section className="deep fin">
+        <figure className="finpic"><img className="pos-top" src={a("nido")} alt="Integrante del campamento colocando huevos de tortuga en un nido del corral" loading="lazy" decoding="async" /></figure>
+        <div className="wrap">
+          <h2>Esta temporada, uno de esos nidos puede ser tuyo.</h2>
+          <p className="body intro">
+            Lo cuidamos noche tras noche y te avisamos cuando sus crías estén listas para llegar al mar.
+          </p>
+          <div className="ctas">
+            <a className="btn btn-t" href="#pago">Adoptar mi nido</a>
+            <a className="tl tl-light" href={WHATSAPP} target="_blank" rel="noopener noreferrer">o escríbenos por WhatsApp</a>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
