@@ -1,3 +1,4 @@
+import { uuid } from "./uuid";
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, "");
 
 async function callFunction(name, { method = "POST", body } = {}) {
@@ -19,7 +20,7 @@ async function callFunction(name, { method = "POST", body } = {}) {
 
 export async function createDonationCheckout(payload) {
   const data = await callFunction("create-donation-checkout", {
-    body: { ...payload, request_id: payload.request_id || crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/dona/exito?session_id={CHECKOUT_SESSION_ID}` },
+    body: { ...payload, request_id: payload.request_id || uuid(), checkout_mode: "embedded", return_url: `${window.location.origin}/dona/exito?session_id={CHECKOUT_SESSION_ID}` },
   });
   if (!data.client_secret) throw new Error("Stripe no devolvió una sesión de pago válida.");
   return data.client_secret;
@@ -27,7 +28,7 @@ export async function createDonationCheckout(payload) {
 
 export async function createAdoptionCheckout(payload) {
   const data = await callFunction("create-adoption-checkout", {
-    body: { ...payload, request_id: payload.request_id || crypto.randomUUID(), checkout_mode: "embedded", return_url: `${window.location.origin}/adopta/exito?session_id={CHECKOUT_SESSION_ID}` },
+    body: { ...payload, request_id: payload.request_id || uuid(), checkout_mode: "embedded", return_url: `${window.location.origin}/adopta/exito?session_id={CHECKOUT_SESSION_ID}` },
   });
   if (!data.client_secret) throw new Error("Stripe no devolvió una sesión de pago válida.");
   return data.client_secret;
