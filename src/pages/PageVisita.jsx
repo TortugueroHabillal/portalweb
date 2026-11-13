@@ -1,14 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
-import { Reveal } from "../components/home/Reveal";
+import { uuid } from "../lib/uuid";
+import { useRef, useState } from "react";
 import { PrivacyConsent } from "../components/PrivacyConsent";
 import { createVisitRequest } from "../lib/visits";
-import { snapToSections } from "../lib/smoothScroll";
+import { PageHero } from "../components/PageHero";
+import "../styles/pages-v8.css";
 
-/* Fotos propias de esta página (ninguna se repite con Home ni Nosotros) */
+/* Visítanos — mismo estilo que el Home 2026: arena → mar profundo.
+   Fotos propias de esta página: ninguna se repite con el Home ni con Nosotros. */
 const v = (name) => `/visita/${name}.webp`;
-
-const ease = [0.22, 1, 0.36, 1];
 
 const TIPOS_GRUPO = [
   ["ACADEMIC", "Académico"],
@@ -37,65 +36,55 @@ const REGLAS = [
 const scrollToReserva = () => document.getElementById("reserva")?.scrollIntoView({ behavior: "smooth" });
 
 function Hero() {
-  const reduce = useReducedMotion();
-  const enter = (delay) =>
-    reduce ? {} : { initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.9, delay, ease } };
   return (
-    <section className="lt-hero ab-hero" data-snap>
-      <div className="lt-hero__text">
-        <motion.h1 className="lt-display lt-hero__title ab-hero__title" {...enter(0.1)}>
-          Ven a ver la conservación de cerca.
-        </motion.h1>
-        <motion.p className="lt-hero__line" {...enter(0.28)}>Recorridos guiados de martes a domingo, para escuelas, familias y turistas.</motion.p>
-        <motion.div className="lt-hero__ctas" {...enter(0.42)}>
-          <button className="lt-btn lt-btn--hot" onClick={scrollToReserva}>Agenda tu visita</button>
-        </motion.div>
-      </div>
-      <div className="lt-hero__photo">
-        <img src={v("liberacion-visitantes")} alt="Visitantes en la orilla durante una liberación" fetchPriority="high" />
-      </div>
-    </section>
+    <PageHero
+      title={<>Ven a ser parte <em>de la conservación.</em></>}
+      lede={<>Recorridos guiados de martes a domingo, para escuelas, familias y turistas.</>}
+      img="/home/fotos/visitantes.webp"
+      alt="Visitantes conociendo el corral de incubación con nuestro equipo"
+    >
+      <button className="btn btn-t" onClick={scrollToReserva}>Agenda tu visita</button>
+    </PageHero>
   );
 }
 
 function Experiencias() {
   return (
-    <section className="pg-sec pg-sec--espuma" data-snap>
-      <Reveal as="h2" className="lt-display ab-title">Esto vivirás en el campamento.</Reveal>
-      <div className="pg-cards">
-        {EXPERIENCIAS.map((e, i) => (
-          <Reveal key={e.title} as="article" className="pg-card pg-card--photo" delay={i * 0.12}>
-            <div className="pg-card__img"><img src={e.img} alt={e.alt} loading="lazy" decoding="async" /></div>
-            <h3 className="lt-display">{e.title}</h3>
-            <p>{e.text}</p>
-          </Reveal>
-        ))}
+    <section className="sec">
+      <div className="wrap">
+        <div className="sec-h">
+          <div>
+            <h2>Esto vivirás en el campamento.</h2>
+          </div>
+        </div>
+        <div className="cards">
+          {EXPERIENCIAS.map((e) => (
+            <figure key={e.title}>
+              <img src={e.img} alt={e.alt} loading="lazy" decoding="async" />
+              <h3>{e.title}</h3>
+              <p>{e.text}</p>
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
 function Reglas() {
-  const reduce = useReducedMotion();
-  const view = reduce ? {} : { initial: "hidden", whileInView: "shown", viewport: { once: false, amount: 0.35 } };
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    shown: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.1 + i * 0.08, ease } }),
-  };
   return (
-    <section className="pg-sec pg-sec--agua" data-snap>
-      <Reveal as="h2" className="lt-display ab-title">Así cuidamos la playa juntos.</Reveal>
-      <motion.ol className="pg-rules" {...view}>
-        {REGLAS.map((r, i) => (
-          <motion.li key={r} custom={i} variants={item}>
-            <span className="lt-display">{i + 1}</span>
-            <p>{r}</p>
-          </motion.li>
-        ))}
-      </motion.ol>
-      <Reveal as="p" className="pg-sub" delay={0.3}>
-        Cada visita sigue nuestros protocolos para que tu experiencia y la de las tortugas sean igual de seguras.
-      </Reveal>
+    <section className="sec">
+      <div className="wrap">
+        <div className="sec-h">
+          <div>
+            <h2>Así cuidamos la playa juntos.</h2>
+            <p className="body intro">Cada visita sigue nuestros protocolos para que tu experiencia y la de las tortugas sean igual de seguras.</p>
+          </div>
+        </div>
+        <ol className="rules">
+          {REGLAS.map((r) => <li key={r}>{r}</li>)}
+        </ol>
+      </div>
     </section>
   );
 }
@@ -104,11 +93,11 @@ const EMPTY = { nombre: "", correo: "", telefono: "", origen: "", fecha: "", asi
 
 function Reserva() {
   const [form, setForm] = useState(EMPTY);
-  const [sent, setSent] = useState(false);
+  const [requestNumber, setRequestNumber] = useState(null);
   const [sending, setSending] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [privacyOk, setPrivacyOk] = useState(false);
-  const idempotencyKey = useRef(crypto.randomUUID());
+  const idempotencyKey = useRef(uuid());
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
   const handleSubmit = async (e) => {
@@ -118,7 +107,7 @@ function Reserva() {
     setSending(true);
     setSubmitError("");
     try {
-      await createVisitRequest({
+      const result = await createVisitRequest({
         idempotencyKey: idempotencyKey.current,
         name: form.nombre.trim(),
         email: form.correo.trim().toLowerCase(),
@@ -128,7 +117,7 @@ function Reserva() {
         attendees: form.asistentes ? Number(form.asistentes) : 1,
         groupType: form.tipo,
       });
-      setSent(true);
+      setRequestNumber(result.request_number);
     } catch (error) {
       setSubmitError(error.message || "No pudimos registrar tu solicitud.");
     } finally {
@@ -138,77 +127,78 @@ function Reserva() {
 
   const resetRequest = () => {
     setForm(EMPTY);
-    setSent(false);
+    setRequestNumber(null);
     setSubmitError("");
-    idempotencyKey.current = crypto.randomUUID();
+    idempotencyKey.current = uuid();
   };
 
   return (
-    <section id="reserva" className="lt-action pg-end" data-snap>
-      <Reveal as="h2" className="lt-display lt-action__title">Agenda tu recorrido.</Reveal>
-      <Reveal className="pg-reserve" delay={0.12}>
-        <div className="pg-reserve__photo"><img src={v("reserva")} alt="Crías de tortuga avanzando por la arena" loading="lazy" decoding="async" /></div>
-        <div className="pg-formbox pg-formbox--dark">
-        {sent ? (
-          <div className="pg-done">
-            <h3 className="lt-display">¡Solicitud enviada!</h3>
-            <p>
-              Gracias, <strong>{form.nombre}</strong>. Te escribiremos a <strong>{form.correo}</strong> para confirmar la fecha de tu visita.
-            </p>
-            <button className="lt-btn lt-btn--line" onClick={resetRequest}>Agendar otra visita</button>
+    <section id="reserva" className="deep">
+      <div className="wrap">
+        <h2>Agenda tu recorrido.</h2>
+        <div className="reserve">
+          <figure className="ph"><img src={v("reserva")} alt="Crías de tortuga avanzando por la arena" loading="lazy" decoding="async" /></figure>
+          <div>
+            {requestNumber ? (
+              <div className="done">
+                <h3>¡Solicitud enviada!</h3>
+                <p>
+                  Gracias, <strong>{form.nombre}</strong>. Registramos tu solicitud con el folio <strong>#{requestNumber}</strong>. Te escribiremos a <strong>{form.correo}</strong> para confirmar la fecha de tu visita.
+                </p>
+                <button className="btn btn-o" onClick={resetRequest}>Agendar otra visita</button>
+              </div>
+            ) : (
+              <form className="form" onSubmit={handleSubmit}>
+                <label className="field full">
+                  <span>Nombre completo *</span>
+                  <input type="text" required value={form.nombre} onChange={set("nombre")} placeholder="Tu nombre" />
+                </label>
+                <label className="field">
+                  <span>Correo electrónico *</span>
+                  <input type="email" required value={form.correo} onChange={set("correo")} placeholder="tu@correo.com" />
+                </label>
+                <label className="field">
+                  <span>Teléfono / WhatsApp *</span>
+                  <input type="tel" required minLength="7" maxLength="30" autoComplete="tel" value={form.telefono} onChange={set("telefono")} placeholder="753 123 4567" />
+                </label>
+                <label className="field">
+                  <span>Lugar de origen</span>
+                  <input type="text" value={form.origen} onChange={set("origen")} placeholder="Ciudad / Estado" />
+                </label>
+                <label className="field">
+                  <span>Fecha deseada *</span>
+                  <input type="date" required value={form.fecha} onChange={set("fecha")} />
+                </label>
+                <label className="field">
+                  <span>Asistentes</span>
+                  <input type="number" min="1" max="50" value={form.asistentes} onChange={set("asistentes")} placeholder="4" />
+                </label>
+                <label className="field">
+                  <span>Tipo de grupo</span>
+                  <select value={form.tipo} onChange={set("tipo")}>
+                    <option value="" disabled>Selecciona</option>
+                    {TIPOS_GRUPO.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                  </select>
+                </label>
+                <div className="foot">
+                  <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-visita" dark />
+                  {submitError && <p role="alert" className="err">{submitError}</p>}
+                  <button className="btn btn-t" type="submit" disabled={sending}>
+                    {sending ? "Enviando solicitud..." : "Enviar solicitud"}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
-        ) : (
-          <form className="pg-form pg-form--3" onSubmit={handleSubmit}>
-            <label className="pg-field">
-              <span>Nombre completo *</span>
-              <input type="text" required value={form.nombre} onChange={set("nombre")} placeholder="Tu nombre" />
-            </label>
-            <label className="pg-field">
-              <span>Correo electrónico *</span>
-              <input type="email" required value={form.correo} onChange={set("correo")} placeholder="tu@correo.com" />
-            </label>
-            <label className="pg-field">
-              <span>Teléfono / WhatsApp *</span>
-              <input type="tel" required minLength="7" maxLength="30" autoComplete="tel" value={form.telefono} onChange={set("telefono")} placeholder="753 123 4567" />
-            </label>
-            <label className="pg-field">
-              <span>Lugar de origen</span>
-              <input type="text" value={form.origen} onChange={set("origen")} placeholder="Ciudad / Estado" />
-            </label>
-            <label className="pg-field">
-              <span>Fecha deseada *</span>
-              <input type="date" required value={form.fecha} onChange={set("fecha")} />
-            </label>
-            <label className="pg-field pg-field--half">
-              <span>Asistentes</span>
-              <input type="number" min="1" max="50" value={form.asistentes} onChange={set("asistentes")} placeholder="4" />
-            </label>
-            <label className="pg-field pg-field--half">
-              <span>Tipo de grupo</span>
-              <select value={form.tipo} onChange={set("tipo")}>
-                <option value="" disabled>Selecciona</option>
-                {TIPOS_GRUPO.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-              </select>
-            </label>
-            <div className="pg-field--full pg-form__foot">
-              <PrivacyConsent checked={privacyOk} onChange={setPrivacyOk} id="privacy-visita" />
-              {submitError && <p role="alert" className="pg-error">{submitError}</p>}
-              <button className="lt-btn lt-btn--hot pg-submit" type="submit" disabled={sending}>
-                {sending ? "Enviando…" : "Enviar solicitud"}
-              </button>
-            </div>
-          </form>
-        )}
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }
 
 export function PageVisita() {
-  useEffect(() => snapToSections(), []);
   return (
-    <main className="lt-home pg-page">
+    <main className="p8">
       <Hero />
       <Experiencias />
       <Reglas />
