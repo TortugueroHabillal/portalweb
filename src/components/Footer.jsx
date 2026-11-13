@@ -1,80 +1,38 @@
-import { TOKENS, LOGO_URL } from "../theme";
-import { WaveDivider } from "./WaveDivider";
+import { HOME_MEDIA } from "./home/media";
 
-export function Footer({ go, fromColor = TOKENS.arena }) {
-  const links = [
-    { label: "Inicio", route: "home" },
-    { label: "Nosotros", route: "about" },
-    { label: "Eventos y Memoria", route: "eventos" },
-    { label: "Visítanos", route: "visita" },
-    { label: "Adopta un nido", route: "adopta" },
-    { label: "Dona al programa", route: "dona" },
-    { label: "Convocatorias", route: "convocatorias" },
-    { label: "Contacto", route: "contacto" },
-    { label: "Aviso de privacidad", route: "privacidad" },
-  ];
-
+/* Footer compacto: azul marino fijo con corte de ola, sin animación */
+export function Footer({ go }) {
+  const to = (route) => () => go && go(route);
   return (
-    // La ola es transparente arriba y se monta sobre el final de la página:
-    // así se ve el color real de la página y no queda ninguna línea de corte
-    <footer style={{ background: `linear-gradient(transparent 47px, ${TOKENS.noche} 47px)`, color: TOKENS.espuma, position: "relative" }}>
-      <WaveDivider
-        fromColor="transparent"
-        toColor={TOKENS.noche}
-        style={{
-          marginTop: "-47px",
-          position: "relative",
-          zIndex: 5,
-          marginBottom: "-1px",
-        }}
-      />
-      <div
-        className="tt-footer-grid"
-        style={{
-          padding: "48px 32px 32px",
-          maxWidth: "1200px",
-          margin: "0 auto",
-        }}
-      >
-        <div>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
-            <img src={LOGO_URL} alt="" loading="lazy" style={{ height: "42px", width: "42px", objectFit: "contain" }} />
-            <span style={{ fontFamily: "'Fraunces', serif", fontSize: "16.5px", fontWeight: 600, color: "#fff" }}>
-              Campamento Tortuguero El Habillal Asociación Civil
+    <footer className="sfoot">
+      <svg className="sfoot-waves" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,20 C200,60 350,0 600,24 C850,48 1000,4 1200,28 L1200,60 L0,60 Z" fill="#0E4A5A" />
+      </svg>
+      <div className="sfoot-in">
+        <div className="sfoot-c">
+          <button className="sfoot-brand" onClick={to("home")}>
+            <img src={HOME_MEDIA.logo} alt="" loading="lazy" />
+            <span>
+              Campamento Tortuguero
+              <br />
+              El Habillal
             </span>
-          </div>
+          </button>
+          <nav aria-label="Pie de página">
+            <button onClick={to("adopta")}>Adopta</button>
+            <button onClick={to("dona")}>Dona</button>
+            <button onClick={to("visita")}>Visítanos</button>
+            <button onClick={to("about")}>Nosotros</button>
+            <button onClick={to("eventos")}>Eventos</button>
+            <button onClick={to("convocatorias")}>Convocatorias</button>
+            <button onClick={to("contacto")}>Contacto</button>
+            <a href="mailto:camp.tortuguero.elhabillal@gmail.com">Correo</a>
+            <a href="https://wa.me/527531631707" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          </nav>
         </div>
-        <div>
-          <p style={{ fontFamily: "'Public Sans', sans-serif", fontWeight: 700, fontSize: "13px", color: TOKENS.cielo, marginBottom: "12px" }}>Navegación</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px" }}>
-            {links.map((l) => (
-              <button
-                key={l.route}
-                onClick={() => go && go(l.route)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: 0,
-                  color: "#B9CBC7",
-                  fontFamily: "'Public Sans', sans-serif",
-                  fontSize: "13.5px",
-                  textAlign: "left",
-                  cursor: "pointer",
-                  transition: "color 0.2s",
-                }}
-                onMouseOver={(e) => (e.currentTarget.style.color = "#fff")}
-                onMouseOut={(e) => (e.currentTarget.style.color = "#B9CBC7")}
-              >
-                {l.label}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <p style={{ fontFamily: "'Public Sans', sans-serif", fontWeight: 700, fontSize: "13px", color: TOKENS.cielo, marginBottom: "12px" }}>Ubicación</p>
-          <p style={{ fontFamily: "'Public Sans', sans-serif", fontSize: "13.5px", color: "#B9CBC7", lineHeight: 1.6, margin: 0 }}>
-            La caroa, Tenencia, 60981 El Habillal, Mich.
-          </p>
+        <div className="sfoot-b">
+          <span>© {new Date().getFullYear()} · La Caroa, Tenencia, 60981 El Habillal, Michoacán</span>
+          <button onClick={to("privacidad")}>Aviso de privacidad</button>
         </div>
       </div>
     </footer>
